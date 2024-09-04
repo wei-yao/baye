@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_settings"
+        android:title="@string/menu_settings"/>
+    <item
+        android:id="@+id/menu_whatsnew"
+        android:title="@string/menu_whatsnew"/>
+    <item
+        android:id="@+id/menu_faceback"
+        android:title="@string/menu_faceback"/>
+    <item
+        android:id="@+id/menu_update"
+        android:title="@string/soft_update_updatebtn"/>
+    <item
+        android:id="@+id/menu_about"
+        android:title="@string/menu_about"/>
+
+</menu>

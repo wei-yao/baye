@@ -1,0 +1,34 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>btn_cancel1.png</file>
+        <file>btn_confirm1.png</file>
+        <file>btn_down1.png</file>
+        <file>btn_find1.png</file>
+        <file>btn_left1.png</file>
+        <file>btn_map1.png</file>
+        <file>btn_right1.png</file>
+        <file>btn_up1.png</file>
+        <file>icon1.ico</file>
+        <file>btn_pgdn1.png</file>
+        <file>btn_pgup1.png</file>
+        <file>logo.png</file>
+        <file>btn_cancel2.png</file>
+        <file>btn_confirm2.png</file>
+        <file>btn_find2.png</file>
+        <file>btn_down2.png</file>
+        <file>btn_left2.png</file>
+        <file>btn_map2.png</file>
+        <file>btn_pgdn2.png</file>
+        <file>btn_pgup2.png</file>
+        <file>btn_right2.png</file>
+        <file>btn_up2.png</file>
+        <file>btn_down3.png</file>
+        <file>btn_left3.png</file>
+        <file>btn_right3.png</file>
+        <file>btn_up3.png</file>
+    </qresource>
+    <qresource prefix="/fonts">
+        <file>DroidSansFallback.ttf</file>
+    </qresource>
+    <qresource prefix="/"/>
+</RCC>
