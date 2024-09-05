@@ -25,3 +25,26 @@ private:
 };
 
 #endif // WINDOWINIDIALOG_H
+
+#ifndef NEW_MENU_WINDOW_H
+#define NEW_MENU_WINDOW_H
+
+#include <QMainWindow>
+#include <QListWidget>
+
+class NewMenuWindow : public QMainWindow {
+    Q_OBJECT
+
+public:
+    NewMenuWindow(QWidget *parent = nullptr);
+    ~NewMenuWindow();
+
+private slots:
+    void onItemClicked(QListWidgetItem *item);
+
+private:
+    QListWidget *listWidget;
+};
+
+#endif // NEW_MENU_WINDOW_H
+

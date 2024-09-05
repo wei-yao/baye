@@ -6,6 +6,7 @@
 #include <QApplication>
 #include <QFontDatabase>
 #include <QTextCodec>
+#include "windowinidialog.h"
 #if defined(Q_OS_ANDROID)
 #include<QtAndroidExtras/QAndroidJniObject>
 #include<QtAndroidExtras/QAndroidJniEnvironment>
@@ -486,5 +487,10 @@ int main(int argc, char *argv[])
     getGlobalWidget()->show();
     getGlobalWidget()->grabGesture(Qt::PinchGesture);
     getGlobalWidget()->grabGesture(Qt::TapAndHoldGesture);
+
+     NewMenuWindow mainWindow;
+    mainWindow.resize(400, 300);
+    mainWindow.show();
+
     return a.exec();
 }

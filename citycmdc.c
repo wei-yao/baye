@@ -727,6 +727,12 @@
 ******************************************************************************/
  U8 RealienateMake(U8 city)
 {
+	g_Cities[city].autoManage= !g_Cities[city].autoManage;
+	if(g_Cities[city].autoManage){
+		GamMsgBox("auto on",2);
+	}else{
+		GamMsgBox("auto off",2);
+	}
 	return(1);
 }
 

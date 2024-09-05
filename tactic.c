@@ -170,8 +170,9 @@ void ComputerTactic(void)
 		b = cptr->Belong;
 		if (!(b))
 			continue;
-		if (b == (g_PlayerKing + 1))
-			continue;
+		bool isAuto = true;
+		// if (b == (g_PlayerKing + 1))
+		//	continue;
 			
 		cptr->AvoidCalamity += 1;
 		if (cptr->AvoidCalamity > 100)
@@ -180,21 +181,27 @@ void ComputerTactic(void)
 		if (cptr->Food < 100)
 			cptr->Food = 500;
 		if (cptr->Money > 10000)
-			cptr->Money /= 2;
+			{
+				cptr->Food += 2000;
+				cptr->Money -=10000;
+			}
 		/*添加电脑策略代码*/
         rnd = rand() % 100;
-		if (TacticOddsIH[g_Persons[b - 1].Character] > rnd)			/*执行内政、协调策略*/
+		if (TacticOddsIH[g_Persons[b - 1].Character] > rnd || cptr->Food < 1000)			/*执行内政、协调策略*/
 		{
 			ComputerTacticInterior(i);
-			ComputerTacticHarmonize(i);
+			ComputerTacticHarmonize(i, isAuto);
 		}
 		else if (TacticOddsD[g_Persons[b - 1].Character] > rnd)		/*执行外交策略*/
 		{
-			ComputerTacticDiplomatism(i);
+			if(isAuto)
+				AITacticDiplomatism(i);
+			else
+				ComputerTacticDiplomatism(i);
 		}
 		else										/*执行军备策略*/
 		{
-			ComputerTacticArmament(i);
+			ComputerTacticArmament(i, isAuto);
 		}
 	}
 }
@@ -212,6 +219,7 @@ void ComputerTactic(void)
 *		----		----			-----------
 *		陈泽伟		2005-7-20 15:32	基本功能完成
 ******************************************************************************/
+
 void ComputerTacticInterior(U8 city)
 {
 	U8 *pqptr;
@@ -239,18 +247,25 @@ void ComputerTacticInterior(U8 city)
 	for (i = 0;i < pcount;i ++)
 	{
         rnd = rand() % 5;
+		if(g_Cities[city].Food < 1000){
+			rnd = 0;
+		}
+	
 		switch (rnd)
 		{
 		case 0:		/*开垦*/
-			fa = 200;
-			*f += fa;
-			if (*f > fl)
-			{
-				*f = fl;
+		    if(*f<fl){
+				fa = 200;
+				*f += fa;
+				if (*f > fl)
+				{
+					*f = fl;
+				}
+				order.OrderId = ASSART;
+				break;
 			}
-			order.OrderId = ASSART;
-			break;
 		case 1:		/*招商*/
+			if (*c < cl){
 			ca = 200;
 			*c += ca;
 			if (*c > cl)
@@ -259,10 +274,9 @@ void ComputerTacticInterior(U8 city)
 			}
 			order.OrderId = ACCRACTBUSINESS;
 			break;
-		case 2:		/*搜寻*/
-			order.OrderId = SEARCH;
-			break;
+			}
 		case 3:		/*出巡*/
+			if (*PeopleDevotion < 100 || *Population < cptr->PopulationLimit){
 			*PeopleDevotion += 4;
 			if (*PeopleDevotion > 100)
 				*PeopleDevotion = 100;
@@ -272,9 +286,11 @@ void ComputerTacticInterior(U8 city)
 				
 			order.OrderId = INSPECTION;
 			break;
-		case 4:
-			continue;
+			}
+		default:		/*搜寻*/
+			order.OrderId = SEARCH;
 			break;
+
 		}
 		
 		order.Person = pqptr[i];
@@ -423,6 +439,53 @@ void ComputerTacticDiplomatism(U8 city)
 	}
 }
 
+void AITacticDiplomatism(U8 city)
+{
+	U8 *pqptr,*eqptr;
+	U8 i,rnd;
+	U8 pcount,ecount;
+	OrderType order;
+	
+	pqptr = SHARE_MEM;
+	eqptr = SHARE_MEM + PERSON_MAX;
+	pcount = GetCityPersons(city,pqptr);
+	for (i = 0;i < pcount;i ++)
+	{
+		ecount = GetCityCaptives(city,eqptr);
+        	/*招降*/
+			/*ecount = GetCityCaptives(city,eqptr);*/
+			if (ecount)
+			{
+                rnd = rand() % ecount; // random pick one and success
+				if (g_Persons[eqptr[rnd]].Id != g_PlayerKing + 1)
+				{
+					g_Persons[eqptr[rnd]].Belong = g_Cities[city].Belong;
+					continue;
+				}
+				DelPerson(city,eqptr[rnd]);
+				order.OrderId = SURRENDER; //should there be an object?
+				continue;
+			}
+			/*招揽*/
+			ecount = GetEnemyPersons(city,eqptr);
+			if (ecount)
+			{
+                rnd = rand() % ecount;
+				order.Object = eqptr[rnd];
+			}
+			else
+			{
+				continue;
+			}
+			order.OrderId = CANVASS;
+		order.Person = pqptr[i];
+		order.City = city;
+		order.TimeCount = 0;
+		AddOrderHead(&order);
+		DelPerson(city,pqptr[i]);
+	}
+}
+
 /******************************************************************************
 * 函数名:ComputerTacticHarmonize
 * 说  明:产生城市协调电脑策略
@@ -436,7 +499,7 @@ void ComputerTacticDiplomatism(U8 city)
 *		----		----			-----------
 *		陈泽伟		2005-7-20 15:34	基本功能完成
 ******************************************************************************/
-void ComputerTacticHarmonize(U8 city)
+void ComputerTacticHarmonize(U8 city, bool isAuto)
 {
 	U8 *pqptr,*cqptr,*eqptr;
 	U8 i,j,c,rnd;
@@ -452,6 +515,9 @@ void ComputerTacticHarmonize(U8 city)
 	for (i = 0;i < pcount;i ++)
 	{
         rnd = rand() % 7;
+		if(isAuto){
+			rnd =0;
+		}
 		switch (rnd)
 		{
 		case 0:		/*治理*/
@@ -527,7 +593,7 @@ void ComputerTacticHarmonize(U8 city)
 *		----		----			-----------
 *		陈泽伟		2005-7-20 15:35	基本功能完成
 ******************************************************************************/
-void ComputerTacticArmament(U8 city)
+void ComputerTacticArmament(U8 city, bool isAuto)
 {
 	U8 *pqptr,*cqptr,fp[10];
 	U8 i,j,rnd;
@@ -568,6 +634,10 @@ void ComputerTacticArmament(U8 city)
         {
             rnd = 7;//高攻击概率模式下
         }
+
+		if(isAuto){
+			rnd = 5; // auto default recruit and assign
+		}
 		switch (rnd)
 		{
 		case 0:
@@ -991,7 +1061,31 @@ void LoadPeriod(U8 period)
 	U8 *ptr;
 	
 	ptr = ResLoadToCon(CITY_RESID,period,g_CBnkPtr);
-	gam_memcpy((U8 *) g_Cities,ptr,sizeof(CityType) * CITY_MAX);
+	OldCityType old_cities[CITY_MAX];
+	memset(old_cities,0, CITY_MAX * sizeof(OldCityType));
+	gam_memcpy((U8 *) old_cities,ptr,sizeof(OldCityType) * CITY_MAX);
+    for(int i=0; i< CITY_MAX; i++){
+		g_Cities[i].Id = old_cities[i].Id;
+    	g_Cities[i].Belong = old_cities[i].Belong;
+    	g_Cities[i].SatrapId = old_cities[i].SatrapId;
+    	g_Cities[i].FarmingLimit = old_cities[i].FarmingLimit;
+    	g_Cities[i].Farming = old_cities[i].Farming;
+    	g_Cities[i].CommerceLimit = old_cities[i].CommerceLimit;
+    	g_Cities[i].Commerce = old_cities[i].Commerce;
+    	g_Cities[i].PeopleDevotion = old_cities[i].PeopleDevotion;
+    	g_Cities[i].AvoidCalamity = old_cities[i].AvoidCalamity;
+    	g_Cities[i].PopulationLimit = old_cities[i].PopulationLimit;
+    	g_Cities[i].Population = old_cities[i].Population;
+    	g_Cities[i].Money = old_cities[i].Money;
+    	g_Cities[i].Food = old_cities[i].Food;
+    	g_Cities[i].MothballArms = old_cities[i].MothballArms;
+    	g_Cities[i].PersonQueue = old_cities[i].PersonQueue;
+    	g_Cities[i].Persons = old_cities[i].Persons;
+    	g_Cities[i].ToolQueue = old_cities[i].ToolQueue;
+    	g_Cities[i].Tools = old_cities[i].Tools;
+    	g_Cities[i].autoManage = 0;
+	}
+
 	ptr += sizeof(CityType) * CITY_MAX;
 	g_YearDate = *((U16 *) ptr);
 	

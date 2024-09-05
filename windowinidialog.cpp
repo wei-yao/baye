@@ -46,3 +46,35 @@ void WindowIniDialog::on_buttonBox_accepted()
 
     QMessageBox::about(this, "提示", "设置成功，请重新启动游戏");
 }
+
+#include <QVBoxLayout>
+#include <QMessageBox>
+
+NewMenuWindow::NewMenuWindow(QWidget *parent)
+    : QMainWindow(parent), listWidget(new QListWidget(this)) {
+    setWindowTitle("Scrollable List Example");
+
+    // Add items to the list
+    for (int i = 0; i < 20; ++i) {
+        listWidget->addItem("Item " + QString::number(i + 1));
+    }
+
+    // Connect the itemClicked signal to the slot
+    connect(listWidget, &QListWidget::itemClicked, this, &NewMenuWindow::onItemClicked);
+
+    // Set the layout
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(listWidget);
+
+    QWidget *centralWidget = new QWidget(this);
+    centralWidget->setLayout(layout);
+    setCentralWidget(centralWidget);
+}
+
+NewMenuWindow::~NewMenuWindow() {}
+
+void NewMenuWindow::onItemClicked(QListWidgetItem *item) {
+    QMessageBox::information(this, "Item Clicked", "You clicked: " + item->text());
+}
+
+

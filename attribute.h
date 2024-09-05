@@ -181,6 +181,29 @@ typedef struct CityRes				/*城市属性*/
 	U8 Distances[8];	/*城市间距离*/
 }CityResType;
 
+typedef struct OldCity				/*城市属性(30 Bytes)*/
+{
+    U8 Id;
+    U8 Belong;			/*归属*/
+    U8 SatrapId;			/*太守编号*/
+    U16 FarmingLimit;		/*农业上限*/
+    U16 Farming;			/*农业开发度*/
+    U16 CommerceLimit;		/*商业上限*/
+    U16 Commerce;			/*商业开发度*/
+    U8 PeopleDevotion;		/*民忠*/
+    U8 AvoidCalamity;		/*防灾*/
+    U32 PopulationLimit;		/*人口上限*/
+    U32 Population;			/*人口*/
+    U16 Money;			/*金钱*/
+    U16 Food;			/*粮食*/
+    U16 MothballArms;		/*后备兵力*/
+    U8 PersonQueue;			/*人才队列*/
+    U8 Persons;			/*人才数*/
+    U8 ToolQueue;			/*道具队列*/
+    U8 Tools;			/*道具数*/
+
+} OldCityType;
+
 typedef struct City				/*城市属性(30 Bytes)*/
 {
     U8 Id;
@@ -201,6 +224,8 @@ typedef struct City				/*城市属性(30 Bytes)*/
     U8 Persons;			/*人才数*/
     U8 ToolQueue;			/*道具队列*/
     U8 Tools;			/*道具数*/
+	bool autoManage;           // if auto manage
+
 }CityType;
 
 #endif

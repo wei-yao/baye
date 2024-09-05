@@ -129,7 +129,7 @@ U8 MainOrderMenu(void)
 U8 InteriorOrderMenu(void)
 {
 	RECT pRect;
-	U8 mstr[75];
+	U8 mstr[85];
 	ResLoadToMem(STRING_CONST,MENU_INTERIORSTR,mstr);
 	pRect.sx = WK_SX + WK_EX / 2;
 	pRect.ex = WK_SX + WK_EX / 2 + ASC_WID * 4;
@@ -287,6 +287,7 @@ U8 ArmamentOrderMenu(void)
 			CounterespiongeMake(city);
 			break;
 		case REALIENATE:	/*反间*/
+		    RealienateMake(city);
 			break;
 		case INDUCE:		/*劝降*/
 			InduceMake(city);
