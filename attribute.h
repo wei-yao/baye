@@ -156,6 +156,8 @@ typedef struct Person				/*人才属性 (12 Bytes) */
 	U8 Age;				/*年龄*/
 }PersonType;
 
+
+
 typedef struct CityRes				/*城市属性*/
 {
 	U8 Id;				/*编号*/

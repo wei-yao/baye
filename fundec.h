@@ -6,7 +6,9 @@
 #include "fight.h"
 
 //#define bool unsigned char
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 GamEng U8		GamRecordMan(U8 flag);
 
 PublicFun U8		PlcMovie(U16 speid,U8 startfrm,U8 endfrm,U8 keyflag,U8 x,U8 y);
@@ -59,5 +61,8 @@ FgtPkAi U8		FgtJNChkAim(U8 param,U8 same,U8 aidx);
 FgtPkAi void		FgtGetCmdRng(U8 type,U8 param,U8 idx);
 FgtPkAi void		FgtShowMvRng(void);
 FgtPkAi void		FgtShowView(void);
+#ifdef __cplusplus
+}
+#endif
 
 #endif	/* _FUNDEC_H */

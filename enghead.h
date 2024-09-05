@@ -17,8 +17,15 @@
 #include "sharefun.h"
 #include "gameview.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 void GamBaYeEng(void);
 
 U8 *itoa_my(int value,U8 *string,int radix);
 U8 *ltoa_my(long value,U8 *string,int radix);
+
+#ifdef __cplusplus
+}
+#endif
 #endif	/* _ENG_HEAD_H */

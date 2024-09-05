@@ -21,8 +21,8 @@
 #undef	TACTIC_C
 #define	TACTIC_C
 #include "enghead.h"
-
-void logMessageFromCppFormat(const char *__format, ...);
+#include "tactic.h"
+#include "mainwindow.h"
 
 extern int ngsecond1;
 extern int ngc;
@@ -35,7 +35,7 @@ extern int g_modAIHighAttack;
 extern int g_modAIHeroUpLevel;
 extern int g_startFlag;
 
-extern bool GamSaveRcd(U8 idx);
+extern "C" bool GamSaveRcd(U8 idx);
 
 /*void ComputerTacticInterior(U8 city);
 void ComputerTacticDiplomatism(U8 city);

@@ -1,5 +1,8 @@
 #ifndef	SHAREFUN_H
 #define	SHAREFUN_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 CITYEDIT_C U8 AddPerson(U8 city,U8 person);
 CITYEDIT_C U8 DelPerson(U8 city,U8 person);
@@ -132,23 +135,24 @@ SHOWFACE_C void GetCityProStr(U8 city,U8 pro,U8 *str);
 SHOWFACE_C void GetCityState(U8 city,U8 *str);
 SHOWFACE_C U8 ShowCityPro(U8 city);
 
-TACTIC_C U8 PlayerTactic(void);
-TACTIC_C void ComputerTactic(void);
-TACTIC_C void ComputerTacticInterior(U8 city);
-TACTIC_C void ComputerTacticDiplomatism(U8 city);
-TACTIC_C void ComputerTacticHarmonize(U8 city,  bool isAuto);
-TACTIC_C void ComputerTacticArmament(U8 city, bool isAuto);
-TACTIC_C void ConditionUpdate(void);
-TACTIC_C U8 GameDevDrv(void);
-TACTIC_C U8 IsWin(void);
-TACTIC_C U8 IsLoss(void);
-TACTIC_C void SetCitySatrap(void);
-TACTIC_C U8 GetPeriodKings(U8 period,U8 *kings);
-TACTIC_C U8 GetAllKing(U8 *kings);
-TACTIC_C void LoadPeriod(U8 period);
-TACTIC_C U8 FunctionMenu(void);
-TACTIC_C U16 NumOperate(U16 min,U16 max);
-TACTIC_C void ShowTacticNote(void);
+
+// TACTIC_C U8 PlayerTactic(void);
+// TACTIC_C void ComputerTactic(void);
+// TACTIC_C void ComputerTacticInterior(U8 city);
+// TACTIC_C void ComputerTacticDiplomatism(U8 city);
+// TACTIC_C void ComputerTacticHarmonize(U8 city,  bool isAuto);
+// TACTIC_C void ComputerTacticArmament(U8 city, bool isAuto);
+// TACTIC_C void ConditionUpdate(void);
+// TACTIC_C U8 GameDevDrv(void);
+// TACTIC_C U8 IsWin(void);
+// TACTIC_C U8 IsLoss(void);
+// TACTIC_C void SetCitySatrap(void);
+// TACTIC_C U8 GetPeriodKings(U8 period,U8 *kings);
+// TACTIC_C U8 GetAllKing(U8 *kings);
+// TACTIC_C void LoadPeriod(U8 period);
+// TACTIC_C U8 FunctionMenu(void);
+// TACTIC_C U16 NumOperate(U16 min,U16 max);
+// TACTIC_C void ShowTacticNote(void);
 
 
 PACCOUNT_C void InitItem(U8 x0,U8 y0,U8 x1,U8 y1,PosItemType *positem);
@@ -175,5 +179,9 @@ INFDEAL_C U8 GetCityDispGoods(U8 city,U8 *gqueue);
 INFDEAL_C U8 GetPersonsCount(U8 king);
 INFDEAL_C U8 GetDirect(U8 sc,U8 oc);
 INFDEAL_C void ReportCalamity(U8 city);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

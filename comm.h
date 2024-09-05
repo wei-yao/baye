@@ -85,6 +85,9 @@ typedef	struct {
 /*------------------------
   函数
   ------------------------*/
+  #ifdef __cplusplus
+extern "C" {
+#endif
     U8	GamConInit(void);						/* 游戏系统环境初始化，根据不同环境调用不同的初始化函数 */
     U8	GamConRst(void);						/* 游戏系统环境恢复，根据不同环境调用不同的恢复函数 */
     U8	GamGetMsg(GMType *pMsg);					/* 封装系统的输入，并将其转换成游戏的消息机制 */
@@ -109,5 +112,7 @@ typedef	struct {
     extern U8 FIGHTERS_IDX[30+1];
     extern U8 FIGHTERS[300+1];
     extern U8 ORDERQUEUE[1200+1];
-
+#ifdef __cplusplus
+}
+#endif
 #endif	/* _COMM_H */

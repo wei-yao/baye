@@ -73,8 +73,8 @@ typedef struct CitySet
 #define SHOWMAP_WS	((WK_EX-WK_SX+1+1)/CITYMAP_TIL_W-2)	/*屏幕显示地图块数*/
 #define SHOWMAP_HS	((WK_EY-WK_SY+1)/CITYMAP_TIL_H)	/*屏幕显示地图块数*/
 
- void InitItem(U8 x0,U8 y0,U8 x1,U8 y1,PosItemType *positem);
- U8 AddItem(U8 wid,U8 hig,PosItemType *positem,U8 *x,U8 *y);
- U8 NextLineItem(PosItemType *positem);
+//  void InitItem(U8 x0,U8 y0,U8 x1,U8 y1,PosItemType *positem);
+//  U8 AddItem(U8 wid,U8 hig,PosItemType *positem,U8 *x,U8 *y);
+//  U8 NextLineItem(PosItemType *positem);
 
 #endif
