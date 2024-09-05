@@ -75,8 +75,8 @@
 				if (cptr->AvoidCalamity > rnd)
 					cptr->AvoidCalamity -= rnd;
 			}
-			if (cptr->Money > 30000)
-				cptr->Money = 30000;
+			if (cptr->Money > 60000)
+				cptr->Money = 60000;
 				
 			Population = &cptr->Population;
 			*Population += 50;
@@ -106,7 +106,7 @@
 				df += as;
 				g_Persons[pqptr[j]].Arms = as;
 			}
-			df /= 50;
+			df /= 50;  //df = sum(army)/50
 			
 			food = &cptr->Food;
 			if (*food > df)

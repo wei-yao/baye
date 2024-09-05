@@ -12,6 +12,7 @@
 #include<QtAndroidExtras/QAndroidJniEnvironment>
 #include<QtAndroidExtras/QtAndroid>
 #include <QDir>
+#include "log.h"
 //#include <QtAndroidExtras>
 
 using namespace QtAndroid;
@@ -56,9 +57,21 @@ QString startUpIniPath;
 QString versionIniPath;
 //QString modverIniPath;
 
+#include <QApplication>
+#include <QDebug>
+#include <windows.h>
+
+void attachConsole() {
+    if (AllocConsole()) {
+        FILE* fp;
+        freopen_s(&fp, "CONOUT$", "w", stdout); // Redirect stdout to console
+        freopen_s(&fp, "CONOUT$", "w", stderr); // Redirect stderr to console
+    }
+}
 int main(int argc, char *argv[])
 {
 
+   
     QTextCodec *codec = QTextCodec::codecForName("GB18030");//情况2
     QTextCodec::setCodecForLocale(codec);
 
@@ -149,6 +162,8 @@ int main(int argc, char *argv[])
 
 #endif
    QApplication a(argc, argv);
+   attachConsole();
+    logMessageFromCpp("this is the log");
     //MainWindow m;
     //m.show();
 
@@ -488,9 +503,9 @@ int main(int argc, char *argv[])
     getGlobalWidget()->grabGesture(Qt::PinchGesture);
     getGlobalWidget()->grabGesture(Qt::TapAndHoldGesture);
 
-     NewMenuWindow mainWindow;
-    mainWindow.resize(400, 300);
-    mainWindow.show();
+    //  NewMenuWindow mainWindow;
+    // mainWindow.resize(400, 300);
+    // mainWindow.show();
 
     return a.exec();
 }

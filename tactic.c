@@ -22,6 +22,8 @@
 #define	TACTIC_C
 #include "enghead.h"
 
+void logMessageFromCppFormat(const char *__format, ...);
+
 extern int ngsecond1;
 extern int ngc;
 extern int g_stat;
@@ -170,7 +172,7 @@ void ComputerTactic(void)
 		b = cptr->Belong;
 		if (!(b))
 			continue;
-		bool isAuto = true;
+		bool isAuto = (b == (g_PlayerKing + 1));
 		// if (b == (g_PlayerKing + 1))
 		//	continue;
 			
@@ -190,7 +192,8 @@ void ComputerTactic(void)
 		if (TacticOddsIH[g_Persons[b - 1].Character] > rnd || cptr->Food < 1000)			/*执行内政、协调策略*/
 		{
 			ComputerTacticInterior(i);
-			ComputerTacticHarmonize(i, isAuto);
+
+			// ComputerTacticHarmonize(i, isAuto);
 		}
 		else if (TacticOddsD[g_Persons[b - 1].Character] > rnd)		/*执行外交策略*/
 		{
@@ -247,7 +250,9 @@ void ComputerTacticInterior(U8 city)
 	for (i = 0;i < pcount;i ++)
 	{
         rnd = rand() % 5;
-		if(g_Cities[city].Food < 1000){
+		if(cptr->Id != STATE_NORMAL){
+			rnd = 4;
+		}else if(g_Cities[city].Food < 1000){
 			rnd = 0;
 		}
 	
@@ -275,7 +280,7 @@ void ComputerTacticInterior(U8 city)
 			order.OrderId = ACCRACTBUSINESS;
 			break;
 			}
-		case 3:		/*出巡*/
+		case 2:		/*出巡*/
 			if (*PeopleDevotion < 100 || *Population < cptr->PopulationLimit){
 			*PeopleDevotion += 4;
 			if (*PeopleDevotion > 100)
@@ -287,6 +292,15 @@ void ComputerTacticInterior(U8 city)
 			order.OrderId = INSPECTION;
 			break;
 			}
+		case 3:
+				if(cptr->Id != STATE_NORMAL || cptr->AvoidCalamity < 100  ){
+				cptr->Id = STATE_NORMAL; //zhi li
+				cptr->AvoidCalamity += 4;
+				if (cptr->AvoidCalamity > 100)
+					cptr->AvoidCalamity = 100;
+				order.OrderId = FATHER;
+				break;
+				}
 		default:		/*搜寻*/
 			order.OrderId = SEARCH;
 			break;
@@ -298,6 +312,9 @@ void ComputerTacticInterior(U8 city)
 		order.Object = city;
 		order.TimeCount = 0;
 		AddOrderHead(&order);
+		if(cptr->Belong == g_PlayerKing + 1){
+			logMessageFromCppFormat("order type %d", order.OrderId);
+		}
 		DelPerson(city,pqptr[i]);
 	}
 }
@@ -481,6 +498,7 @@ void AITacticDiplomatism(U8 city)
 		order.Person = pqptr[i];
 		order.City = city;
 		order.TimeCount = 0;
+		logMessageFromCppFormat(" 外交 order type %d", order.OrderId);
 		AddOrderHead(&order);
 		DelPerson(city,pqptr[i]);
 	}
@@ -520,7 +538,7 @@ void ComputerTacticHarmonize(U8 city, bool isAuto)
 		}
 		switch (rnd)
 		{
-		case 0:		/*治理*/
+		case 0:		/*治理*/  // todo never go here
 				cptr->Id = STATE_NORMAL;
 				cptr->AvoidCalamity += 4;
 				if (cptr->AvoidCalamity > 100)
@@ -750,6 +768,9 @@ void ComputerTacticArmament(U8 city, bool isAuto)
 			break;
 		}
 		
+		if(isAuto){
+			logMessageFromCppFormat("军事 order type %d", order.OrderId);
+		}
 		order.Person = pqptr[i];
 		order.City = city;
 		order.TimeCount = 0;
@@ -863,7 +884,7 @@ void ConditionUpdate(void)
         }
 		
 		/*提示电脑策略中*/
-		ShowTacticNote();
+		// ShowTacticNote();
 		/*电脑策略*/
 		ComputerTactic();
 		

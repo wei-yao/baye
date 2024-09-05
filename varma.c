@@ -78,6 +78,7 @@ U8 g_MonthDate;			/*当前日期*/
 U8 g_PIdx;			/*历史时期*/
 PersonType *g_Persons;		/*存放人才属性指针*/
 CityType g_Cities[CITY_MAX];	/*存放城市属性指针*/
+
 U8 g_PersonsQueue[PERSON_MAX];	/*人才队列*/
 U8 g_GoodsQueue[GOODS_MAX];	/*道具队列*/
 OrderQueueType *g_OrderHead;	/*命令队列头指针*/
