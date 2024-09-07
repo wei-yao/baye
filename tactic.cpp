@@ -37,6 +37,7 @@ extern int g_startFlag;
 
 extern "C" bool GamSaveRcd(U8 idx);
 
+
 /*void ComputerTacticInterior(U8 city);
 void ComputerTacticDiplomatism(U8 city);
 void ComputerTacticArmament(U8 city);
@@ -182,14 +183,24 @@ void ComputerTactic(void)
 		
 		if (cptr->Food < 100)
 			cptr->Food = 500;
-		if (cptr->Money > 10000)
+		if (cptr->Money > 500 && cptr->Food < 5000)
 			{
-				cptr->Food += 2000;
-				cptr->Money -=10000;
+				cptr->Food += (cptr->Money-500)/2;
+				cptr->Money =500;
 			}
 		/*添加电脑策略代码*/
-        rnd = rand() % 100;
-		if (TacticOddsIH[g_Persons[b - 1].Character] > rnd || cptr->Food < 1000)			/*执行内政、协调策略*/
+       
+		if(cptr->Food < 1000){
+			ComputerTacticInterior(i);
+			continue;
+		}
+		int cCount = GetCityCaptives(i,SHARE_MEM);
+		if(cCount && isAuto){
+			AITacticDiplomatism(i);
+			continue;
+		}
+		rnd = rand() % 100;
+		if (TacticOddsIH[g_Persons[b - 1].Character] > rnd)			/*执行内政、协调策略*/
 		{
 			ComputerTacticInterior(i);
 
@@ -202,9 +213,11 @@ void ComputerTactic(void)
 			else
 				ComputerTacticDiplomatism(i);
 		}
-		else										/*执行军备策略*/
+		else if(!isAuto)										/*执行军备策略*/
 		{
 			ComputerTacticArmament(i, isAuto);
+		}else{
+			ComputerTacticInterior(i);
 		}
 	}
 }
@@ -596,6 +609,10 @@ void ComputerTacticHarmonize(U8 city, bool isAuto)
 		AddOrderHead(&order);
 		DelPerson(city,pqptr[i]);
 	}
+}
+
+void RecruitAndAssign(U8 city){
+
 }
 
 /******************************************************************************
