@@ -23,7 +23,7 @@
 /* 内存函数 */
 #define	gam_memcpy(a,s,l)	memcpy(a,s,l)			/* 替换A系列系统中常驻的内存拷贝函数 */
 #define	gam_memset(buf,val,len)	memset(buf,val,len)			/* 替换A系列系统中的内存填充函数 */
-#define	gam_malloc(len)		malloc(len)			/* 替换A系列系统中堆申请函数 */
+#define	gam_malloc(len)		(U8*)malloc(len)			/* 替换A系列系统中堆申请函数 */
 #define	gam_free(ptr)		free(ptr)				/* 替换A系列系统中堆释放函数 */
 /* 字符串函数 */
 #define	gam_strcmp(str1,str2)	strcmp(str1,str2)

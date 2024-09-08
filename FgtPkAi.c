@@ -36,7 +36,7 @@ void FgtGetHurtMax(U16 *h,U8 *a);
 void FgtGetAtkRng(U8 idx,U8 x,U8 y);
 U8 FgtGetAimPos(U8 *aimx,U8 *aimy);
 U8 FgtGetNearGen(void);
-void FgtLoadToMem3(const U8 *idx,U8 *buf);
+void FgtLoadToMem3(U8 idx,U8 *buf);
 void FgtViewForce(U8 pForce,U8 pSIdx);
 U8 TransIdxToGen3(U8 idx);
 U8 FgtStatGen(U8 flag);
@@ -354,7 +354,7 @@ void FgtCmpMove(U8 idx)
         if(rngb == 2)FgtLoadToMem3(dFgtEthErr,inf);
         if(rngb == 3)FgtLoadToMem3(dFgtWhrErr,inf);
         //FgtLoadToMem3(rngb,inf);
-		GamStrShowS(STA_XXX,STA_XXY,inf);		
+		GamStrShowS(STA_XXX,STA_XXY,(const char*)inf);		
 	}
     ngf = 3;
 	return param;
@@ -755,13 +755,13 @@ U8 FgtCntInterval(U8 x1,U8 y1,U8 x2,U8 y2)
 	sx = (SCR_WID / 2 - g_MapWid) / 2 + WK_SX;
 	sy = (SCR_HGT - g_MapHgt) / 2 + WK_SY + 20;
 	FgtLoadToMem3(dPowerCmp,tbuf);
-	GamStrShowS(WK_SX + 5,WK_SY + 3,tbuf);		/* 战场形势图 */
+	GamStrShowS(WK_SX + 5,WK_SY + 3,(const char*)tbuf);		/* 战场形势图 */
 	FgtLoadToMem3(dDaysInf,tbuf);
 	gam_ltoa(g_FgtBoutCnt,tbuf + 3,10);
 	tbuf[gam_strlen(tbuf)] = ' ';
-	GamStrShowS(WK_SX + 5,WK_SY + 5 + HZ_HGT,tbuf);	/* 进行日期 */
+	GamStrShowS(WK_SX + 5,WK_SY + 5 + HZ_HGT,(const char*)tbuf);	/* 进行日期 */
 	FgtLoadToMem3(dReserve0,tbuf);
-	GamStrShowS((SCR_WID / 2 - 4 * HZ_WID) / 2 + WK_SX,sy - (HZ_HGT + 3),tbuf);	/* 将领位置 */
+	GamStrShowS((SCR_WID / 2 - 4 * HZ_WID) / 2 + WK_SX,sy - (HZ_HGT + 3),(const char*)tbuf);	/* 将领位置 */
 
 	pPcnt = (WK_EY - (HZ_HGT * 2 + 6)) / HZ_HGT;
 	FgtViewForce(1,0);
@@ -838,7 +838,7 @@ void FgtViewForce(U8 pForce,U8 pSIdx)
 	tbuf[i] = ' ';
 	FgtLoadToMem3(dArmyInf,tbuf + i);
 	i = SCR_WID / 2 + SCR_WID / 4 - (i + 2) * ASC_WID / 2;
-	GamStrShowS(WK_SX + i,WK_SY + 2,tbuf);				/* 显示军团势力 */
+	GamStrShowS(WK_SX + i,WK_SY + 2,(const char*)tbuf);				/* 显示军团势力 */
 	FgtLoadToMem3(dProvInf,tbuf);
 	if(pForce)
 	{
@@ -849,7 +849,7 @@ void FgtViewForce(U8 pForce,U8 pSIdx)
 	}
 	else
 		gam_ltoa(g_FgtParam.MProvender,tbuf + 5,10);
-	GamStrShowS(WK_SX + SCR_WID / 2 + 3,WK_SY + HZ_HGT + 4,tbuf);	/* 显示粮草 */
+	GamStrShowS(WK_SX + SCR_WID / 2 + 3,WK_SY + HZ_HGT + 4,(const char*)tbuf);	/* 显示粮草 */
 
 	pPCnt = (WK_EY - (HZ_HGT * 2 + 6)) / HZ_HGT;
 	pSIdx += pGIdx;
@@ -868,7 +868,7 @@ void FgtViewForce(U8 pForce,U8 pSIdx)
         gam_memset(tbuf + tmp,' ',20 - tmp);
         gam_ltoa(provender,tbuf + 8,10);
         c_Ex = 160;
-		GamStrShowS(WK_SX + SCR_WID / 2 + 3,WK_SY + HZ_HGT * (2 + i) + 6,tbuf);	/* 显示将领 */
+		GamStrShowS(WK_SX + SCR_WID / 2 + 3,WK_SY + HZ_HGT * (2 + i) + 6,(const char*)tbuf);	/* 显示将领 */
 	}
 
 }
@@ -902,9 +902,9 @@ U8 FgtStatGen(U8 flag)
  *             ------          ----------      -------------
  *             高国军          2005.5.16       完成基本功能
 ***********************************************************************/
-void FgtLoadToMem3(const U8 *idx,U8 *buf)
+void FgtLoadToMem3(U8 idx,U8 *buf)
 {
-    ResLoadToMem(IFACE_STRID,(U8*)idx,buf);
+    ResLoadToMem(IFACE_STRID, idx,buf);
 }
 /***********************************************************************
  * 说明:     将将领的控制脚标转换成将领id

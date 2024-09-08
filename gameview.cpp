@@ -1035,7 +1035,7 @@ U8 FileSearch(U8 filetype,U8 fileno,U8 * filename,U8 *out_filename)
     return 0;
 }
 
-FILE *FileOpen(U8 * filename,U8 filetype,U8 *openmode,FILE *filehandle,U32 *filelen)
+FILE *FileOpen(U8 * filename,U8 filetype,const char *openmode,FILE *filehandle,U32 *filelen)
 {
     //FileOpen(tmpName,GAME_SAVE,mode,&pFHandle,&pLen);
 #if defined(Q_OS_IOS)

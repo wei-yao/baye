@@ -543,7 +543,7 @@ U8 AlienateDrv(OrderType *Order)
             break;
 			
         rnd = rand() % 100;
-        if (rand < g_Persons[ob].Devotion)
+        if (rnd < g_Persons[ob].Devotion)
             break;
 			
 		switch (g_Persons[ob].Character)
@@ -610,7 +610,7 @@ U8 CanvassDrv(OrderType *Order)
             break;
 			
         rnd = rand() % 100;
-        if (rand < g_Persons[o].Devotion)
+        if (rnd < g_Persons[o].Devotion)
             break;
 		
 		switch (g_Persons[o].Character)
@@ -850,7 +850,7 @@ U8 InduceDrv(OrderType *Order)
 		gam_strcat(str,astr);
 		GetPersonName(pb - 1,astr);
 		gam_strcat(str,astr);
-		GamMsgBox(str,2);
+		GamMsgBox((const char*)str,2);
 	}
 		
 	

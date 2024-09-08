@@ -69,7 +69,7 @@ extern U8 g_startName_char[200];
     if(!strcmp((const char*)tmpbuf,(const char*)fname))
     {
         tmpFile->ftype=FILE_FONT;
-        pFHandle = FileOpen(tmpbuf,FILE_FONT,"rb",&pFHandle,&pLen);
+        pFHandle = FileOpen(tmpbuf,FILE_FONT,"rb",pFHandle,&pLen);
         tmpFile->handle=pFHandle;
         tmpFile->flen=pLen;
 
@@ -87,7 +87,7 @@ extern U8 g_startName_char[200];
         if(!strcmp((const char*)tmpbuf,(const char*)fname))
         {
             tmpFile->ftype=FILE_LIB;
-            pFHandle = FileOpen(tmpbuf,FILE_LIB,"rb",&pFHandle,&pLen);
+            pFHandle = FileOpen(tmpbuf,FILE_LIB,"rb",pFHandle,&pLen);
 
             tmpFile->handle=pFHandle;
             tmpFile->flen=pLen;
@@ -104,7 +104,7 @@ extern U8 g_startName_char[200];
         if(!strcmp((const char*)tmpbuf,(const char*)fname))
         {
             tmpFile->ftype=FILE_RLB;
-            pFHandle = FileOpen(tmpbuf,FILE_RLB,"rb",&pFHandle,&pLen);
+            pFHandle = FileOpen(tmpbuf,FILE_RLB,"rb",pFHandle,&pLen);
             tmpFile->handle=pFHandle;
             tmpFile->flen=pLen;
 
@@ -121,7 +121,7 @@ extern U8 g_startName_char[200];
         if(!strcmp((const char*)tmpbuf,(const char*)fname))
         {
             tmpFile->ftype=FILE_MOD;
-            pFHandle = FileOpen(tmpbuf,FILE_MOD,"rb",&pFHandle,&pLen);
+            pFHandle = FileOpen(tmpbuf,FILE_MOD,"rb",pFHandle,&pLen);
             tmpFile->handle=pFHandle;
             tmpFile->flen=pLen;
 
@@ -174,7 +174,7 @@ extern U8 g_startName_char[200];
 	/* 找到了文件 */
     if(!err && OPEN_W != mode)//20180304非写模式
 	{
-        pFHandle = FileOpen(fname,GAME_SAVE,"rb+",&pFHandle,&pLen);
+        pFHandle = FileOpen(fname,GAME_SAVE,"rb+",pFHandle,&pLen);
         if(pFHandle == NULL)//20180304判不存在
         {
             gam_free((U8 *)tmpFile);
@@ -191,7 +191,7 @@ extern U8 g_startName_char[200];
 	}
 	/* 写模式下，新建文件 */
 	pLen = 0x1000;
-    pFHandle = FileCreat(GAME_SAVE,pLen,fname,&pFHandle);
+    pFHandle = FileCreat(GAME_SAVE,pLen,fname,pFHandle);
     if(pFHandle == NULL)
     {
        err = 0;

@@ -19,6 +19,8 @@
 #include "stdsys.h"
 #include "comm.h"
 #include "enghead.h"
+#include<vector>
+using namespace std;
 
 /*变量定义*/
 /*------------------------------------------*/
@@ -76,10 +78,12 @@ U8 g_PlayerKing;		/*玩家君主*/
 U16 g_YearDate;			/*当前日期*/
 U8 g_MonthDate;			/*当前日期*/
 U8 g_PIdx;			/*历史时期*/
-PersonType *g_Persons;		/*存放人才属性指针*/
-CityType g_Cities[CITY_MAX];	/*存放城市属性指针*/
+PersonType g_Persons[PERSON_MAX];		/*存放人才属性指针 */
 
+CityType g_Cities[CITY_MAX];	/*存放城市属性指针*/
+// vector<CityType> g_Cities;
 U8 g_PersonsQueue[PERSON_MAX];	/*人才队列*/
+
 U8 g_GoodsQueue[GOODS_MAX];	/*道具队列*/
 OrderQueueType *g_OrderHead;	/*命令队列头指针*/
 OrderQueueType *g_OrderEnd;	/*命令队列末指针*/
@@ -92,3 +96,4 @@ U8 cavpdb,cavps;			/*战争俘虏临时变量*/
 
 int g_tlen;
 int g_useMOD;//0-未使用 >0 mod编号
+

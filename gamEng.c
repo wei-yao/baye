@@ -19,6 +19,7 @@
 #undef	GamEng
 #define	GamEng
 #include "enghead.h"
+#include "tactic.h"
 #define		IN_FILE	1	/* 当前文件位置 */
 /*本体函数声明*/
 /*------------------------------------------*/
@@ -129,7 +130,7 @@ U8 GamVarInit(void)
 	if (NULL == g_FgtAtkRng)
 		return 1;
 
-	g_Persons = (PersonType *) gam_malloc(sizeof(PersonType) * PERSON_MAX + 4);	/* 3004 */
+	// g_Persons = (PersonType *) gam_malloc(sizeof(PersonType) * PERSON_MAX + 4);	/* 3004 */
 	if (NULL == g_Persons)
 		return 1;
 	g_OrderHead = (OrderQueueType *) NULL;
@@ -162,7 +163,7 @@ void GamVarRst(void)
 	gam_free((U8 *)g_FightMap);
 	gam_free((U8 *)g_FightPath);
 	gam_free((U8 *)g_FgtAtkRng);
-	gam_free((U8 *)g_Persons);
+	// gam_free((U8 *)g_Persons);
 }
 /***********************************************************************
  * 说明:     驱动玩家在主菜单中的选择
@@ -359,7 +360,7 @@ U8 GamGetKing(U8 num)
 	/* 获取城市坐标指针 */
 	gam_rect(WK_SX,WK_SY,WK_EX,WK_EY);
     ResLoadToMem(IFACE_STRID,dChoseKing,tbuf);
-    GamStrShowS(KING_TX,KING_TY,tbuf);
+    GamStrShowS(KING_TX,KING_TY,(const char*)tbuf);
 	PlcRPicShow(CITY_PIC,1,CITY_SX,CITY_SY,true);
     gam_rect(KING_SX - 3,KING_SY - 3,KING_EX + 2, (WK_EY - 6 - (KING_SY)) / HZ_HGT * HZ_HGT + KING_SY + 2);
 	/* 选择要扮演的君主 */
@@ -464,7 +465,7 @@ void GamShowKing(U8 pTop)
 	c_Ex = KING_EX;
 	c_Sy = KING_SY;
 	c_Ey = (WK_EY - 6 - (KING_SY)) / HZ_HGT * HZ_HGT + KING_SY;
-	GamStrShowS(KING_SX,KING_SY,g_FightPath + (pTop * 6));
+	GamStrShowS(KING_SX,KING_SY,(const char*)(g_FightPath + (pTop * 6)));
 }
 /***********************************************************************
  * 说明:     显示游戏开头的动画
@@ -496,7 +497,7 @@ void GamShowErrInf(U8 idx)
 	U8	tbuf[50];
 		
     ResLoadToMem(IFACE_STRID,idx + dGamConErr,tbuf);
-	GamMsgBox(tbuf,2);
+	GamMsgBox((const char*)tbuf,2);
 }
 /***********************************************************************
  * 说明:     档案管理（提供存档和读取档案的函数）
@@ -594,12 +595,12 @@ void GamRcdIFace(void)
             if(year > 5000)
             {
                 U16 tYear = 10000 - year;
-                U8 * min ;
-                min = SHARE_MEM + 500;
+                char * min ;
+                min = (char*)SHARE_MEM + 500;
                 strcpy(min,"-");
                 gam_itoa(tYear,tbuf,10);
                 gam_strcat(min,tbuf);
-                strcpy(tbuf,min);
+                strcpy((char*)tbuf,min);
             }
             else
             {
@@ -609,7 +610,7 @@ void GamRcdIFace(void)
 			king = gam_strlen(tbuf) + 1;
 			gam_memcpy(fnam + 10,tbuf,king);	/* fnam = "君主    ???年" */
 		}
-		GamStrShowS(WK_SX + 31,WK_SY + 34 + idx * 14,fnam);
+		GamStrShowS(WK_SX + 31,WK_SY + 34 + idx * 14,(const char*)fnam);
 	}
 	g_PIdx = pbak;
 }
@@ -628,7 +629,7 @@ bool GamLoadRcd(U8 idx)
 	gam_FILE	*fp;
 	
     ResLoadToMem(IFACE_STRID,dReading,tbuf);
-	GamMsgBox(tbuf,0);
+	GamMsgBox((const char*)tbuf,0);
     ResLoadToMem(IFACE_STRID,dSaveFNam,tbuf);
 
 	/* 读取第一个文件 */
@@ -637,7 +638,7 @@ bool GamLoadRcd(U8 idx)
 	if(NULL == fp)
 	{
         ResLoadToMem(IFACE_STRID,dErrInf1,tbuf);
-		GamMsgBox(tbuf,2);
+		GamMsgBox((const char*)tbuf,2);
 		return false;
 	}
 	gam_fread((U8 *)&g_PIdx,1,1,fp);
@@ -659,7 +660,7 @@ bool GamLoadRcd(U8 idx)
 	if(NULL == fp)
 	{
         ResLoadToMem(IFACE_STRID,dErrInf1,tbuf);
-		GamMsgBox(tbuf,2);
+		GamMsgBox((const char*)tbuf,2);
 		return false;
 	}
 	
@@ -686,7 +687,7 @@ bool GamSaveRcd(U8 idx)
 	gam_FILE	*fp;
 	
     ResLoadToMem(IFACE_STRID,dWriting,tbuf);
-	GamMsgBox(tbuf,0);
+	GamMsgBox((const char*)tbuf,0);
     ResLoadToMem(IFACE_STRID,dSaveFNam,tbuf);
 
 	/* 存储第一个文件 */
@@ -695,7 +696,7 @@ bool GamSaveRcd(U8 idx)
 	if(NULL == fp)
 	{
         ResLoadToMem(IFACE_STRID,dErrInf,tbuf);
-		GamMsgBox(tbuf,2);
+		GamMsgBox((const char*)tbuf,2);
 		return false;
 	}
 	gam_fwrite((U8 *)&g_PIdx,1,1,fp);
@@ -717,7 +718,7 @@ bool GamSaveRcd(U8 idx)
 	if(NULL == fp)
 	{
         ResLoadToMem(IFACE_STRID,dErrInf,tbuf);
-		GamMsgBox(tbuf,2);
+		GamMsgBox((const char*)tbuf,2);
 		return false;
 	}
 	

@@ -317,7 +317,7 @@ U8 *ltoa_my(long value,U8 * string,int radix);
 	}	
 	poff = pSIdx;
 	poff *= pLen;
-	GamStrShowS(c_Sx,c_Sy,buf + poff);
+	GamStrShowS(c_Sx,c_Sy,(const char*)(buf + poff));
 	/* 初始化光标 */
 	sy = c_Sy + (pIdx - pSIdx) * ASC_HGT;
 	gam_revlcd(c_Sx,sy,c_Ex,sy + ASC_HGT);
@@ -406,7 +406,7 @@ U8 *ltoa_my(long value,U8 * string,int radix);
         }
         g_stat = pIdx;
 		if(tflag)
-			GamStrShowS(c_Sx,c_Sy,buf + poff);
+			GamStrShowS(c_Sx,c_Sy,(const char*)buf + poff);
 		sy = c_Sy + (pIdx - pSIdx) * ASC_HGT;
 		gam_revlcd(c_Sx,sy,c_Ex,sy + ASC_HGT);
 	}
@@ -427,7 +427,7 @@ U8 *ltoa_my(long value,U8 * string,int radix);
 	pLen = gam_strlen(buf) * ASC_WID;
 	pLen >>= 1;
 	x -= pLen;
-	GamStrShowS(x,y,buf);
+	GamStrShowS(x,y,(const char*)buf);
 }
 /***********************************************************************
  * 说明:     显示图形边框的消息框(只能显示一行)
@@ -528,7 +528,7 @@ const U32 FgtDigMask[10]={1,10,100,1000,10000,100000,1000000,10000000,100000000,
 
 	gam_memcpy(ptr,numb,slen + 1);
 	if(vs == NULL)
-		GamStrShowS(x,y,buf);
+		GamStrShowS(x,y,(const char*)buf);
 	else
 		GamStrShowV(x,y,buf,vs);
 }
@@ -754,7 +754,7 @@ U8 *PlcItemShowS(U8 sx,U8 sy,U8 ex,U8 ey,U8 *buf)
 	c_Sy = sy;
 	c_Ex = ex;
 	c_Ey = ey;
-	GamStrShowS(sx,sy,buf);
+	GamStrShowS(sx,sy,(const char*)buf);
 	return ptr;
 }
 /***********************************************************************

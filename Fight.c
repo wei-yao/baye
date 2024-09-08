@@ -34,7 +34,7 @@ void FgtDealCmp(void);
 U8 FgtGetControl(void);
 U8 FgtGenMove(U8 idx);
 void FgtAllRight(bool *flag);
-U8 FgtGetFoucs(U16 (*chkcondition)());
+U8 FgtGetFoucs(void (*chkcondition)(bool*));
 void FgtMoveBack(bool *flag);
 void FgtShowState(void);
 void FgtShowInf(void);
@@ -43,7 +43,7 @@ U8 FgtExeCmd(FGTCMD *pcmd);
 void FgtGetMPos(U8 idx,RECT *pRect);
 U8 FgtCmdAimGet(U8 type,U8 param,U8 idx);
 void FgtShowAtRng(void);
-U16 FgtCmdBack(bool *flag);
+void FgtCmdBack(bool *flag);
 bool FgtChkRng(void);
 void FgtRPicShowV(U16 id,U8 idx,U8 sx,U8 sy);
 void FgtDealBout(void);
@@ -55,9 +55,9 @@ void FgtShowGetExp(U8 exp);
 void FgtShowChgSpe(U8 sfrm,U8 efrm,U8 x,U8 y);
 void FgtChkAtkEnd(void);
 U8 TransIdxToGen2(U8 idx);
-U8 FgtLoadToMem(const U8 *idx,U8 *buf);
+U8 FgtLoadToMem(U8 idx,U8 *buf);
 U8 *FgtLoadToCon(U16 ResId,U8 idx);
-U8 *FgtConstLoadToCon(U16 ResId,const U8 *idx);
+U8 *FgtConstLoadToCon(U16 ResId,U8 idx);
 void FgtShowFrame(void);
 void FgtStrShowV(U8 x,U8 y,U8 *buf);
 void FgtShowMap(U8 x,U8 y);
@@ -213,7 +213,7 @@ void FgtGetPCmd(FGTCMD *pcmd)
 	idx = pcmd->sIdx;
 	sIdx = TransIdxToGen2(idx);
 	type = 0;
-	buf = gam_malloc(100);
+	buf = (U8*)gam_malloc(100);
 	while(lflag)
 	{
 		/* 选择命令 */
@@ -320,7 +320,7 @@ U8 FgtCmdAimGet(U8 type,U8 param,U8 idx)
  *             ------          ----------      -------------
  *             高国军          2005.5.16       完成基本功能
 ***********************************************************************/
-U16 FgtCmdBack(bool *flag)
+void FgtCmdBack(bool *flag)
 {	
 	if(*flag)
 		FgtShowAtRng();
@@ -544,7 +544,7 @@ U8 FgtGetControl(void)
  *             ------          ----------      -------------
  *             高国军          2005.5.16       完成基本功能
 ***********************************************************************/
-U8 FgtGetFoucs(U16 (*chkcondition)())
+U8 FgtGetFoucs(void (*chkcondition)(bool*))
 {
 	bool	flag,tflag;	
 	GMType	pMsg;
@@ -854,7 +854,7 @@ void FgtDealBout(void)
 {
 	U8	idx,numb[5],xof;
 	U8	tbuf[30];
-    const U8* idx1;
+    U8 idx1;
 		
 	g_FgtBoutCnt += 1;	/* 战斗天数增加 */
 	g_EneTmpProv = 0;	/* 敌人粮草临时变量 */
@@ -875,7 +875,7 @@ void FgtDealBout(void)
 	PlcRPicShow(DAYS_PIC,1,FGT_SPESX + 46,FGT_SPESY + 18,true);
 	gam_itoa(g_FgtBoutCnt,numb,10);
 	xof = 64 - (gam_strlen(numb) - 1) * ASC_WID / 2;
-	GamStrShowS(FGT_SPESX + xof,FGT_SPESY + 22,numb);
+	GamStrShowS(FGT_SPESX + xof,FGT_SPESY + 22,(const char*)numb);
 	GamDelay(SHOW_DLYBASE * 5,false);
 	
 	if(g_FgtParam.EProvender == 0)
@@ -891,7 +891,7 @@ void FgtDealBout(void)
 	if(g_FgtOver)
 	{
         FgtLoadToMem(idx1,tbuf);
-		GamMsgBox(tbuf,1);
+		GamMsgBox((const char*)tbuf,1);
 	}
 	
 	FgtDrvState();
@@ -1469,9 +1469,9 @@ U8 TransIdxToGen2(U8 idx)
  *             ------          ----------      -------------
  *             高国军          2005.5.16       完成基本功能
 ***********************************************************************/
-U8 FgtLoadToMem(const U8 *idx,U8 *buf)
+U8 FgtLoadToMem(U8 idx,U8 *buf)
 {
-    ResLoadToMem(IFACE_STRID,(U8*)idx,buf);
+    ResLoadToMem(IFACE_STRID,(U8)idx,buf);
 }
 /***********************************************************************
  * 说明:     初始化游戏引擎所在的机型环境
@@ -1487,7 +1487,7 @@ U8 *FgtLoadToCon(U16 ResId,U8 idx)
     return (ResLoadToCon(ResId,idx,g_CBnkPtr));
 }
 
-U8 *FgtConstLoadToCon(U16 ResId,const U8 *idx)
+U8 *FgtConstLoadToCon(U16 ResId,U8 idx)
 {
     return (ResLoadToCon(ResId,idx,g_CBnkPtr));
 }

@@ -974,11 +974,11 @@ void GetCityProStr(U8 city,U8 pro,U8 *str)
             g_noUseStrMem = 1;
             SysCopyFromDcToStr();
 
-			GamStrShowS((WK_EX - WK_SX - ASC_WID * 15) / 2 + WK_SX,WK_SY + 2,str);
+			GamStrShowS((WK_EX - WK_SX - ASC_WID * 15) / 2 + WK_SX,WK_SY + 2,(const char*)str);
 			for (i = 0;i < ((WK_EY - 1 - 2 - (WK_SY + 2)) / (ASC_HGT + 1)) - 1;i ++)
 			{
 				GetCityProStr(city,showtop + i,str);
-				GamStrShowS((WK_EX - WK_SX - ASC_WID * 15) / 2 + WK_SX, WK_SY + 2 + ASC_HGT + (ASC_HGT + 1) * i,str);
+				GamStrShowS((WK_EX - WK_SX - ASC_WID * 15) / 2 + WK_SX, WK_SY + 2 + ASC_HGT + (ASC_HGT + 1) * i,(const char*)str);
 			}
             g_noUseStrMem = 0;
             SysCopyToDcStr();

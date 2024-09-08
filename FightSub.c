@@ -32,7 +32,7 @@ void FgtGetMapDat(U8 x,U8 y);
 U8 TransIdxToGen1(U8 idx);
 U8 FgtAtkAction(U8 aIdx);
 U8 FgtJNAction(FGTCMD *pcmd);
-U8 FgtLoadToMem2(const U8 *idx,U8 *buf);
+U8 FgtLoadToMem2(U8 idx,U8 *buf);
 void FgtResumeMp(U8 idx);
 void FgtShowSNum2(U8 sym,U8 idx,U16 num);
 
@@ -194,7 +194,7 @@ extern int  g_stat;
 		c_Sy = HLP_SY + 4;
 		c_Ex = HLP_EX - 4;
 		c_Ey = HLP_EY - 4;
-		GamStrShowS(c_Sx,c_Sy,pbuf);
+		GamStrShowS(c_Sx,c_Sy,(const char*)pbuf);
 	}
 	GamDelay(0,true);
 	GamDelay(0,true);
@@ -227,7 +227,7 @@ U8 FgtJNAction(FGTCMD *pcmd)
 	U8	state,*ptr;
 	U16	arms,prov,*provp,up;
 	SKILLEF	*skl;
-    const U8 *bidx;
+    U8 bidx;
 
 	param = pcmd->param;
 	sIdx = pcmd->sIdx;
@@ -320,7 +320,7 @@ U8 FgtJNAction(FGTCMD *pcmd)
 		if(g_LookMovie)
 		{		
 			FgtLoadToMem2(bidx,buf);
-			GamStrShowS(FGT_SPESX + 40,FGT_SPESY + 2,buf);
+			GamStrShowS(FGT_SPESX + 40,FGT_SPESY + 2,(const char*)buf);
 			FgtAtvShowNum(FGT_SPESX + 40,FGT_SPESY + 40,arms);
 		}
 		else		
@@ -336,7 +336,7 @@ U8 FgtJNAction(FGTCMD *pcmd)
 		FgtLoadToMem2(dFgtInSta,ptr);
 		FgtLoadToMem2(dFgtState0 + state,ptr + 8);
 		FgtLoadToMem2(dFgtState,ptr + 8 + 4);
-		GamMsgBox(buf,1);
+		GamMsgBox((const char*)buf,1);
 	}
 	
 	return (FgtGetExp(arms));
@@ -682,7 +682,7 @@ U8 FgtGetExp(U16 hurt)
 {
 	U8	*var;
 	U8	tmp,idx,mbuf[42];
-    const U8 *tmp1;
+    U8 tmp1;
 	RECT	pRect,pRect2;
 	
 	idx = WK_SY + 8 + HZ_HGT * 5;
@@ -849,7 +849,7 @@ U8 TransIdxToGen1(U8 idx)
  *             ------          ----------      -------------
  *             高国军          2005.5.16       完成基本功能
 ***********************************************************************/
-U8 FgtLoadToMem2(const U8 *idx,U8 *buf)
+U8 FgtLoadToMem2(U8 idx,U8 *buf)
 {
-    ResLoadToMem(IFACE_STRID,(U8*)idx,buf);
+    ResLoadToMem(IFACE_STRID,idx,buf);
 }

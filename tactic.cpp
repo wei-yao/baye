@@ -35,7 +35,7 @@ extern int g_modAIHighAttack;
 extern int g_modAIHeroUpLevel;
 extern int g_startFlag;
 
-extern "C" bool GamSaveRcd(U8 idx);
+bool GamSaveRcd(U8 idx);
 
 
 /*void ComputerTacticInterior(U8 city);
@@ -1252,10 +1252,10 @@ U8 FunctionMenu(void)
 	showflag = 1;
     operateflag = 1;
 	ResLoadToMem(STRING_CONST,ATRR_STR63,str);
-	GamStrShowS((WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2 + ASC_HGT,str);
+	GamStrShowS((WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2 + ASC_HGT,(const char*)str);
 	ResLoadToMem(STRING_CONST,ATRR_STR64,str);
 	gam_ltoa(max,&str[7],10);
-	GamStrShowS((WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2 + ASC_HGT * 2,str);
+	GamStrShowS((WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2 + ASC_HGT * 2,(const char*)str);
     maxbit = gam_strlen(&str[7]) - 1;
     if(maxbit == 255)maxbit = 0;
 	bit = maxbit;
@@ -1367,7 +1367,7 @@ void ShowTacticNote(void)
 		gam_strcat(str,astr);
 		gam_clrlcd(WK_SX + WK_EX / 2 - (WK_SX + ASC_WID * 19 + 4) / 2,WK_EY - 2 - ASC_HGT - 2,WK_SX + WK_EX / 2 - (WK_SX + ASC_WID * 19 + 4) / 2 + ASC_WID * 19 + 4,WK_EY - 2);
 		gam_rect(WK_SX + WK_EX / 2 - (WK_SX + ASC_WID * 19 + 4) / 2,WK_EY - 2 - ASC_HGT - 2,WK_SX + WK_EX / 2 - (WK_SX + ASC_WID * 19 + 4) / 2 + ASC_WID * 19 + 4,WK_EY - 2);
-		GamStrShowS(WK_SX + (WK_EX - (WK_SX + ASC_WID * 19)) / 2,WK_EY - 2 - ASC_HGT,str);
+		GamStrShowS(WK_SX + (WK_EX - (WK_SX + ASC_WID * 19)) / 2,WK_EY - 2 - ASC_HGT,(const char*)str);
         GamDelay(50,true);
         //GamDelay(50,false);
 	}

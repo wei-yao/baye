@@ -92,7 +92,7 @@ extern "C" {
     U8	GamConRst(void);						/* 游戏系统环境恢复，根据不同环境调用不同的恢复函数 */
     U8	GamGetMsg(GMType *pMsg);					/* 封装系统的输入，并将其转换成游戏的消息机制 */
     U8	GamDelay(U16 dly,bool keyflag);					/* 1%秒延时 */
-    void	GamMsgBox(U8 *buf,U8 delay);					/* 信息框 */
+    void	GamMsgBox(const char *buf,U8 delay);					/* 信息框 */
     void	GamShowFrame(U8 *vscr);						/* 将虚拟屏幕show到屏幕上 */
     void	GamPicShowS(U8 x,U8 y,U16 wid,U16 hgt,U8 *pic);			/* 显示图片到屏幕 */
     void	GamPicShowV(U8 x,U8 y,U16 wid,U16 hgt,U8 *pic,U8 *vscr);		/* 显示图片到虚拟屏幕 */
@@ -100,7 +100,7 @@ extern "C" {
     void	GamMPicShowV(U8 x,U8 y,U16 wid,U16 hgt,U8 *pic,U8 *vscr);		/* 显示mask图片到虚拟屏幕 */
     void	GamPicShowExS(U8 x,U8 y,U16 wid,U16 hgt,U8 idx,U8 *pic);		/* 显示图片到屏幕(功能扩展——可显示图片的部分) */
     void	GamPicShowExV(U8 x,U8 y,U16 wid,U16 hgt,U8 idx,U8 *pic,U8 *vscr);	/* 显示图片到虚拟屏幕(功能扩展——可显示图片的部分) */
-    void	GamStrShowS(U8 x,U8 y,U8 *str);					/* 显示12汉字到屏幕 */
+    void	GamStrShowS(U8 x,U8 y,const char *str);					/* 显示12汉字到屏幕 */
     void	GamStrShowT(U8 x,U8 y,U8 *str);					/* 显示12汉字到屏幕 */
     void	GamAsciiS(U8 x,U8 y,U8 asc);					/* 显示6x12ASCII字符到屏幕 */
     void	GamStrShowV(U8 x,U8 y,U8 *str,U8 *vscr);			/* 显示12汉字到虚拟屏幕 */

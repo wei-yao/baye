@@ -539,7 +539,7 @@
 				GetPersonName(cavpdb,str);
 				ResLoadToMem(STRING_CONST,STR_CAV_NOTE1 + cavps - 1,astr);
 				gam_strcat(str,astr);
-				GamMsgBox(str,2);
+				GamMsgBox((const char*)str,2);
 			}
 		}
 		else
@@ -635,7 +635,7 @@ U8 TheLoserDeal(U8 city,U8 *lqueue)
 						GetPersonName(p,str);
 						ResLoadToMem(STRING_CONST,STR_PERSONOVER,astr);
 						gam_strcat(str,astr);
-						GamMsgBox(str,2);
+						GamMsgBox((const char*)str,2);
 					}
 				}
 			}
@@ -847,7 +847,7 @@ void KingDeadNote(U8 king)
 	gam_strcat(str,sbuf);
 	ResLoadToMem(STRING_CONST,STR_DEAD,sbuf);
 	gam_strcat(str,sbuf);
-	GamMsgBox(str,2);
+	GamMsgBox((const char*)str,2);
 }
 
 /******************************************************************************
@@ -872,7 +872,7 @@ void KingDeadNote(U8 king)
 	GetPersonName(king,str);
 	ResLoadToMem(STRING_CONST,STR_BEKING,sbuf);
 	gam_strcat(str,sbuf);
-	GamMsgBox(str,2);
+	GamMsgBox((const char*)str,2);
 }
 
 /******************************************************************************
@@ -897,7 +897,7 @@ void KingDeadNote(U8 king)
 	GetPersonName(king,str);
 	ResLoadToMem(STRING_CONST,STR_BEKINGED,sbuf);
 	gam_strcat(str,sbuf);
-	GamMsgBox(str,2);
+	GamMsgBox((const char*)str,2);
 }
 
 /******************************************************************************
@@ -922,7 +922,7 @@ void KingDeadNote(U8 king)
 	GetPersonName(king,str);
 	ResLoadToMem(STRING_CONST,STR_OVER,sbuf);
 	gam_strcat(str,sbuf);
-	GamMsgBox(str,2);
+	GamMsgBox((const char*)str,2);
 }
 
 /******************************************************************************

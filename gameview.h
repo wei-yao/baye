@@ -53,7 +53,7 @@ U8 FileNum(U8 filetype,U16 * filenum);
 U8 FileSearch(U8 filetype,U8 fileno,U8 * filename,U8 *out_filename);
 
 
-FILE *FileOpen(U8 * filename,U8 filetype,U8 *openmode,FILE *filehandle,U32 *filelen);
+FILE *FileOpen(U8 * filename,U8 filetype,const char *openmode,FILE *filehandle,U32 *filelen);
 
 
 U8 FileDel(gam_FILE * fhandle);

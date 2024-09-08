@@ -21,6 +21,7 @@
 #undef	CITYEDIT_C
 #define	CITYEDIT_C
 #include "enghead.h"
+#include "tactic.h"
 /*U8 GetCityOutPersons(U8 city,U8 *pqueue);
 U8 GetCityPersons(U8 city,U8 *pqueue);
 U8 ShowCityMap(CitySetType *pos);
@@ -1218,11 +1219,11 @@ U8 ClearOrderQueue(void)
          U16 tYear = 10000 - g_YearDate;
          U8 * min ;
          min = SHARE_MEM + 500;
-         strcpy(min,"-");
+         strcpy((char*)min,"-");
          tmpa = 6;
          gam_itoa(tYear,str,10);
          gam_strcat(min,str);
-         strcpy(str,min);
+         strcpy((char*)str,(const char*)min);
      }
      else if(g_YearDate > 999)
      {
@@ -1422,11 +1423,11 @@ U8 ClearOrderQueue(void)
          U16 tYear = 10000 - g_YearDate;
          U8 * min ;
          min = SHARE_MEM + 500;
-         strcpy(min,"-");
+         strcpy((char*)min,"-");
          tmpa = 6;
          gam_itoa(tYear,str,10);
          gam_strcat(min,str);
-         strcpy(str,min);
+         strcpy((char*)str,(const char*)min);
      }
      else if(g_YearDate > 999)
      {
@@ -1500,7 +1501,7 @@ U8 ClearOrderQueue(void)
 	gam_clrlcd((WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2,(WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2 + ASC_WID * 12,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2 + ASC_HGT * 3);
 	gam_rect((WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2 - 1,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2 - 1,(WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2 + ASC_WID * 12 + 1,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2 + ASC_HGT * 3 + 1);
 	ResLoadToMem(STRING_CONST,ATRR_STR60,str);
-	GamStrShowS((WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2,str);
+	GamStrShowS((WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2,(const char*)str);
 	return(NumOperate(min,max));
 }
 
@@ -1524,7 +1525,7 @@ U8 ClearOrderQueue(void)
 	gam_clrlcd((WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2,(WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2 + ASC_WID * 12,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2 + ASC_HGT * 3);
 	gam_rect((WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2 - 1,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2 - 1,(WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2 + ASC_WID * 12 + 1,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2 + ASC_HGT * 3 + 1);
 	ResLoadToMem(STRING_CONST,ATRR_STR61,str);
-	GamStrShowS((WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2,str);
+	GamStrShowS((WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2,(const char*)str);
 	return(NumOperate(min,max));
 }
 
@@ -1548,7 +1549,7 @@ U8 ClearOrderQueue(void)
 	gam_clrlcd((WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2,(WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2 + ASC_WID * 12,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2 + ASC_HGT * 3);
 	gam_rect((WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2 - 1,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2 - 1,(WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2 + ASC_WID * 12 + 1,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2 + ASC_HGT * 3 + 1);
 	ResLoadToMem(STRING_CONST,ATRR_STR62,str);
-	GamStrShowS((WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2,str);
+	GamStrShowS((WK_SX + WK_EX - WK_SX  - ASC_WID * 12) / 2,(WK_SY + WK_EY - WK_SY - ASC_HGT * 3) / 2,(const char*)str);
 	return(NumOperate(min,max));
 }
 

@@ -691,11 +691,11 @@ void FgtSetDifPot(U8 idx)
  *             高国军          2005.5.16       完成基本功能
 ***********************************************************************/
 /* 树展开的方向 */
-const U8 FgtUnfurlDrt[4] = {-FGT_MRG,FGT_MRG,-1,1};
+const int FgtUnfurlDrt[4] = {-FGT_MRG,FGT_MRG,-1,1};
 void FgtUnfurlTree(U8 idx,U8 *buf,U8 *len)
 {
 	U8	power,plen,resistance;
-	U8	i,poff,tmp;
+	int	i,poff,tmp;
 
 	plen = *len;
 	power = g_FightPath[idx];

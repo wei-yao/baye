@@ -38,7 +38,7 @@ U32	CountHZMAddrOff(U16 Hz);
 void	GamResumeSet(U16 bakBnk);
 void	GamAscii(U8 x,U8 y,U8 asc);
 void	GamChinese(U8 x,U8 y,U16 Hz);
-void	GamStrShow(U8 x,U8 y,U8 *buf);
+void	GamStrShow(U8 x,U8 y,const char *buf);
 void	GamStrShowT(U8 x,U8 y,U8 *buf);
 void	GetExcHZMCode(U16 Hz,U8 *hzmCode);
 
@@ -51,7 +51,7 @@ void	GetExcHZMCode(U16 Hz,U8 *hzmCode);
  *             ------          ----------      -------------
  *             高国军          2005.5.16       完成基本功能
 ***********************************************************************/
- void GamMsgBox(U8 *buf,U8 delay)
+ void GamMsgBox(const char *buf,U8 delay)
 {
     U8	h,s;
 	U8	slen;
@@ -363,7 +363,7 @@ void	GetExcHZMCode(U16 Hz,U8 *hzmCode);
  *             ------          ----------      -------------
  *             高国军          2005.5.16       完成基本功能
 ***********************************************************************/
-void GamStrShowS(U8 x,U8 y,U8 *str)
+void GamStrShowS(U8 x,U8 y,const char *str)
 {
     c_VisScr=(U8 *)NULL;
     //g_noUseStrMem = 1;
@@ -382,7 +382,7 @@ void GamStrShowS(U8 x,U8 y,U8 *str)
 {
 
 	c_VisScr=vscr;
-	GamStrShow(x,y,str);
+	GamStrShow(x,y,(const char*)str);
 
 }
 /***********************************************************************
@@ -508,7 +508,7 @@ void GamStrShowT(U8 x,U8 y,U8 *buf)
         SysCopyToDcStr();
     }
 }
-void GamStrShow(U8 x,U8 y,U8 *buf)
+void GamStrShow(U8 x,U8 y,const char *buf)
 {
 
     //SysAscii(x*g_screentimes,y*g_screentimes,buf);

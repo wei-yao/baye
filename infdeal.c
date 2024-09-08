@@ -568,7 +568,7 @@ void HarvestryFood(void)
 {
 	U8 str[20];
 	ResLoadToMem(STRING_CONST,idx,str);
-	GamMsgBox(str,2);
+	GamMsgBox((const char*)str,2);
 }
 
 /******************************************************************************

@@ -47,7 +47,7 @@ extern "C" {
 
 
 
-typedef unsigned char C;
+typedef  char C;
 typedef unsigned char UT;
 typedef unsigned short US;
 typedef unsigned int UL;
@@ -83,7 +83,7 @@ typedef struct _User{
 //C g_userPass[30+1];
 
 UT ClientSndMsg(US transType,unsigned char * data,int way);
-UT ClientRcvMsg(US transType,unsigned char * data,int way);
+UT ClientRcvMsg(US transType, char * data,int way);
 
 UT GetUUID(UT kingId,char * UUID);
 UT SetUUID(char * player,char * UUID);

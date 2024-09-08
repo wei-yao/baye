@@ -25,13 +25,13 @@ UT ClientSndMsg(US transType,unsigned char * data,int way)
     tcphead.Status = way;
     tcphead.MessageID = g_clientMsgid;
     g_clientMsgid ++;
-    PackMsg(tcphead,data,senddata);
+    PackMsg(tcphead,(char*)data,senddata);
     SendTcpMsg(senddata,tcphead.DataLen+TCPHEADLEN);
     return OK;
 }
 
 //返回0说明目前未收到无此类消息，仅限way=0服务端发起的消息
-UT ClientRcvMsg(US transType,unsigned char * data,int way)
+UT ClientRcvMsg(US transType,char * data,int way)
 {
     Tcphead tcphead ;
 
@@ -310,7 +310,7 @@ UT hextochar(C * inbuf, C * outbuf)
     int idx,idx1;
     int size;
 
-    size = strlen(inbuf);
+    size = strlen((const char*)inbuf);
     idx1=0;
 
     for(idx=0; idx<size; idx++)
@@ -325,10 +325,10 @@ UT hextochar(C * inbuf, C * outbuf)
 char* StrSHA256(const char* str, int length, char* sha256)
 {
     char *pp, *ppend;
-    long l, i, W[64], T1, T2, A, B, C, D, E, F, G, H, H0, H1, H2, H3, H4, H5, H6, H7;
+    unsigned long l, i, W[64], T1, T2, A, B, C, D, E, F, G, H, H0, H1, H2, H3, H4, H5, H6, H7;
     H0 = 0x6a09e667, H1 = 0xbb67ae85, H2 = 0x3c6ef372, H3 = 0xa54ff53a;
     H4 = 0x510e527f, H5 = 0x9b05688c, H6 = 0x1f83d9ab, H7 = 0x5be0cd19;
-    long K[64] = {
+    unsigned long K[64] = {
         0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
         0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
         0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,

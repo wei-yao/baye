@@ -15,8 +15,8 @@ CC            = gcc
 CXX           = g++
 DEFINES       = -DUNICODE -D_UNICODE -DWIN32 -DMINGW_HAS_SECURE_API=1 -DQT_DEPRECATED_WARNINGS -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
 CFLAGS        = -fno-keep-inline-dllexport -g -Wall -Wextra -Wextra $(DEFINES)
-CXXFLAGS      = -fno-keep-inline-dllexport -g -Wall -Wextra -Wextra -fexceptions -mthreads $(DEFINES)
-INCPATH       = -I. -IC:\Qt\Qt5.14.2\5.14.2\mingw73_32\include -IC:\Qt\Qt5.14.2\5.14.2\mingw73_32\include\QtWidgets -IC:\Qt\Qt5.14.2\5.14.2\mingw73_32\include\QtGui -IC:\Qt\Qt5.14.2\5.14.2\mingw73_32\include\QtANGLE -IC:\Qt\Qt5.14.2\5.14.2\mingw73_32\include\QtNetwork -IC:\Qt\Qt5.14.2\5.14.2\mingw73_32\include\QtCore -Idebug -I. -IC:\Qt\Qt5.14.2\5.14.2\mingw73_32\mkspecs\win32-g++ 
+CXXFLAGS      = -std=c++11 -fno-keep-inline-dllexport -g -Wall -Wextra -Wextra -fexceptions -mthreads $(DEFINES)
+INCPATH       = -I. -IC:\Qt\Qt5.14.2\5.14.2\mingw73_32\include -IC:\Qt\Qt5.14.2\5.14.2\mingw73_32\include\QtWidgets -IC:\Qt\Qt5.14.2\5.14.2\mingw73_32\include\QtGui -IC:\Qt\Qt5.14.2\5.14.2\mingw73_32\include\QtANGLE -IC:\Qt\Qt5.14.2\5.14.2\mingw73_32\include\QtNetwork -IC:\Qt\Qt5.14.2\5.14.2\mingw73_32\include\QtCore -Idebug -I. -IC:\Qt\Qt5.14.2\5.14.2\mingw73_32\mkspecs\win32-g++ -IC:\Qt\Qt5.14.2\Tools\mingw730_32\lib\gcc\i686-w64-mingw32\7.3.0\include\c++ -IC:/Qt/Qt5.14.2/Tools/mingw730_32/lib/gcc/i686-w64-mingw32/7.3.0/include/c++/i686-w64-mingw32
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,windows -mthreads
 LIBS        =        C:\Qt\Qt5.14.2\5.14.2\mingw73_32\lib\libQt5Widgets.a C:\Qt\Qt5.14.2\5.14.2\mingw73_32\lib\libQt5Gui.a C:\Qt\Qt5.14.2\5.14.2\mingw73_32\lib\libQt5Network.a C:\Qt\Qt5.14.2\5.14.2\mingw73_32\lib\libQt5Core.a debug\skyico_res.o  -lmingw32 C:\Qt\Qt5.14.2\5.14.2\mingw73_32\lib\libqtmain.a -LC:\openssl\lib -LC:\Utils\my_sql\mysql-5.7.25-win32\lib -LC:\Utils\postgresql\pgsql\lib -lshell32 
