@@ -650,7 +650,8 @@ bool GamLoadRcd(U8 idx)
 	gam_fread((U8 *)&g_MonthDate,1,1,fp);
 	gam_fread((U8 *)&g_CityPos,sizeof(CitySetType),1,fp);
 	gam_fread((U8 *)g_Persons,sizeof(PersonType),PERSON_MAX,fp);
-	gam_fread((U8 *)g_PersonsQueue,1,PERSON_MAX,fp);
+	U8 personsQueue[PERSON_MAX];
+	gam_fread((U8 *)personsQueue,1,PERSON_MAX,fp);
 	gam_fread((U8 *)g_GoodsQueue,1,GOODS_MAX,fp);
 	gam_fclose(fp);
 
@@ -667,8 +668,11 @@ bool GamLoadRcd(U8 idx)
 	gam_fread((U8 *)FIGHTERS_IDX,1,FIGHT_ORDER_MAX,fp);
 	gam_fread((U8 *)FIGHTERS,10,FIGHT_ORDER_MAX,fp);
 	gam_fread((U8 *)ORDERQUEUE,sizeof(OrderType),ORDER_MAX,fp);
-	gam_fread((U8 *)g_Cities,sizeof(CityType),CITY_MAX,fp);
-	
+
+	OldCityType old_cities[CITY_MAX];
+	memset(old_cities, 0, CITY_MAX * sizeof(OldCityType));
+	gam_fread((U8 *)old_cities,sizeof(OldCityType),CITY_MAX,fp);
+	OldCityToNewCity(old_cities, personsQueue);
 	gam_fclose(fp);
 	return true;	
 }
@@ -708,7 +712,11 @@ bool GamSaveRcd(U8 idx)
 	gam_fwrite((U8 *)&g_MonthDate,1,1,fp);
 	gam_fwrite((U8 *)&g_CityPos,sizeof(CitySetType),1,fp);
 	gam_fwrite((U8 *)g_Persons,sizeof(PersonType),PERSON_MAX,fp);
-	gam_fwrite((U8 *)g_PersonsQueue,1,PERSON_MAX,fp);
+	// #todo finally I want to get rid of old field completely and save/load in json
+	// except the inital load
+	U8 personsQueue[PERSON_MAX];
+	NewCityToOldPersonsQueue(personsQueue);
+	gam_fwrite((U8 *)personsQueue,1,PERSON_MAX,fp);
 	gam_fwrite((U8 *)g_GoodsQueue,1,GOODS_MAX,fp);
 	gam_fclose(fp);
 

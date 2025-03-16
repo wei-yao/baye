@@ -48,87 +48,36 @@ extern int g_startFlag;
 *		----		----			-----------
 *		陈泽伟		2005-6-3 14:50	基本功能完成
 ******************************************************************************/
- U8 AddPerson(U8 city,U8 person)
-{
-	U8 i;
-	U8 qnum;
+//  U8 AddPerson(U8 city,U8 person)
+// {
+// 	U8 i;
+// 	U8 qnum;
 	
-	if (city >= CITY_MAX)
-		return(0);
+// 	if (city >= CITY_MAX)
+// 		return(0);
 	
-	if (person >= PERSON_MAX)
-		return(0);
+// 	if (person >= PERSON_MAX)
+// 		return(0);
 	
-	qnum  = g_Cities[city].PersonQueue + g_Cities[city].Persons;
+// 	qnum  = g_Cities[city].PersonQueue + g_Cities[city].Persons;
 	
-	for (i = PERSON_MAX - 1;i > qnum;i --)
-	{
-		g_PersonsQueue[i] = g_PersonsQueue[i - 1];
-	}
+// 	for (i = PERSON_MAX - 1;i > qnum;i --)
+// 	{
+// 		g_PersonsQueue[i] = g_PersonsQueue[i - 1];
+// 	}
 	
-	g_PersonsQueue[qnum] = person;
-	g_Cities[city].Persons += 1;
+// 	g_PersonsQueue[qnum] = person;
+// 	g_Cities[city].Persons += 1;
 	
-	for (i = city + 1;i < CITY_MAX;i ++)
-	{
-		g_Cities[i].PersonQueue += 1;
-	}
+// 	for (i = city + 1;i < CITY_MAX;i ++)
+// 	{
+// 		g_Cities[i].PersonQueue += 1;
+// 	}
 	
-	return(1);
-}
+// 	return(1);
+// }
 
-/******************************************************************************
-* 函数名:DelPerson
-* 说  明:在城市人才队列中删除人才
-*
-* 入口参数：city -- 城市编号，person -- 人才编号
-*
-* 出口参数：1 -- 成功，0 -- 失败
-*
-* 修改历史:
-*		姓名		日期			说明
-*		----		----			-----------
-*		陈泽伟		2005-6-3 15:41	基本功能完成
-******************************************************************************/
- U8 DelPerson(U8 city,U8 person)
-{
-	U8 i;
-	U8 qnum;
-	CityType *cptr;
-	
-	if (city >= CITY_MAX)
-		return(0);
-	
-	if (person >= PERSON_MAX)
-		return(0);
-	
-	cptr = &g_Cities[city];
-	
-	qnum  = cptr->PersonQueue + cptr->Persons;
-	
-	for (i = cptr->PersonQueue;i < qnum;i ++)
-	{
-		if (g_PersonsQueue[i] == person)
-			break;
-	}
-	
-	if (i >= qnum)
-		return(0);
-	
-	for (;i < PERSON_MAX - 1;i ++)
-	{
-		g_PersonsQueue[i] = g_PersonsQueue[i + 1];
-	}
-	
-	cptr->Persons -= 1;
-	
-	for (i = city + 1;i < CITY_MAX;i ++)
-	{
-		g_Cities[i].PersonQueue -= 1;
-	}
-	
-	return(1);
-}
+
 
 /******************************************************************************
 * 函数名:AddGoods
@@ -638,130 +587,12 @@ U8 ClearOrderQueue(void)
 	return(count);
 }
 
-/******************************************************************************
-* 函数名:GetPersonCity
-* 说  明:获得武将所在城市编号
-*
-* 入口参数：指定武将
-*
-* 出口参数：0xff -- 所有城市都无此武将，其他 -- 武将所在城市编号
-*
-* 修改历史:
-*		姓名		日期			说明
-*		----		----			-----------
-*		陈泽伟		2005-7-23 11:06	基本功能完成
-******************************************************************************/
- U8 GetPersonCity(U8 person)
-{
-	U8 c,i,j;
-	
-	for (c = 0;c < CITY_MAX;c ++)
-	{
-		j = g_Cities[c].PersonQueue;
-		for (i = 0;i < g_Cities[c].Persons;i ++,j ++)
-		{
-			if (g_PersonsQueue[j] == person)
-			{
-				return(c);
-			}
-		}
-	}
-	return(0xff);
-}
-
-/******************************************************************************
-* 函数名:GetCityPersons
-* 说  明:取得城市中在任武将
-*
-* 入口参数：city -- 城市编号，pqueue -- 武将队列指针
-*
-* 出口参数：在任武将个数
-*
-* 修改历史:
-*		姓名		日期			说明
-*		----		----			-----------
-*		陈泽伟		2005/5/18 11:26AM	基本功能完成
-******************************************************************************/
- U8 GetCityPersons(U8 city,U8 *pqueue)
-{
-	U8 i,count;
-	U8 p;
-	
-	count = 0;
-	for (i = 0;i < g_Cities[city].Persons;i ++)
-	{
-		p = g_PersonsQueue[g_Cities[city].PersonQueue + i];
-		if (g_Persons[p].Belong == g_Cities[city].Belong)
-		{
-			pqueue[count] = p;
-			count += 1;
-		}
-	}
-	return(count);
-}
 
 
-/******************************************************************************
-* 函数名:GetCityOutPersons
-* 说  明:取得城市中在野武将
-*
-* 入口参数：city -- 城市编号，pqueue -- 武将队列指针
-*
-* 出口参数：在野武将个数
-*
-* 修改历史:
-*		姓名		日期			说明
-*		----		----			-----------
-*		陈泽伟		2005-7-4 9:18	基本功能完成
-******************************************************************************/
- U8 GetCityOutPersons(U8 city,U8 *pqueue)
-{
-	U8 i,count;
-	U8 p;
-	
-	count = 0;
-	for (i = 0;i < g_Cities[city].Persons;i ++)
-	{
-		p = g_PersonsQueue[g_Cities[city].PersonQueue + i];
-		if (!(g_Persons[p].Belong))
-		{
-			pqueue[count] = p;
-			count += 1;
-		}
-	}
-	return(count);
-}
 
-/******************************************************************************
-* 函数名:GetCityCaptives
-* 说  明:取得城市中俘虏
-*
-* 入口参数：city -- 城市编号，pqueue -- 武将队列指针
-*
-* 出口参数：俘虏个数
-*
-* 修改历史:
-*		姓名		日期			说明
-*		----		----			-----------
-*		陈泽伟		2005-7-4 9:24	基本功能完成
-******************************************************************************/
- U8 GetCityCaptives(U8 city,U8 *pqueue)
-{
-	U8 i,count;
-	U8 p;
-	
-	count = 0;
-	for (i = 0;i < g_Cities[city].Persons;i ++)
-	{
-		p = g_PersonsQueue[g_Cities[city].PersonQueue + i];
-		if (0xff == (g_Persons[p].Belong))
-		{
-			pqueue[count] = p;
-			count += 1;
-		}
-	}
-	return(count);
-}
+
+
+
 
 /******************************************************************************
 * 函数名:GetEnemyPersons
@@ -776,30 +607,18 @@ U8 ClearOrderQueue(void)
 *		----		----			-----------
 *		陈泽伟		2005-7-4 9:24	基本功能完成
 ******************************************************************************/
- U8 GetEnemyPersons(U8 king,U8 *pqueue)
-{
-	U8 c,i,count;
-	U8 b,p;
-	
-	count = 0;
-	for (c = 0;c < CITY_MAX;c ++)
-	{
-		b = g_Cities[c].Belong;
-		if ((b != (king + 1)) && b)
-		{
-			for (i = 0;i < g_Cities[c].Persons;i ++)
-			{
-				p = g_PersonsQueue[g_Cities[c].PersonQueue + i];
-				if ((g_Persons[p].Belong == b) && ((p + 1) != b))
-				{
-					pqueue[count] = p;
-					count += 1;
-				}
-			}
-		}
-	}
-	return(count);
-}
+// // For backward compatibility with old array-based code:
+// U8 GetEnemyPersons(U8 king, U8* pqueue)
+// {
+//     auto officers = GetEnemyPersonsV(king);
+    
+//     // Copy to array
+//     for (size_t i = 0; i < officers.size(); i++) {
+//         pqueue[i] = officers[i];
+//     }
+    
+//     return officers.size();
+// }
 
 /******************************************************************************
 * 函数名:GetEnemySatraps

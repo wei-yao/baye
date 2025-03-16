@@ -260,10 +260,8 @@ U8 SearchDrv(OrderType *Order)
 		g_Cities[Order->City].Food += rnd;
 		break;
 	}
-	while (pb == g_PlayerKing + 1)
+	if(pb == g_PlayerKing + 1 && pss != 1)
 	{
-		if (1 == pss)
-			break;
 			
 		if (!pss)
 		{
@@ -275,8 +273,10 @@ U8 SearchDrv(OrderType *Order)
 			gam_itoa(rnd,astr,10);
 			gam_strcat(str,astr);
 		}
-		ShowGReport(person,str);
-		break;
+		// ShowGReport(person,str);
+		logMessageFromCppFormat(
+			"ignored search output %s", str);
+
 	}
 	
 	AddPerson(Order->City,person);

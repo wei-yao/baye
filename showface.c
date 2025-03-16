@@ -841,6 +841,7 @@ void GetCityProStr(U8 city,U8 pro,U8 *str)
 	{
 	case 0:		/*归属*/
 		ResLoadToMem(STRING_CONST,ATRR_STR1,str);
+		// printf("city: %d, Belong: %d\n", city, g_Cities[city].Belong);
 		if (g_Cities[city].Belong)
 		{
 			GetPersonName(g_Cities[city].Belong - 1,&str[5]);
@@ -964,6 +965,7 @@ void GetCityProStr(U8 city,U8 pro,U8 *str)
 	
 	showtop = 0;
 	showflag = 1;
+	printf("ShowCityPro %d\n", city);
 	while (1)
 	{
 		if (showflag)

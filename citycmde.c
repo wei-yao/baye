@@ -436,57 +436,44 @@ void ShowFightNoteFace(U8 idx)
 	g_Persons[person].Thew -= ptr[order];
 }
 
-/******************************************************************************
-* 函数名:GetWeekCity
-* 说  明:取得最弱的城市
-*
-* 入口参数：count -- 城市个数，cqueue -- 城市队列指针
-*
-* 出口参数：最弱的城市
-*
-* 修改历史:
-*		姓名		日期			说明
-*		----		----			-----------
-*		陈泽伟		2005-8-29 16:20	基本功能完成
-******************************************************************************/
- U8 GetWeekCity(U8 count,U8 *cqueue)
-{
-	U8 c,i,cw;
-	U8 p,o;
-	U16 armst,armsw;
-	CityType *cptr;
-	OrderType *inode;
+
+// {
+// 	U8 c,i,cw;
+// 	U8 p,o;
+// 	U16 armst,armsw;
+// 	CityType *cptr;
+// 	OrderType *inode;
 	
-	inode = (OrderType *) ORDERQUEUE;
-	armsw = 0xffff;
-	for (c = 0;c < count;c ++)
-	{
-		cptr = &g_Cities[cqueue[c]];
-		armst = 0;
-		for (i = 0;i < cptr->Persons;i ++)
-		{
-			p = g_PersonsQueue[cptr->PersonQueue + i];
-			if (g_Persons[p].Belong == cptr->Belong)
-			{
-				armst += g_Persons[p].Arms;
-			}
-		}
-		for (i = 0;i < ORDER_MAX;i ++)
-		{
-			o = inode[i].OrderId;
-			if (0xff == o)
-				continue;
+// 	inode = (OrderType *) ORDERQUEUE;
+// 	armsw = 0xffff;
+// 	for (c = 0;c < count;c ++)
+// 	{
+// 		cptr = &g_Cities[cqueue[c]];
+// 		armst = 0;
+// 		for (i = 0;i < cptr->Persons;i ++)
+// 		{
+// 			p = g_PersonsQueue[cptr->PersonQueue + i];
+// 			if (g_Persons[p].Belong == cptr->Belong)
+// 			{
+// 				armst += g_Persons[p].Arms;
+// 			}
+// 		}
+// 		for (i = 0;i < ORDER_MAX;i ++)
+// 		{
+// 			o = inode[i].OrderId;
+// 			if (0xff == o)
+// 				continue;
 			
-			if ((o != MOVE) && (o != BATTLE) && inode[i].City == cqueue[c])
-			{
-				armst += g_Persons[inode[i].Person].Arms;
-			}
-		}
-		if (armsw > armst)
-		{
-			armsw = armst;
-			cw = c;
-		}
-	}
-	return(cqueue[cw]);
-}
+// 			if ((o != MOVE) && (o != BATTLE) && inode[i].City == cqueue[c])
+// 			{
+// 				armst += g_Persons[inode[i].Person].Arms;
+// 			}
+// 		}
+// 		if (armsw > armst)
+// 		{
+// 			armsw = armst;
+// 			cw = c;
+// 		}
+// 	}
+// 	return(cqueue[cw]);
+// }

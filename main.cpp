@@ -7,6 +7,7 @@
 #include <QFontDatabase>
 #include <QTextCodec>
 #include "windowinidialog.h"
+#include "log.h"
 #if defined(Q_OS_ANDROID)
 #include<QtAndroidExtras/QAndroidJniObject>
 #include<QtAndroidExtras/QAndroidJniEnvironment>
@@ -163,11 +164,12 @@ int main(int argc, char *argv[])
 #endif
    QApplication a(argc, argv);
    attachConsole();
-    logMessageFromCpp("this is the log");
+   logMessageFromCpp("test log");
     //MainWindow m;
     //m.show();
 
-   int fontId = QFontDatabase::addApplicationFont(":/fonts/DroidSansFallback.ttf");
+   int fontId = QFontDatabase::addApplicationFont("DroidSansFallback.ttf");
+   logMessageFromCppFormat("font id %d", fontId);
    //将字体Id传给applicationFontFamilies,得到一个QStringList,其中的第一个元素为新添加字体的family
    androidFont = QFontDatabase::applicationFontFamilies(fontId).at(0);
    QFont font(androidFont);
@@ -203,7 +205,7 @@ int main(int argc, char *argv[])
     int heighty = configIniStartUp->value("/Startup/Height",600).toInt();
     version_now = configIniVersion->value("/Startup/Version",180701300).toInt();
     int color=configIniStartUp->value("/Startup/Color",0).toInt();
-    g_showPicType = color;
+    g_showPicType = 0; //change
     if(g_showPicType == 1)g_showPicType = 2;
 
     int backcolor=configIniStartUp->value("/Startup/BackColor",0).toInt();

@@ -968,7 +968,7 @@ void KingDeadNote(U8 king)
 	inode = (OrderType *) ORDERQUEUE;
 	for (i = 0;i < ORDER_MAX;i ++)
 	{
-		if (0xff == inode[i].OrderId)
+		if (0xff == inode[i].OrderId) //this is the tail
 		{
 			gam_memcpy((U8 *) &inode[i],(U8 *) Order,sizeof(OrderType));
 			return(0);

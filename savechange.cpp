@@ -30,7 +30,7 @@ extern U8 g_MonthDate;			/*当前日期*/
 extern U8 g_PIdx;			/*历史时期*/
 extern PersonType *g_Persons;		/*存放人才属性指针*/
 extern CityType g_Cities[CITYMAX];	/*存放城市属性指针*/
-extern U8 g_PersonsQueue[HEROMAX];	/*人才队列*/
+// extern U8 g_PersonsQueue[HEROMAX];	/*人才队列*/
 extern U8 g_GoodsQueue[GOODMAX];	/*道具队列*/
 extern CitySetType g_CityPos;		/*当前城市地图显示位置结构*/
 
@@ -47,20 +47,21 @@ U8 AddPerson(U8 city,U8 person)
    if (person >= PERSON_MAX)
        return(0);
 
-   qnum  = g_Cities[city].PersonQueue + g_Cities[city].Persons;
+   g_Cities[city].PersonV.push_back(person);
+//    qnum  = g_Cities[city].PersonQueue + g_Cities[city].Persons;
 
-   for (i = PERSON_MAX - 1;i > qnum;i --)
-   {
-       g_PersonsQueue[i] = g_PersonsQueue[i - 1];
-   }
+//    for (i = PERSON_MAX - 1;i > qnum;i --)
+//    {
+//        g_PersonsQueue[i] = g_PersonsQueue[i - 1];
+//    }
 
-   g_PersonsQueue[qnum] = person;
-   g_Cities[city].Persons += 1;
+//    g_PersonsQueue[qnum] = person;
+//    g_Cities[city].Persons += 1;
 
-   for (i = city + 1;i < CITY_MAX;i ++)
-   {
-       g_Cities[i].PersonQueue += 1;
-   }
+//    for (i = city + 1;i < CITY_MAX;i ++)
+//    {
+//        g_Cities[i].PersonQueue += 1;
+//    }
 
    return(1);
 }

@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <unistd.h>
+#include "log.h"
 
 #ifndef	_COMM_H
 #define	_COMM_H

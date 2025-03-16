@@ -17,6 +17,7 @@
 ***********************************************************************/
 
 #include "stdsys.h"
+#include "stdio.h"
 #include "comm.h"
 #undef	INFDEAL_C
 #define	INFDEAL_C
@@ -66,6 +67,7 @@
 	pqptr = SHARE_MEM;
 	for (i = 0;i < CITY_MAX;i ++)
 	{
+		//printf("city %d %d\n", i, g_Cities[12].Persons);
 		cptr = &g_Cities[i];
 		if (cptr->Belong)
 		{

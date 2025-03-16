@@ -4,6 +4,7 @@
 #define ATTRIBUT_H
 
 #include<vector>
+#include<set>
 
 #define PERSON_MAX		200	/*最大武将数*/
 #define CITY_MAX		38	/*最大城市数*/
@@ -229,11 +230,13 @@ typedef struct City				/*城市属性(30 Bytes)*/
     U8 Persons;			/*人才数*/
     U8 ToolQueue;			/*道具队列*/
     U8 Tools;			/*道具数*/
-	std::vector<U8> ToolsV;
-	std::vector<U8> PersonV;
-	bool autoManage;           // if auto manage
-
-}CityType;
+	//#ifdef __cplusplus
+    std::vector<U8> ToolsV;
+    std::vector<U8> PersonV;
+    std::set<U8> usedPersonsV;
+    bool autoManage;    // if auto manage
+//#endif
+} CityType;
 
 #endif
 

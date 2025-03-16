@@ -70,7 +70,7 @@ extern U8 g_MonthDate;			/*当前日期*/
 extern U8 g_PIdx;			/*历史时期*/
 extern PersonType g_Persons[PERSON_MAX];		/*存放人才属性指针*/
 extern CityType g_Cities[CITY_MAX];	/*存放城市属性指针*/
-extern U8 g_PersonsQueue[PERSON_MAX];	/*人才队列*/
+//extern U8 g_PersonsQueue[PERSON_MAX];	/*人才队列*/
 extern U8 g_GoodsQueue[GOODS_MAX];	/*道具队列*/
 extern OrderQueueType *g_OrderHead;	/*命令队列头指针*/
 extern OrderQueueType *g_OrderEnd;	/*命令队列末指针*/

@@ -5,3 +5,4 @@ SkySide3gby_Net.pro.user.18631de
 *.sav
 startup.ini
 bin/
+*.o
