@@ -25,6 +25,7 @@
 #include "mainwindow.h"
 #include <vector>
 #include <algorithm>
+#include <fstream>
 using namespace std;
 
 extern int ngsecond1;
@@ -1680,4 +1681,109 @@ U8 GetWeekCity(U8 count, U8* cqueue)
     }
     
     return cqueue[weakestCity];
+}
+
+#include "json.hpp"
+using json = nlohmann::json;
+
+bool SaveCityJson(U8 idx)
+{
+    // Create filename
+    std::string filename = "city_" + std::to_string(idx) + ".json";
+
+    // Convert cities to JSON
+    json citiesJson;
+    for (int i = 0; i < CITY_MAX; i++) {
+        json city;
+        // Basic properties
+        city["Id"] = g_Cities[i].Id;
+        city["Belong"] = g_Cities[i].Belong;
+        city["SatrapId"] = g_Cities[i].SatrapId;
+        city["FarmingLimit"] = g_Cities[i].FarmingLimit;
+        city["Farming"] = g_Cities[i].Farming;
+        city["CommerceLimit"] = g_Cities[i].CommerceLimit;
+        city["Commerce"] = g_Cities[i].Commerce;
+        city["PeopleDevotion"] = g_Cities[i].PeopleDevotion;
+        city["AvoidCalamity"] = g_Cities[i].AvoidCalamity;
+        city["PopulationLimit"] = g_Cities[i].PopulationLimit;
+        city["Population"] = g_Cities[i].Population;
+        city["Money"] = g_Cities[i].Money;
+        city["Food"] = g_Cities[i].Food;
+        city["MothballArms"] = g_Cities[i].MothballArms;
+        city["PersonQueue"] = g_Cities[i].PersonQueue;
+        city["Persons"] = g_Cities[i].Persons;
+        city["ToolQueue"] = g_Cities[i].ToolQueue;
+        city["Tools"] = g_Cities[i].Tools;
+        city["autoManage"] = g_Cities[i].autoManage;
+
+        // Vector and set properties
+        city["PersonV"] = g_Cities[i].PersonV;
+        city["ToolsV"] = g_Cities[i].ToolsV;
+        city["usedPersonsV"] = json(g_Cities[i].usedPersonsV);
+        
+        citiesJson.push_back(city);
+    }
+
+    try {
+        // Write JSON to file with pretty printing
+        std::ofstream o(filename);
+        o << citiesJson.dump(4);  // indent with 4 spaces
+        o.close();
+        return true;
+    }
+    catch (const std::exception& e) {
+        // Handle any file writing errors
+        return false;
+    }
+}
+
+
+bool LoadCityJson(U8 idx)
+{
+    // Create filename
+    std::string filename = "city_" + std::to_string(idx) + ".json";
+
+    try {
+        // Read JSON from file
+        std::ifstream i(filename);
+        json citiesJson;
+        i >> citiesJson;
+
+        // Load cities from JSON
+        for (int i = 0; i < CITY_MAX; i++) {
+            const auto& city = citiesJson[i];
+            
+            // Basic properties
+            g_Cities[i].Id = city["Id"];
+            g_Cities[i].Belong = city["Belong"];
+            g_Cities[i].SatrapId = city["SatrapId"];
+            g_Cities[i].FarmingLimit = city["FarmingLimit"];
+            g_Cities[i].Farming = city["Farming"];
+            g_Cities[i].CommerceLimit = city["CommerceLimit"];
+            g_Cities[i].Commerce = city["Commerce"];
+            g_Cities[i].PeopleDevotion = city["PeopleDevotion"];
+            g_Cities[i].AvoidCalamity = city["AvoidCalamity"];
+            g_Cities[i].PopulationLimit = city["PopulationLimit"];
+            g_Cities[i].Population = city["Population"];
+            g_Cities[i].Money = city["Money"];
+            g_Cities[i].Food = city["Food"];
+            g_Cities[i].MothballArms = city["MothballArms"];
+            g_Cities[i].PersonQueue = city["PersonQueue"];
+            g_Cities[i].Persons = city["Persons"];
+            g_Cities[i].ToolQueue = city["ToolQueue"];
+            g_Cities[i].Tools = city["Tools"];
+            g_Cities[i].autoManage = city["autoManage"];
+
+            // Vector and set properties
+            g_Cities[i].PersonV = city["PersonV"].get<std::vector<U8>>();
+            g_Cities[i].ToolsV = city["ToolsV"].get<std::vector<U8>>();
+            g_Cities[i].usedPersonsV = city["usedPersonsV"].get<std::set<U8>>();
+        }
+
+        return true;
+    }
+    catch (const std::exception& e) {
+        // Handle any file reading or parsing errors
+        return false;
+    }
 }

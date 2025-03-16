@@ -6,3 +6,4 @@ SkySide3gby_Net.pro.user.18631de
 startup.ini
 bin/
 *.o
+*.json

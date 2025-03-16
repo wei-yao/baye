@@ -36,6 +36,8 @@ U8 GetCityOutPersons(U8 city, U8* pqueue);
 U8 GetCityOutPersons(U8 city, U8* pqueue);
 U8 GetCityCaptives(U8 city, U8* pqueue);
 U8 GetWeekCity(U8 count, U8* cqueue);
+bool SaveCityJson(U8 idx);
+bool LoadCityJson(U8 idx);
 
 #ifdef __cplusplus
 }
