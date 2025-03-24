@@ -26,6 +26,14 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
+#include <stringapiset.h>
+
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <iconv.h>
+#include <locale>
+// #include <wincon.h>
 using namespace std;
 
 extern int ngsecond1;
@@ -92,7 +100,7 @@ U8 PlayerTactic(void)
 	{
 		// usleep(1000);
 		// DebugTime(84);
-	
+
 		if (g_startFlag == 3 || g_startFlag == 2)
 		{
 			return 0xfe;
@@ -130,7 +138,8 @@ U8 PlayerTactic(void)
 				break;
 			case 0xfe:
 				ngc = 3;
-				ShowCityPro(cset);
+				printCityDebugInfoCout(cset);
+				ShowCityPro(cset);		
 				break;
 			default:
 				CityCommon(cset, cral);
@@ -195,7 +204,6 @@ void ComputerTactic(void)
 			cptr->Money = 500;
 		}
 
-		
 		if (isAuto && cptr->Food >= 1000)
 		{
 			SmartAssign(i, 5);
@@ -228,7 +236,7 @@ void ComputerTactic(void)
 			else
 				ComputerTacticDiplomatism(i);
 		}
-		else if(!isAuto)/*执行军备策略*/
+		else if (!isAuto) /*执行军备策略*/
 		{
 			ComputerTacticArmament(i, isAuto);
 		}
@@ -274,7 +282,7 @@ void ComputerTacticInterior(U8 city)
 	pqptr = SHARE_MEM;
 	pcount = GetCityPersons(city, pqptr);
 	bool isAuto = (city == (g_PlayerKing + 1));
-	
+
 	for (i = 0; i < pcount; i++)
 	{
 		rnd = rand() % 5;
@@ -343,7 +351,7 @@ void ComputerTacticInterior(U8 city)
 			// 	{
 			// 		if (g_Cities[ci].Belong == (g_PlayerKing + 1) && ci != city && (minCity==-1 || g_Cities[ci].PersonV))
 			// 		{
-						
+
 			// 		}
 			// 	}
 			// }
@@ -504,25 +512,25 @@ void ComputerTacticDiplomatism(U8 city)
 }
 
 // Get all persons in the city: include active, out, and captives
-std::vector<U8> GetAllCityPersonsFromLegacy(U8 city, U8* o_PersonsQueue)
+std::vector<U8> GetAllCityPersonsFromLegacy(U8 city, U8 *o_PersonsQueue)
 {
-    std::vector<U8> officers;
-    
-    // Pre-allocate space based on city's total persons
-    officers.reserve(g_Cities[city].Persons);
-    
-    // Loop through all persons in the city
-    for (U8 i = 0; i < g_Cities[city].Persons; i++)
-    {
-        U8 p = o_PersonsQueue[g_Cities[city].PersonQueue + i];
+	std::vector<U8> officers;
+
+	// Pre-allocate space based on city's total persons
+	officers.reserve(g_Cities[city].Persons);
+
+	// Loop through all persons in the city
+	for (U8 i = 0; i < g_Cities[city].Persons; i++)
+	{
+		U8 p = o_PersonsQueue[g_Cities[city].PersonQueue + i];
 		officers.push_back(p);
 		// if (g_Persons[p].Belong == g_Cities[city].Belong)
 		// {
 		// 	officers.push_back(p);
 		// }
-    }
+	}
 
-    return officers;
+	return officers;
 }
 
 void AITacticDiplomatism(U8 city)
@@ -535,7 +543,7 @@ void AITacticDiplomatism(U8 city)
 	pqptr = SHARE_MEM;
 	eqptr = SHARE_MEM + PERSON_MAX;
 	pcount = GetCityPersons(city, pqptr);
-	
+
 	for (i = 0; i < pcount; i++)
 	{
 		ecount = GetCityCaptives(city, eqptr);
@@ -555,7 +563,7 @@ void AITacticDiplomatism(U8 city)
 		}
 		/*招揽*/
 		ecount = GetEnemyPersons(city, eqptr);
-		
+
 		if (ecount)
 		{
 			rnd = rand() % ecount;
@@ -734,15 +742,15 @@ int SmartAssign(U8 city, int k)
 vector<U8> getAllCityPersonsBelonging(U8 city)
 {
 	vector<U8> ret;
-    // Filter persons that belong to the city's faction
-    for (auto p : g_Cities[city].PersonV) 
-    {
-        if (g_Persons[p].Belong == g_Cities[city].Belong)
-        {
-            ret.push_back(p);
-        }
-    }
-    return ret;
+	// Filter persons that belong to the city's faction
+	for (auto p : g_Cities[city].PersonV)
+	{
+		if (g_Persons[p].Belong == g_Cities[city].Belong)
+		{
+			ret.push_back(p);
+		}
+	}
+	return ret;
 }
 
 /******************************************************************************
@@ -788,9 +796,9 @@ void ComputerTacticArmament(U8 city, bool isAuto)
 	}
 
 	SmartAssign(city, 5);
-	
+
 	fcount = GetRoundEnemyCity(city, cqptr);
-	rnd = rand() % 10;  // 1/10 attack
+	rnd = rand() % 10; // 1/10 attack
 	if (!fcount || rnd)
 	{
 		return;
@@ -817,7 +825,7 @@ void ComputerTacticArmament(U8 city, bool isAuto)
 			}
 		}
 
-		if (g_Persons[cqptr[0]].Arms >= 1000 && fpcount >=4)
+		if (g_Persons[cqptr[0]].Arms >= 1000 && fpcount >= 4)
 		{
 			/*添加出征命今生成代码*/
 			order.OrderId = BATTLE;
@@ -1021,37 +1029,42 @@ U8 IsLoss(void)
  *		----		----			-----------
  *		陈泽伟		2005-7-30 0:47	基本功能完成
  ******************************************************************************/
-void SetCitySatrap() 
+void SetCitySatrap()
 {
-    for (U8 cityId = 0; cityId < CITY_MAX; cityId++) 
-    {
-        if (!g_Cities[cityId].Belong) {
-            g_Cities[cityId].SatrapId = 0;
-            continue;
-        }
+	for (U8 cityId = 0; cityId < CITY_MAX; cityId++)
+	{
+		if (!g_Cities[cityId].Belong)
+		{
+			g_Cities[cityId].SatrapId = 0;
+			continue;
+		}
 
-        // Get all persons belonging to this city's faction
-        vector<U8> cityPersons = getAllCityPersonsBelonging(cityId);
-        
-        // If no persons, set SatrapId to 0
-        if (cityPersons.empty()) {
-            g_Cities[cityId].SatrapId = 0;
-            continue;
-        }
+		// Get all persons belonging to this city's faction
+		vector<U8> cityPersons = getAllCityPersonsBelonging(cityId);
 
-        // Sort persons by IQ, prioritizing the king if present
-        auto bestSatrap = *std::max_element(cityPersons.begin(), cityPersons.end(),
-            [cityId](U8 a, U8 b) -> bool{
-                // If one is the king, they take priority
-                if (g_Cities[cityId].Belong == a + 1) return false;
-                if (g_Cities[cityId].Belong == b + 1) return true;
-                // Otherwise compare by IQ
-                return g_Persons[a].IQ < g_Persons[b].IQ;
-            });
+		// If no persons, set SatrapId to 0
+		if (cityPersons.empty())
+		{
+			g_Cities[cityId].SatrapId = 0;
+			continue;
+		}
 
-        // Set the satrap (+1 because game uses 1-based indices for SatrapId)
-        g_Cities[cityId].SatrapId = bestSatrap + 1;
-    }
+		// Sort persons by IQ, prioritizing the king if present
+		auto bestSatrap = *std::max_element(cityPersons.begin(), cityPersons.end(),
+											[cityId](U8 a, U8 b) -> bool
+											{
+												// If one is the king, they take priority
+												if (g_Cities[cityId].Belong == a + 1)
+													return false;
+												if (g_Cities[cityId].Belong == b + 1)
+													return true;
+												// Otherwise compare by IQ
+												return g_Persons[a].IQ < g_Persons[b].IQ;
+											});
+
+		// Set the satrap (+1 because game uses 1-based indices for SatrapId)
+		g_Cities[cityId].SatrapId = bestSatrap + 1;
+	}
 }
 
 /******************************************************************************
@@ -1135,7 +1148,6 @@ void LoadPeriod(U8 period)
 	OldCityType old_cities[CITY_MAX];
 	memset(old_cities, 0, CITY_MAX * sizeof(OldCityType));
 	gam_memcpy((U8 *)old_cities, ptr, sizeof(OldCityType) * CITY_MAX);
-	
 
 	ptr += sizeof(CityType) * CITY_MAX;
 	g_YearDate = *((U16 *)ptr);
@@ -1155,7 +1167,6 @@ void LoadPeriod(U8 period)
 
 	g_PIdx = period;
 
-	
 	for (i = 0; i < PERSON_MAX; i++)
 	{
 		g_Persons[i].Thew = 100;
@@ -1163,60 +1174,65 @@ void LoadPeriod(U8 period)
 		g_Persons[i].Id = 0;
 	}
 
-    OldCityToNewCity(old_cities, o_PersonsQueue);
-    g_MonthDate = 1;
+	OldCityToNewCity(old_cities, o_PersonsQueue);
+	g_MonthDate = 1;
 }
+
+
 
 void OldCityToNewCity(OldCityType old_cities[38], U8 o_PersonsQueue[200])
 {
-    for (int i = 0; i < CITY_MAX; i++)
-        g_Cities[i].Id = 0;
-    for (int i = 0; i < CITY_MAX; i++)
-    {
-        g_Cities[i].Id = old_cities[i].Id;
-        g_Cities[i].Belong = old_cities[i].Belong;
-        g_Cities[i].SatrapId = old_cities[i].SatrapId;
-        g_Cities[i].FarmingLimit = old_cities[i].FarmingLimit;
-        g_Cities[i].Farming = old_cities[i].Farming;
-        g_Cities[i].CommerceLimit = old_cities[i].CommerceLimit;
-        g_Cities[i].Commerce = old_cities[i].Commerce;
-        g_Cities[i].PeopleDevotion = old_cities[i].PeopleDevotion;
-        g_Cities[i].AvoidCalamity = old_cities[i].AvoidCalamity;
-        g_Cities[i].PopulationLimit = old_cities[i].PopulationLimit;
-        g_Cities[i].Population = old_cities[i].Population;
-        g_Cities[i].Money = old_cities[i].Money;
-        g_Cities[i].Food = old_cities[i].Food;
-        g_Cities[i].MothballArms = old_cities[i].MothballArms;
-        g_Cities[i].PersonQueue = old_cities[i].PersonQueue;
-        g_Cities[i].Persons = old_cities[i].Persons;
-        g_Cities[i].ToolQueue = old_cities[i].ToolQueue;
-        g_Cities[i].Tools = old_cities[i].Tools;
-        g_Cities[i].autoManage = 0;
-        g_Cities[i].PersonV = GetAllCityPersonsFromLegacy(i, o_PersonsQueue);
-    }
+	for (int i = 0; i < CITY_MAX; i++)
+		g_Cities[i].Id = 0;
+	for (int i = 0; i < CITY_MAX; i++)
+	{
+		g_Cities[i].Id = old_cities[i].Id;
+		g_Cities[i].Belong = old_cities[i].Belong;
+		g_Cities[i].SatrapId = old_cities[i].SatrapId;
+		g_Cities[i].FarmingLimit = old_cities[i].FarmingLimit;
+		g_Cities[i].Farming = old_cities[i].Farming;
+		g_Cities[i].CommerceLimit = old_cities[i].CommerceLimit;
+		g_Cities[i].Commerce = old_cities[i].Commerce;
+		g_Cities[i].PeopleDevotion = old_cities[i].PeopleDevotion;
+		g_Cities[i].AvoidCalamity = old_cities[i].AvoidCalamity;
+		g_Cities[i].PopulationLimit = old_cities[i].PopulationLimit;
+		g_Cities[i].Population = old_cities[i].Population;
+		g_Cities[i].Money = old_cities[i].Money;
+		g_Cities[i].Food = old_cities[i].Food;
+		g_Cities[i].MothballArms = old_cities[i].MothballArms;
+		g_Cities[i].PersonQueue = old_cities[i].PersonQueue;
+		g_Cities[i].Persons = old_cities[i].Persons;
+		g_Cities[i].ToolQueue = old_cities[i].ToolQueue;
+		g_Cities[i].Tools = old_cities[i].Tools;
+		g_Cities[i].autoManage = 0;
+		g_Cities[i].PersonV = GetAllCityPersonsFromLegacy(i, o_PersonsQueue);
+		U8 tmpName[5];
+		GetCityName(i, tmpName);
+		g_Cities[i].Name = gbk_to_utf8((const char*)tmpName, 4);
+	}
 }
 
 // Copy all person IDs  from new city to person queue
 // update personsQueue, and g_Cities[].PersonQueue/Persons
-void NewCityToOldPersonsQueue(U8* personsQueue)
+void NewCityToOldPersonsQueue(U8 *personsQueue)
 {
-    int queueIndex = 0;
-    
-    // Iterate through all cities
-    for (U8 cityId = 0; cityId < CITY_MAX; cityId++) 
-    {
-        // Update city's PersonQueue to point to start of its section
-        g_Cities[cityId].PersonQueue = queueIndex;
-        
-        // Copy all person IDs from this city's PersonV to queue
-        for (const auto& personId : g_Cities[cityId].PersonV) 
-        {
-            personsQueue[queueIndex++] = personId;
-        }
-        
-        // Update number of persons in this city
-        g_Cities[cityId].Persons = g_Cities[cityId].PersonV.size();
-    }
+	int queueIndex = 0;
+
+	// Iterate through all cities
+	for (U8 cityId = 0; cityId < CITY_MAX; cityId++)
+	{
+		// Update city's PersonQueue to point to start of its section
+		g_Cities[cityId].PersonQueue = queueIndex;
+
+		// Copy all person IDs from this city's PersonV to queue
+		for (const auto &personId : g_Cities[cityId].PersonV)
+		{
+			personsQueue[queueIndex++] = personId;
+		}
+
+		// Update number of persons in this city
+		g_Cities[cityId].Persons = g_Cities[cityId].PersonV.size();
+	}
 }
 
 /******************************************************************************
@@ -1441,246 +1457,281 @@ void ShowTacticNote(void)
 }
 
 // Get all enemies persons.
-std::vector<U8> GetEnemyPersonsV(U8 king) 
+std::vector<U8> GetEnemyPersonsV(U8 king)
 {
-    vector<U8> enemyOfficers;
-    
-    // Iterate through all cities
-    for (U8 cityId = 0; cityId < CITY_MAX; cityId++) 
-    {
-        U8 cityBelong = g_Cities[cityId].Belong;
-        
-        // Check if city belongs to an enemy (not player's faction and not empty)
-        if (cityBelong && (cityBelong != (king + 1))) 
-        {
-            // Add all officers from this city's PersonV
-            for (auto personId : g_Cities[cityId].PersonV)
-            {
-                // Only add if they belong to this city's faction and aren't the king
-                if ((g_Persons[personId].Belong == cityBelong) && 
-                    ((personId + 1) != cityBelong))
-                {
-                    enemyOfficers.push_back(personId);
-                }
-            }
-        }
-    }
+	vector<U8> enemyOfficers;
 
-    return enemyOfficers;
+	// Iterate through all cities
+	for (U8 cityId = 0; cityId < CITY_MAX; cityId++)
+	{
+		U8 cityBelong = g_Cities[cityId].Belong;
+
+		// Check if city belongs to an enemy (not player's faction and not empty)
+		if (cityBelong && (cityBelong != (king + 1)))
+		{
+			// Add all officers from this city's PersonV
+			for (auto personId : g_Cities[cityId].PersonV)
+			{
+				// Only add if they belong to this city's faction and aren't the king
+				if ((g_Persons[personId].Belong == cityBelong) &&
+					((personId + 1) != cityBelong))
+				{
+					enemyOfficers.push_back(personId);
+				}
+			}
+		}
+	}
+
+	return enemyOfficers;
 }
 
-U8 GetEnemyPersons(U8 king, U8* pqueue)
+U8 GetEnemyPersons(U8 king, U8 *pqueue)
 {
-    auto officers = GetEnemyPersonsV(king);
-    
-    // Copy to array
-    for (size_t i = 0; i < officers.size(); i++) {
-        pqueue[i] = officers[i];
-    }
-    
-    return officers.size();
+	auto officers = GetEnemyPersonsV(king);
+
+	// Copy to array
+	for (size_t i = 0; i < officers.size(); i++)
+	{
+		pqueue[i] = officers[i];
+	}
+
+	return officers.size();
 }
 
 U8 AddPerson(U8 city, U8 person)
 {
-    // Validate inputs
-    if (city >= CITY_MAX || person >= PERSON_MAX) {
-        return 1;
-    }
+	// Validate inputs
+	if (city >= CITY_MAX || person >= PERSON_MAX)
+	{
+		return 1;
+	}
 
-    // Add person to city's PersonV vector
-    g_Cities[city].PersonV.push_back(person);
+	// Add person to city's PersonV vector
+	g_Cities[city].PersonV.push_back(person);
 
-    // Update officer's affiliation if needed
-    // if (g_Persons[person].Belong != g_Cities[city].Belong) {
-    //     g_Persons[person].Belong = g_Cities[city].Belong;
-    // }
+	// Update officer's affiliation if needed
+	// if (g_Persons[person].Belong != g_Cities[city].Belong) {
+	//     g_Persons[person].Belong = g_Cities[city].Belong;
+	// }
 
-    return 0;
+	return 0;
 }
 /******************************************************************************
-* Function: DelPerson
-* Description: Removes an officer from a city's roster using remove-and-swap idiom
-* 
-* Input: 
-*   city - City ID to remove officer from
-*   person - Officer ID to remove
-* Returns: 
-*   0 - Success
-*   1 - Failure (invalid params or officer not found)
-******************************************************************************/
+ * Function: DelPerson
+ * Description: Removes an officer from a city's roster using remove-and-swap idiom
+ *
+ * Input:
+ *   city - City ID to remove officer from
+ *   person - Officer ID to remove
+ * Returns:
+ *   0 - Success
+ *   1 - Failure (invalid params or officer not found)
+ ******************************************************************************/
 U8 DelPerson(U8 city, U8 person)
 {
-    // Validate inputs
-    if (city >= CITY_MAX || person >= PERSON_MAX) {
-        return 1;
-    }
+	// Validate inputs
+	if (city >= CITY_MAX || person >= PERSON_MAX)
+	{
+		return 1;
+	}
 
-    auto& personV = g_Cities[city].PersonV;
-    
-    // Find and remove person using remove-and-swap idiom
-    auto newEnd = std::remove(personV.begin(), personV.end(), person);
-    
-    // Check if person was found and removed
-    if (newEnd != personV.end()) {
-        personV.erase(newEnd, personV.end());
-        return 0;
-    }
+	auto &personV = g_Cities[city].PersonV;
 
-    return 1; // Person not found
+	// Find and remove person using remove-and-swap idiom
+	auto newEnd = std::remove(personV.begin(), personV.end(), person);
+
+	// Check if person was found and removed
+	if (newEnd != personV.end())
+	{
+		personV.erase(newEnd, personV.end());
+		return 0;
+	}
+
+	return 1; // Person not found
 }
 
 /******************************************************************************
-* Function: GetPersonCity
-* Description: Gets the city ID where a person/officer is currently located
-* 
-* Input: person - Officer ID to find
-* Returns: City ID (0xff if not found in any city)
-******************************************************************************/
+ * Function: GetPersonCity
+ * Description: Gets the city ID where a person/officer is currently located
+ *
+ * Input: person - Officer ID to find
+ * Returns: City ID (0xff if not found in any city)
+ ******************************************************************************/
 U8 GetPersonCity(U8 person)
 {
-    // Check each city's PersonV for the officer
-    for (U8 cityId = 0; cityId < CITY_MAX; cityId++)
-    {
-        const auto& personV = g_Cities[cityId].PersonV;
-        
-        // Use std::find to search for person in vector
-        if (std::find(personV.begin(), personV.end(), person) != personV.end())
-        {
-            return cityId;
-        }
-    }
-    
-    return 0xff; // Person not found in any city
+	// Check each city's PersonV for the officer
+	for (U8 cityId = 0; cityId < CITY_MAX; cityId++)
+	{
+		const auto &personV = g_Cities[cityId].PersonV;
+
+		// Use std::find to search for person in vector
+		if (std::find(personV.begin(), personV.end(), person) != personV.end())
+		{
+			return cityId;
+		}
+	}
+
+	return 0xff; // Person not found in any city
 }
 
 /******************************************************************************
-* Function: GetCityPersons
-* Description: Gets list of active officers in a city (excluding captives)
-* 
-* Input: 
-*   city - City ID to check
-*   pqueue - Array to store officer IDs
-* Returns: Number of active officers found
-******************************************************************************/
-U8 GetCityPersons(U8 city, U8* pqueue)
+ * Function: GetCityPersons
+ * Description: Gets list of active officers in a city (excluding captives)
+ *
+ * Input:
+ *   city - City ID to check
+ *   pqueue - Array to store officer IDs
+ * Returns: Number of active officers found
+ ******************************************************************************/
+U8 GetCityPersons(U8 city, U8 *pqueue)
 {
-    U8 count = 0;
-    
-    // Get all officers that belong to city's faction
-    for (const auto& personId : g_Cities[city].PersonV)
-    {
-        if (g_Persons[personId].Belong == g_Cities[city].Belong)
-        {
-            pqueue[count++] = personId;
-        }
-    }
-    
-    return count;
+	U8 count = 0;
+
+	// Get all officers that belong to city's faction
+	for (const auto &personId : g_Cities[city].PersonV)
+	{
+		if (g_Persons[personId].Belong == g_Cities[city].Belong)
+		{
+			pqueue[count++] = personId;
+		}
+	}
+
+	return count;
 }
 
 /******************************************************************************
-* Function: GetCityOutPersons
-* Description: Gets unaffiliated officers (在野武将) in a city
-* 
-* Input: 
-*   city - City ID to check
-*   pqueue - Array to store officer IDs
-* Returns: Number of unaffiliated officers found
-******************************************************************************/
-U8 GetCityOutPersons(U8 city, U8* pqueue)
+ * Function: GetCityOutPersons
+ * Description: Gets unaffiliated officers (在野武将) in a city
+ *
+ * Input:
+ *   city - City ID to check
+ *   pqueue - Array to store officer IDs
+ * Returns: Number of unaffiliated officers found
+ ******************************************************************************/
+U8 GetCityOutPersons(U8 city, U8 *pqueue)
 {
-    U8 count = 0;
-    
-    // Get all unaffiliated officers from city's PersonV
-    for (const auto& personId : g_Cities[city].PersonV)
-    {
-        // Check if person is unaffiliated (Belong == 0)
-        if (g_Persons[personId].Belong == 0)
-        {
-            pqueue[count++] = personId;
-        }
-    }
-    
-    return count;
+	U8 count = 0;
+
+	// Get all unaffiliated officers from city's PersonV
+	for (const auto &personId : g_Cities[city].PersonV)
+	{
+		// Check if person is unaffiliated (Belong == 0)
+		if (g_Persons[personId].Belong == 0)
+		{
+			pqueue[count++] = personId;
+		}
+	}
+
+	return count;
 }
 /******************************************************************************
-* Function: GetCityCaptives
-* Description: Gets captured officers (俘虏) in a city
-* 
-* Input: 
-*   city - City ID to check
-*   pqueue - Array to store captured officer IDs
-* Returns: Number of captured officers found
-******************************************************************************/
-U8 GetCityCaptives(U8 city, U8* pqueue)
+ * Function: GetCityCaptives
+ * Description: Gets captured officers (俘虏) in a city
+ *
+ * Input:
+ *   city - City ID to check
+ *   pqueue - Array to store captured officer IDs
+ * Returns: Number of captured officers found
+ ******************************************************************************/
+U8 GetCityCaptives(U8 city, U8 *pqueue)
 {
-    U8 count = 0;
-    
-    // Get all captured officers from city's PersonV
-    for (const auto& personId : g_Cities[city].PersonV)
-    {
-        // Check if person belongs to a different faction than the city
-        if (g_Persons[personId].Belong != 0 && 
-            g_Persons[personId].Belong != g_Cities[city].Belong)
-        {
-            pqueue[count++] = personId;
-        }
-    }
-    
-    return count;
+	U8 count = 0;
+
+	// Get all captured officers from city's PersonV
+	for (const auto &personId : g_Cities[city].PersonV)
+	{
+		// Check if person belongs to a different faction than the city
+		if (g_Persons[personId].Belong != 0 &&
+			g_Persons[personId].Belong != g_Cities[city].Belong)
+		{
+			pqueue[count++] = personId;
+		}
+	}
+
+	return count;
 }
 
 /******************************************************************************
-* Function: GetWeekCity
-* Description: Gets the weakest city from a list of cities based on total arms
-* 
-* Input: 
-*   count - Number of cities to check
-*   cqueue - Array of city IDs to check
-* Returns: ID of the weakest city
-******************************************************************************/
-U8 GetWeekCity(U8 count, U8* cqueue)
+ * Function: GetWeekCity
+ * Description: Gets the weakest city from a list of cities based on total arms
+ *
+ * Input:
+ *   count - Number of cities to check
+ *   cqueue - Array of city IDs to check
+ * Returns: ID of the weakest city
+ ******************************************************************************/
+U8 GetWeekCity(U8 count, U8 *cqueue)
 {
-    U16 weakestArms = 0xffff;
-    U8 weakestCity = 0;
-    
-    // Check each city in the queue
-    for (U8 c = 0; c < count; c++)
-    {
-        U16 totalArms = 0;
-        const auto& city = g_Cities[cqueue[c]];
-        
-        // Sum arms from all officers in city's PersonV
-        for (const auto& personId : city.PersonV)
-        {
-            if (g_Persons[personId].Belong == city.Belong)
-            {
-                totalArms += g_Persons[personId].Arms;
-            }
-        }
-        
-        // Add arms from officers on missions
-        const auto* orders = (OrderType*)ORDERQUEUE;
-        for (U8 i = 0; i < ORDER_MAX && orders[i].OrderId != 0xff; i++)
-        {
-            if ((orders[i].OrderId != MOVE) && 
-                (orders[i].OrderId != BATTLE) && 
-                (orders[i].City == cqueue[c]))
-            {
-                totalArms += g_Persons[orders[i].Person].Arms;
-            }
-        }
-        
-        // Update weakest city if this one has fewer arms
-        if (totalArms < weakestArms)
-        {
-            weakestArms = totalArms;
-            weakestCity = c;
-        }
+	U16 weakestArms = 0xffff;
+	U8 weakestCity = 0;
+
+	// Check each city in the queue
+	for (U8 c = 0; c < count; c++)
+	{
+		U16 totalArms = 0;
+		const auto &city = g_Cities[cqueue[c]];
+
+		// Sum arms from all officers in city's PersonV
+		for (const auto &personId : city.PersonV)
+		{
+			if (g_Persons[personId].Belong == city.Belong)
+			{
+				totalArms += g_Persons[personId].Arms;
+			}
+		}
+
+		// Add arms from officers on missions
+		const auto *orders = (OrderType *)ORDERQUEUE;
+		for (U8 i = 0; i < ORDER_MAX && orders[i].OrderId != 0xff; i++)
+		{
+			if ((orders[i].OrderId != MOVE) &&
+				(orders[i].OrderId != BATTLE) &&
+				(orders[i].City == cqueue[c]))
+			{
+				totalArms += g_Persons[orders[i].Person].Arms;
+			}
+		}
+
+		// Update weakest city if this one has fewer arms
+		if (totalArms < weakestArms)
+		{
+			weakestArms = totalArms;
+			weakestCity = c;
+		}
+	}
+
+	return cqueue[weakestCity];
+}
+
+std::string gbk_to_utf8(const char* gbk_str, size_t gbk_len) {
+    iconv_t cd = iconv_open("UTF-8", "GBK");
+    if (cd == (iconv_t)-1) {
+        std::cerr << "iconv_open error: " << strerror(errno) << std::endl;
+        return "";
     }
     
-    return cqueue[weakestCity];
+    // Allocate output buffer (4x input size to be safe - UTF-8 can be longer than GBK)
+    size_t out_buf_size = gbk_len * 4;
+    char* utf8_buf = new char[out_buf_size];
+    
+    char* in_ptr = const_cast<char*>(gbk_str);
+    char* out_ptr = utf8_buf;
+    size_t in_bytes_left = gbk_len;
+    size_t out_bytes_left = out_buf_size;
+    
+    if (iconv(cd, &in_ptr, &in_bytes_left, &out_ptr, &out_bytes_left) == (size_t)-1) {
+        std::cerr << "iconv error: " << strerror(errno) << std::endl;
+        delete[] utf8_buf;
+        iconv_close(cd);
+        return "";
+    }
+    
+    // Create string from buffer, using the correct length
+    std::string result(utf8_buf, out_buf_size - out_bytes_left);
+    
+    delete[] utf8_buf;
+    iconv_close(cd);
+    return result;
 }
 
 #include "json.hpp"
@@ -1688,102 +1739,152 @@ using json = nlohmann::json;
 
 bool SaveCityJson(U8 idx)
 {
-    // Create filename
-    std::string filename = "city_" + std::to_string(idx) + ".json";
+	// Create filename
+	std::string filename = "city_" + std::to_string(idx) + ".json";
 
-    // Convert cities to JSON
-    json citiesJson;
-    for (int i = 0; i < CITY_MAX; i++) {
-        json city;
-        // Basic properties
-        city["Id"] = g_Cities[i].Id;
-        city["Belong"] = g_Cities[i].Belong;
-        city["SatrapId"] = g_Cities[i].SatrapId;
-        city["FarmingLimit"] = g_Cities[i].FarmingLimit;
-        city["Farming"] = g_Cities[i].Farming;
-        city["CommerceLimit"] = g_Cities[i].CommerceLimit;
-        city["Commerce"] = g_Cities[i].Commerce;
-        city["PeopleDevotion"] = g_Cities[i].PeopleDevotion;
-        city["AvoidCalamity"] = g_Cities[i].AvoidCalamity;
-        city["PopulationLimit"] = g_Cities[i].PopulationLimit;
-        city["Population"] = g_Cities[i].Population;
-        city["Money"] = g_Cities[i].Money;
-        city["Food"] = g_Cities[i].Food;
-        city["MothballArms"] = g_Cities[i].MothballArms;
-        city["PersonQueue"] = g_Cities[i].PersonQueue;
-        city["Persons"] = g_Cities[i].Persons;
-        city["ToolQueue"] = g_Cities[i].ToolQueue;
-        city["Tools"] = g_Cities[i].Tools;
-        city["autoManage"] = g_Cities[i].autoManage;
+	// Convert cities to JSON
+	json citiesJson;
+	for (int i = 0; i < CITY_MAX; i++)
+	{
+		json city;
+		// Basic properties
+		city["Id"] = g_Cities[i].Id;
+		city["Belong"] = g_Cities[i].Belong;
+		city["SatrapId"] = g_Cities[i].SatrapId;
+		city["FarmingLimit"] = g_Cities[i].FarmingLimit;
+		city["Farming"] = g_Cities[i].Farming;
+		city["CommerceLimit"] = g_Cities[i].CommerceLimit;
+		city["Commerce"] = g_Cities[i].Commerce;
+		city["PeopleDevotion"] = g_Cities[i].PeopleDevotion;
+		city["AvoidCalamity"] = g_Cities[i].AvoidCalamity;
+		city["PopulationLimit"] = g_Cities[i].PopulationLimit;
+		city["Population"] = g_Cities[i].Population;
+		city["Money"] = g_Cities[i].Money;
+		city["Food"] = g_Cities[i].Food;
+		city["MothballArms"] = g_Cities[i].MothballArms;
+		city["PersonQueue"] = g_Cities[i].PersonQueue;
+		city["Persons"] = g_Cities[i].Persons;
+		city["ToolQueue"] = g_Cities[i].ToolQueue;
+		city["Tools"] = g_Cities[i].Tools;
+		city["autoManage"] = g_Cities[i].autoManage;
+		city["Name"] = g_Cities[i].Name;
 
-        // Vector and set properties
-        city["PersonV"] = g_Cities[i].PersonV;
-        city["ToolsV"] = g_Cities[i].ToolsV;
-        city["usedPersonsV"] = json(g_Cities[i].usedPersonsV);
-        
-        citiesJson.push_back(city);
-    }
+		// Vector and set properties
+		city["PersonV"] = g_Cities[i].PersonV;
+		city["ToolsV"] = g_Cities[i].ToolsV;
+		city["usedPersonsV"] = json(g_Cities[i].usedPersonsV);
 
-    try {
-        // Write JSON to file with pretty printing
-        std::ofstream o(filename);
-        o << citiesJson.dump(4);  // indent with 4 spaces
-        o.close();
-        return true;
-    }
-    catch (const std::exception& e) {
-        // Handle any file writing errors
-        return false;
-    }
+		citiesJson.push_back(city);
+	}
+
+	try
+	{
+		// Write JSON to file with pretty printing
+		std::ofstream o(filename);
+		o << citiesJson.dump(4); // indent with 4 spaces
+		o.close();
+		return true;
+	}
+	catch (const std::exception &e)
+	{
+		// Handle any file writing errors
+		return false;
+	}
 }
-
 
 bool LoadCityJson(U8 idx)
 {
-    // Create filename
-    std::string filename = "city_" + std::to_string(idx) + ".json";
+	// Create filename
+	std::string filename = "city_" + std::to_string(idx) + ".json";
 
-    try {
-        // Read JSON from file
-        std::ifstream i(filename);
-        json citiesJson;
-        i >> citiesJson;
+	try
+	{
+		// Read JSON from file
+		std::ifstream i(filename);
+		json citiesJson;
+		i >> citiesJson;
 
-        // Load cities from JSON
-        for (int i = 0; i < CITY_MAX; i++) {
-            const auto& city = citiesJson[i];
-            
-            // Basic properties
-            g_Cities[i].Id = city["Id"];
-            g_Cities[i].Belong = city["Belong"];
-            g_Cities[i].SatrapId = city["SatrapId"];
-            g_Cities[i].FarmingLimit = city["FarmingLimit"];
-            g_Cities[i].Farming = city["Farming"];
-            g_Cities[i].CommerceLimit = city["CommerceLimit"];
-            g_Cities[i].Commerce = city["Commerce"];
-            g_Cities[i].PeopleDevotion = city["PeopleDevotion"];
-            g_Cities[i].AvoidCalamity = city["AvoidCalamity"];
-            g_Cities[i].PopulationLimit = city["PopulationLimit"];
-            g_Cities[i].Population = city["Population"];
-            g_Cities[i].Money = city["Money"];
-            g_Cities[i].Food = city["Food"];
-            g_Cities[i].MothballArms = city["MothballArms"];
-            g_Cities[i].PersonQueue = city["PersonQueue"];
-            g_Cities[i].Persons = city["Persons"];
-            g_Cities[i].ToolQueue = city["ToolQueue"];
-            g_Cities[i].Tools = city["Tools"];
-            g_Cities[i].autoManage = city["autoManage"];
+		// Load cities from JSON
+		for (int i = 0; i < CITY_MAX; i++)
+		{
+			const auto &city = citiesJson[i];
 
-            // Vector and set properties
-            g_Cities[i].PersonV = city["PersonV"].get<std::vector<U8>>();
-            g_Cities[i].ToolsV = city["ToolsV"].get<std::vector<U8>>();
-            g_Cities[i].usedPersonsV = city["usedPersonsV"].get<std::set<U8>>();
-        }
+			// Basic properties
+			g_Cities[i].Id = city["Id"];
+			g_Cities[i].Belong = city["Belong"];
+			g_Cities[i].SatrapId = city["SatrapId"];
+			g_Cities[i].FarmingLimit = city["FarmingLimit"];
+			g_Cities[i].Farming = city["Farming"];
+			g_Cities[i].CommerceLimit = city["CommerceLimit"];
+			g_Cities[i].Commerce = city["Commerce"];
+			g_Cities[i].PeopleDevotion = city["PeopleDevotion"];
+			g_Cities[i].AvoidCalamity = city["AvoidCalamity"];
+			g_Cities[i].PopulationLimit = city["PopulationLimit"];
+			g_Cities[i].Population = city["Population"];
+			g_Cities[i].Money = city["Money"];
+			g_Cities[i].Food = city["Food"];
+			g_Cities[i].MothballArms = city["MothballArms"];
+			g_Cities[i].PersonQueue = city["PersonQueue"];
+			g_Cities[i].Persons = city["Persons"];
+			g_Cities[i].ToolQueue = city["ToolQueue"];
+			g_Cities[i].Tools = city["Tools"];
+			g_Cities[i].autoManage = city["autoManage"];
 
-        return true;
-    }
-    catch (const std::exception& e) {
-        // Handle any file reading or parsing errors
-        return false;
-    }
+			// Vector and set properties
+			g_Cities[i].PersonV = city["PersonV"].get<std::vector<U8>>();
+			g_Cities[i].ToolsV = city["ToolsV"].get<std::vector<U8>>();
+			g_Cities[i].usedPersonsV = city["usedPersonsV"].get<std::set<U8>>();
+			g_Cities[i].Name =city["Name"];
+		}
+
+		return true;
+	}
+	catch (const std::exception &e)
+	{
+		// Handle any file reading or parsing errors
+		return false;
+	}
 }
+
+void printCityDebugInfo(U8 cityId) {
+	if (cityId >= CITY_MAX) {
+		logMessageFromCppFormat("Invalid city ID %d", cityId);
+		return;
+	}
+
+	// Print city info
+	logMessageFromCppFormat("City %d (%s):", cityId, g_Cities[cityId].Name.c_str());
+	
+	// Get and print unaffiliated persons in city 
+	logMessageFromCppFormat("在野武将:");
+	for (const auto& personId : g_Cities[cityId].PersonV) {
+		if (g_Persons[personId].Belong) {
+			continue;
+		}
+		U8 nameBuf[10];
+		GetPersonName(personId, nameBuf);
+		logMessageFromCppFormat("ID: %3d, Name: %s", personId, gbk_to_utf8((char*)nameBuf, 10).c_str());
+	}
+}
+void printCityDebugInfoCout(U8 cityId) {
+	if (cityId >= CITY_MAX) {
+		std::cout << "Invalid city ID " << (int)cityId << std::endl;
+		return;
+	}
+
+	// Print city info
+	std::cout << "City " << (int)cityId << " (" << g_Cities[cityId].Name << "):" << std::endl;
+	
+	// Get and print unaffiliated persons in city
+	std::cout << "在野武将:" << std::endl; 
+	for (const auto& personId : g_Cities[cityId].PersonV) {
+		if (g_Persons[personId].Belong) {
+			continue;
+		}
+		U8 nameBuf[10];
+		GetPersonName(personId, nameBuf);
+		std::cout << "ID: " << std::setw(3) << (int)personId 
+				 << ", Name: " << gbk_to_utf8((char*)nameBuf, strlen((const char*)nameBuf)) << std::endl;
+	}
+}
+

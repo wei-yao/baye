@@ -10,7 +10,7 @@ CXXFLAGS = -g -I C:/Qt/Qt5.14.2/5.14.2/mingw73_32/include \
            -I C:/Qt/Qt5.14.2/5.14.2/mingw73_32/include/QtCore
 
 LDFLAGS = -L C:/Qt/Qt5.14.2/5.14.2/mingw73_32/lib \
-          -lQt5Core -lQt5Gui -lQt5Widgets -lQt5Network -lqtmain
+          -lQt5Core -lQt5Gui -lQt5Widgets -lQt5Network -lqtmain -liconv -lkernel32
 
 # Paths
 SRC_DIR = .

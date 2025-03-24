@@ -25,7 +25,7 @@
 void GetPersonProStr(U8 person,U8 pro,U8 *str);
 void GetPersonName(U8 person,U8 *str);*/
 
-
+//void printCityDebugInfo(U8 cityId);
 
 extern int g_stat;
 extern int ngthird1;
@@ -965,7 +965,7 @@ void GetCityProStr(U8 city,U8 pro,U8 *str)
 	
 	showtop = 0;
 	showflag = 1;
-	printf("ShowCityPro %d\n", city);
+	// printCityDebugInfo(city);
 	while (1)
 	{
 		if (showflag)

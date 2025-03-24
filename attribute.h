@@ -159,6 +159,25 @@ typedef struct Person				/*人才属性 (12 Bytes) */
 	U8 Age;				/*年龄*/
 }PersonType;
 
+typedef struct NewPerson				/*人才属性 (12 Bytes) */
+{
+	U8 Id;				/*编号*/
+	U8 Belong;			/*归属*/
+	U8 Level;			/*等级*/
+	U8 Force;			/*武力*/
+	U8 IQ;				/*智力*/
+	U8 Devotion;			/*忠诚*/
+	U8 Character;			/*性格*/
+	U8 Experience;			/*经验*/
+	U8 Thew;			/*体力*/
+	U8 ArmsType;			/*兵种*/
+	U16 Arms;			/*兵力*/
+	U8 Equip[2];			/*装备*/
+	U8 Age;				/*年龄*/
+  U8 city;      /* 出现城市编号 */
+  std::string Name;        /*名称*/
+} NewPersonType;
+
 // maybe still use the current framework, addperson, delperson, getcitypersons
 //for assign: need to list all persons
 
@@ -235,6 +254,7 @@ typedef struct City				/*城市属性(30 Bytes)*/
     std::vector<U8> PersonV;
     std::set<U8> usedPersonsV;
     bool autoManage;    // if auto manage
+    std::string Name;        /*城市名称*/  // Added name field
 //#endif
 } CityType;
 

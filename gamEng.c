@@ -90,7 +90,8 @@ extern int g_startFlag;
 
 
         /* 获取游戏选项 */
-        if(!GamMainChose())
+
+		if(!GamMainChose())
             break;
         ngb=1;
         GameDevDrv();	 	/* 游戏引擎入口程序 */

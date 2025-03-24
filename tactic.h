@@ -38,6 +38,9 @@ U8 GetCityCaptives(U8 city, U8* pqueue);
 U8 GetWeekCity(U8 count, U8* cqueue);
 bool SaveCityJson(U8 idx);
 bool LoadCityJson(U8 idx);
+std::string gbk_to_utf8(const char* gbk_str, size_t gbk_len);
+void printCityDebugInfo(U8 cityId);
+void printCityDebugInfoCout(U8 cityId);
 
 #ifdef __cplusplus
 }
