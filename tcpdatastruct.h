@@ -1,11 +1,6 @@
 #ifndef TCPDATASTRUCT_H
 #define TCPDATASTRUCT_H
 
-#ifdef __cplusplus
-
-extern "C" {
-#endif /* __cplusplus */
-
 #include "gameview.h"
 
 #pragma pack(1)
@@ -104,9 +99,5 @@ UT DownloadSave();//0002
 UT chartohex(C *instr, C *outchar);
 UT hextochar(C *instr, C *outchar);
 char* StrSHA256(const char* str, int length, char* sha256);
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 #endif // TCPDATASTRUCT_H

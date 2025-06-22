@@ -39,10 +39,6 @@ extern CitySetType g_CityPos;		/*当前城市地图显示位置结构*/
 //extern U8 AddGoods(U8 city,U8 goods);
 //extern U8 AddPerson(U8 city,U8 persion);
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 U8 AddPerson(U8 city,U8 person)
 {
    U8 i;
@@ -248,10 +244,6 @@ void InitializeToolsVFromOldSystem()
     
     std::cout << "ToolsV initialization complete!" << std::endl;
 }
-
-#ifdef __cplusplus
-}
-#endif
 
 //需存储的信息
 int herosave[HEROMAX_OLD][19];

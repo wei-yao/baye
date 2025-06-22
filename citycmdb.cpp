@@ -35,10 +35,8 @@ extern int ngsecond1;
 } // namespace GameEngine
 
 // Global variables accessible from C code
-extern "C" {
     extern int g_stat;
     extern int ngsecond1;
-}
 
 /******************************************************************************
 * 函数名:OrderMenu
@@ -54,7 +52,7 @@ extern "C" {
 *		陈泽伟		2005-6-13 15:21	基本功能完成
 *		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-extern "C" U8 OrderMenu(void)
+ U8 OrderMenu(void)
 {
 	U8 rav;
 	
@@ -112,7 +110,7 @@ extern "C" U8 OrderMenu(void)
 *		陈泽伟		2005-6-13 15:33	基本功能完成
 *		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-extern "C" U8 MainOrderMenu(void)
+ U8 MainOrderMenu(void)
 {
 	RECT pRect;
 	U8 mstr[25];
@@ -142,7 +140,7 @@ extern "C" U8 MainOrderMenu(void)
 *		陈泽伟		2005-6-13 15:33	基本功能完成
 *		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-extern "C" U8 InteriorOrderMenu(void)
+ U8 InteriorOrderMenu(void)
 {
 	RECT pRect;
 	U8 mstr[85];
@@ -172,7 +170,7 @@ extern "C" U8 InteriorOrderMenu(void)
 *		陈泽伟		2005-6-13 15:36	基本功能完成
 *		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-extern "C" U8 DiplomatismOrderMenu(void)
+ U8 DiplomatismOrderMenu(void)
 {
 	RECT pRect;
 	U8 mstr[30];
@@ -202,7 +200,7 @@ extern "C" U8 DiplomatismOrderMenu(void)
 *		陈泽伟		2005-6-13 15:36	基本功能完成
 *		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-extern "C" U8 ArmamentOrderMenu(void)
+ U8 ArmamentOrderMenu(void)
 {
 	RECT pRect;
 	U8 mstr[30];
@@ -232,7 +230,7 @@ extern "C" U8 ArmamentOrderMenu(void)
 *		陈泽伟		2005-6-16 14:39	基本功能完成
 *		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-extern "C" U8 CityCommon(U8 city,U8 cmd)
+ U8 CityCommon(U8 city,U8 cmd)
 {
 	if (CITY_MAX <= city)
 		return(0);
@@ -334,7 +332,7 @@ extern "C" U8 CityCommon(U8 city,U8 cmd)
 *		陈泽伟		2005-6-3 17:30	基本功能完成
 *		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-extern "C" U8 AssartMake(U8 city)
+ U8 AssartMake(U8 city)
 {
 	U8 *pqptr;
 	U8 pcount;
@@ -428,7 +426,7 @@ extern "C" U8 AssartMake(U8 city)
 *		陈泽伟		2005-6-3 17:30	基本功能完成
 *		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-extern "C" U8 AccractbusinessMake(U8 city)
+ U8 AccractbusinessMake(U8 city)
 {
 	U8 *pqptr;
 	U8 pcount;
@@ -522,7 +520,7 @@ extern "C" U8 AccractbusinessMake(U8 city)
 *		陈泽伟		2005-8-16 15:38	基本功能完成
 *		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-extern "C" void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
+ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 {
 	U8 *str,*astr;
 	
@@ -573,7 +571,7 @@ extern "C" void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 *		陈泽伟		2005-6-3 17:30	基本功能完成
 *		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-extern "C" U8 SearchMake(U8 city)
+ U8 SearchMake(U8 city)
 {
 	U8 *str;
 	U8 *pqptr;
@@ -665,7 +663,7 @@ extern "C" U8 SearchMake(U8 city)
 *		陈泽伟		2005-6-3 17:30	基本功能完成
 *		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-extern "C" U8 FatherMake(U8 city)
+ U8 FatherMake(U8 city)
 {
 	U8 *pqptr;
 	U8 pcount;
@@ -755,7 +753,7 @@ extern "C" U8 FatherMake(U8 city)
 *		陈泽伟		2005-6-3 17:30	基本功能完成
 *		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-extern "C" U8 InspectionMake(U8 city)
+ U8 InspectionMake(U8 city)
 {
 	U8 *pqptr;
 	U8 pcount;
@@ -848,7 +846,7 @@ extern "C" U8 InspectionMake(U8 city)
 *		陈泽伟		2005-6-3 17:30	基本功能完成
 *		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-extern "C" U8 SurrenderMake(U8 city)
+ U8 SurrenderMake(U8 city)
 {
 	U8 *str;
 	U8 *pqptr;
@@ -939,7 +937,7 @@ extern "C" U8 SurrenderMake(U8 city)
 *		陈泽伟		2005-6-3 17:30	基本功能完成
 *		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-extern "C" U8 KillMake(U8 city)
+ U8 KillMake(U8 city)
 {
 	U8 *pqptr;
 	U8 pcount;
@@ -994,7 +992,7 @@ extern "C" U8 KillMake(U8 city)
 *		陈泽伟		2005-6-3 17:30	基本功能完成
 *		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-extern "C" U8 BanishMake(U8 city)
+ U8 BanishMake(U8 city)
 {
 	U8 *pqptr;
 	U8 pcount;
@@ -1051,7 +1049,7 @@ extern "C" U8 BanishMake(U8 city)
 *		陈泽伟		2005-6-3 17:30	基本功能完成
 *		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-extern "C" U8 LargessMake(U8 city)
+ U8 LargessMake(U8 city)
 {
 	U8 *str;
 	U8 *gqptr;

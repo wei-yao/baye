@@ -3,11 +3,7 @@
 
 #define	CITYEDIT_C
 #define	CITYCMD_C
-#ifdef __cplusplus
-#define	CITYCMDB_C extern "C"
-#else
 #define	CITYCMDB_C
-#endif
 #define	CITYCMDC_C
 #define	CITYCMDD_C
 #define	CITYCMDE_C

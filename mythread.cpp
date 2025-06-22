@@ -1,12 +1,9 @@
 #include "mythread.h"
 #include <QDebug>
-extern "C" {
-//#include "enghead.h"
-}
 
 extern int g_startFlag;
 
-extern "C" void GamBaYeEng(void);
+void GamBaYeEng(void);
 
 MyThread::MyThread(QObject * parent) :
     QThread(parent)

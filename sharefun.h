@@ -1,8 +1,5 @@
 #ifndef	SHAREFUN_H
 #define	SHAREFUN_H
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 CITYEDIT_C U8 AddPerson(U8 city,U8 person);
 CITYEDIT_C U8 DelPerson(U8 city,U8 person);
@@ -182,9 +179,5 @@ INFDEAL_C U8 GetCityDispGoods(U8 city,U8 *gqueue);
 INFDEAL_C U8 GetPersonsCount(U8 king);
 INFDEAL_C U8 GetDirect(U8 sc,U8 oc);
 INFDEAL_C void ReportCalamity(U8 city);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

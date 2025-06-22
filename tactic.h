@@ -1,9 +1,6 @@
 #ifndef TAC_TIC_HEADER
 #define TAC_TIC_HEADER
 #include<vector>
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 void AITacticDiplomatism(U8 city);
  U8 PlayerTactic();
@@ -49,13 +46,6 @@ void InitializeToolsVFromOldSystem(void);
 
 // C wrapper for debug logging (visible to both C and C++)
 void writeAllCitiesDebugLogC(const char* operation);
-
-#ifdef __cplusplus
-}
-#endif
-
-// C wrapper for debug logging (visible to both C and C++)
-//void writeAllCitiesDebugLogC(const char* operation);
 
 // C++ specific functions (cannot have C linkage)
 std::vector<U8> getAllCityPersonsBelonging(U8 city);

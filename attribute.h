@@ -249,13 +249,11 @@ typedef struct City				/*城市属性(30 Bytes)*/
     U8 Persons;			/*人才数*/
     U8 ToolQueue;			/*道具队列*/
     U8 Tools;			/*道具数*/
-	//#ifdef __cplusplus
     std::vector<U8> ToolsV;
     std::vector<U8> PersonV;
     std::set<U8> usedPersonsV;
     bool autoManage;    // if auto manage
     std::string Name;        /*城市名称*/  // Added name field
-//#endif
 } CityType;
 
 #endif

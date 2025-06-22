@@ -22,9 +22,6 @@ typedef struct {
 /*------------------------
   函数
   ------------------------*/
-  #ifdef __cplusplus
-extern "C" {
-#endif
  U16 ResGetItemLen(U16 ResId,U8 idx);
  U8 *ResLoadToCon(U16 ResId,U8 idx,U8 *cbnk);
  U8 ResLoadToMem(U16 ResId,U8 idx,U8 *ptr);
@@ -34,7 +31,5 @@ extern "C" {
  //U8 *ResConstLoadToCon(U16 ResId,const U8 *idx,U8 *cbnk);
  U8 *ResLoadToConOld(U16 ResId,U8 idx,U8 *cbnk);
  U8 *ResLoadToConNew(U16 ResId,U8 idx,U8 *cbnk);
-#ifdef __cplusplus
-}
-#endif
+
 #endif	/* _RESOURCE_H */

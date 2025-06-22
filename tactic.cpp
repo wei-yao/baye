@@ -1842,11 +1842,16 @@ std::string getCityDebugString(U8 cityId) {
                         status = "INVALID_ID";
                     } else {
                         const auto& person = g_Persons[personId];
-                        if (person.Belong == 0) {
+                        if (person.Belong == 0)
+                        {
                             status = "OFF_CITY";  // 在野武将
-                        } else if (person.Belong == city.Belong) {
+                        }
+                        else if (person.Belong == city.Belong)
+                        {
                             status = "IN_CITY";   // 属于该城市势力
-                        } else {
+                        }
+                        else
+                        {
                             status = "CAPTIVE";   // 俘虏
                         }
                     }
@@ -2045,10 +2050,6 @@ bool LoadCityJson(U8 idx)
 }
 
 // C wrapper functions for calling from C code
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 U8 SaveCityJsonC(U8 idx)
 {
 	return SaveCityJson(idx) ? 1 : 0;
@@ -2063,10 +2064,6 @@ void writeAllCitiesDebugLogC(const char* operation)
 {
 	writeAllCitiesDebugLog(std::string(operation));
 }
-
-#ifdef __cplusplus
-}
-#endif
 
 void printCityDebugInfo(U8 cityId) {
 	if (cityId >= CITY_MAX) {

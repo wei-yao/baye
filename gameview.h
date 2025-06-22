@@ -1,12 +1,5 @@
-
-
 #ifndef GAMEVIEW_H
 #define GAMEVIEW_H
-
-#ifdef __cplusplus
-
-extern "C" {
-#endif /* __cplusplus */
 
 #include "compa.h"
 #include "fsys.h"
@@ -91,9 +84,5 @@ U8 TCPgetHostIpAddress(char *outip);
 
 char * NewUUID(char * buffer);
 void SetBrush(U8 type,U8 trans);
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 #endif // GAMEVIEW_H
