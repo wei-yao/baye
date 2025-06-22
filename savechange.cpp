@@ -1,7 +1,9 @@
 #include "gameview.h"
 #include "global.h"
+#include "comm.h"
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 #include "attribute.h"
 #include "paccount.h"
 //#include "sources.h"
@@ -36,6 +38,11 @@ extern CitySetType g_CityPos;		/*当前城市地图显示位置结构*/
 
 //extern U8 AddGoods(U8 city,U8 goods);
 //extern U8 AddPerson(U8 city,U8 persion);
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 U8 AddPerson(U8 city,U8 person)
 {
    U8 i;
@@ -68,48 +75,149 @@ U8 AddPerson(U8 city,U8 person)
 
 U8 AddGoods(U8 city,U8 goods)
 {
-   U8 i;
-   U8 qnum;
-
    if (city >= CITY_MAX)
        return(0);
 
    if (goods >= GOODS_MAX)
        return(0);
 
-   qnum  = g_Cities[city].ToolQueue + g_Cities[city].Tools;
-
-   for (i = GOODS_MAX - 1;i > qnum;i --)
-   {
-       g_GoodsQueue[i] = g_GoodsQueue[i - 1];
-   }
-
-   g_GoodsQueue[qnum] = goods;
-   g_Cities[city].Tools += 1;
-
-   for (i = city + 1;i < CITY_MAX;i ++)
-   {
-       g_Cities[i].ToolQueue += 1;
-   }
+   g_Cities[city].ToolsV.push_back(goods);
+   g_Cities[city].Tools = g_Cities[city].ToolsV.size();
+   std::cout << "Added goods " << (int)goods << " to city " << (int)city << ", new total: " << g_Cities[city].Tools << std::endl;
 
    return(1);
 }
 
 void SetGoods(U8 goods)
 {
-   U8 qc;
+   U8 city;
    U8 i;
 
-   qc = g_Cities[CITY_MAX - 1].ToolQueue + g_Cities[CITY_MAX - 1].Tools;
-   for (i = 0;i < qc;i ++)
+   // Search through all cities to find the goods
+   for (city = 0; city < CITY_MAX; city++)
    {
-       if ((g_GoodsQueue[i] & 0x7f) == goods)
+       for (i = 0; i < g_Cities[city].ToolsV.size(); i++)
        {
-           g_GoodsQueue[i] |= 0x80;
-           break;
+           if ((g_Cities[city].ToolsV[i] & 0x7f) == goods)
+           {
+               g_Cities[city].ToolsV[i] |= 0x80;
+               return;
+           }
        }
    }
 }
+
+U8 DelGoods(U8 city, U8 goods)
+{
+   // Validate inputs
+   if (city >= CITY_MAX || goods >= GOODS_MAX)
+   {
+       return 1;
+   }
+
+   auto &toolsV = g_Cities[city].ToolsV;
+
+   // Find and remove goods (check both base goods and discovered goods)
+   for (auto it = toolsV.begin(); it != toolsV.end(); ++it)
+   {
+       if ((*it & 0x7f) == goods)
+       {
+           toolsV.erase(it);
+           g_Cities[city].Tools = toolsV.size();
+           std::cout << "Deleted goods " << (int)goods << " from city " << (int)city << ", new total: " << g_Cities[city].Tools << std::endl;
+           return 0;
+       }
+   }
+   std::cout << "Failed to delete goods " << (int)goods << " from city " << (int)city << std::endl;
+
+   return 1; // Goods not found
+}
+
+U8 GetCityGoods(U8 city, U8* gqueue)
+{
+   // Validate inputs
+   if (city >= CITY_MAX || gqueue == nullptr)
+   {
+       return 0;
+   }
+
+   const auto &toolsV = g_Cities[city].ToolsV;
+   U8 count = 0;
+
+   // Copy all goods from the city's ToolsV vector
+   for (U8 goods : toolsV)
+   {
+       gqueue[count] = goods;
+       count++;
+   }
+   std::cout << "GetCityGoods: city " << (int)city << ", count: " << (int)count << std::endl;
+   for (U8 i = 0; i < count; i++) {
+       std::cout << "Good " << (int)gqueue[i] << " ";
+   }
+   std::cout << std::endl;
+   return count;
+}
+
+U8 GetCityDiscoveredGoods(U8 city, U8* gqueue)
+{
+   // Validate inputs
+   if (city >= CITY_MAX || gqueue == nullptr)
+   {
+       return 0;
+   }
+
+   const auto &toolsV = g_Cities[city].ToolsV;
+   U8 count = 0;
+
+   // Copy only discovered goods (with high bit set)
+   for (U8 goods : toolsV)
+   {
+       if (goods & 0x80)
+       {
+           gqueue[count] = goods & 0x7f; // Remove the high bit
+           count++;
+       }
+   }
+
+   std::cout << "GetCityDiscoveredGoods: city " << (int)city << ", count: " << (int)count << std::endl;
+   for (U8 i = 0; i < count; i++) {
+       std::cout << "Good " << (int)gqueue[i] << " ";
+   }
+   std::cout << std::endl;
+   return count;
+}
+
+U8 GetCityUndiscoveredGoods(U8 city, U8* gqueue)
+{
+   // Validate inputs
+   if (city >= CITY_MAX || gqueue == nullptr)
+   {
+       return 0;
+   }
+
+   const auto &toolsV = g_Cities[city].ToolsV;
+   U8 count = 0;
+
+   // Copy only undiscovered goods (without high bit set)
+   for (U8 goods : toolsV)
+   {
+       if (!(goods & 0x80))
+       {
+           gqueue[count] = goods;
+           count++;
+       }
+   }
+   std::cout << "GetCityUndiscoveredGoods: city " << (int)city << ", count: " << (int)count << std::endl;
+   for (U8 i = 0; i < count; i++) {
+       std::cout << "Good " << (int)gqueue[i] << " ";
+   }
+   std::cout << std::endl;
+   return count;
+}
+
+#ifdef __cplusplus
+}
+#endif
 
 //需存储的信息
 int herosave[HEROMAX_OLD][19];

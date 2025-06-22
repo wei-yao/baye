@@ -19,6 +19,7 @@
 #include "stdsys.h"
 #include "stdio.h"
 #include "comm.h"
+#include <vector>
 #undef	INFDEAL_C
 #define	INFDEAL_C
 #include "enghead.h"
@@ -666,36 +667,6 @@ void HarvestryFood(void)
 }
 
 /******************************************************************************
-* 函数名:SetGoods
-* 说  明:设定指定道具为已发现道具
-*
-* 入口参数：指定道具
-*
-* 出口参数：无
-*
-* 修改历史:
-*		姓名		日期			说明
-*		----		----			-----------
-*		陈泽伟		2005-8-19 11:22	基本功能完成
-******************************************************************************/
- void SetGoods(U8 goods)
-{
-	U8 qc;
-	U8 i;
-	
-	qc = g_Cities[CITY_MAX - 1].ToolQueue + g_Cities[CITY_MAX - 1].Tools;
-	for (i = 0;i < qc;i ++)
-	{
-		if ((g_GoodsQueue[i] & 0x7f) == goods)
-		{
-			g_GoodsQueue[i] |= 0x80;
-			break;
-		}
-	}
-}
-
-
-/******************************************************************************
 * 函数名:GetCityPGoods
 * 说  明:取得城市已发现物品
 *
@@ -710,16 +681,16 @@ void HarvestryFood(void)
 ******************************************************************************/
  U8 GetCityPGoods(U8 city,U8 *gqueue)
 {
-	U8 i,j;
 	U8 count;
 	
 	count = 0;
-	j = g_Cities[city].ToolQueue;
-	for (i = 0;i < g_Cities[city].Tools;i ++,j ++)
+	// Get discovered goods from the city's ToolsV vector
+	for (size_t i = 0; i < g_Cities[city].ToolsV.size(); i++) 
 	{
-		if (g_GoodsQueue[j] & 0x80)
+		U8 goods = g_Cities[city].ToolsV[i];
+		if (goods & 0x80)
 		{
-			gqueue[count] = g_GoodsQueue[j] & 0x7f;
+			gqueue[count] = goods & 0x7f; // Remove the high bit
 			count += 1;
 		}
 	}
@@ -742,16 +713,16 @@ void HarvestryFood(void)
 ******************************************************************************/
  U8 GetCityDispGoods(U8 city,U8 *gqueue)
 {
-	U8 i,j;
 	U8 count;
 	
 	count = 0;
-	j = g_Cities[city].ToolQueue;
-	for (i = 0;i < g_Cities[city].Tools;i ++,j ++)
+	
+	// Get undiscovered goods from the city's ToolsV vector
+	for (U8 goods : g_Cities[city].ToolsV)
 	{
-		if (!(g_GoodsQueue[j] & 0x80))
+		if (!(goods & 0x80))
 		{
-			gqueue[count] = g_GoodsQueue[j];
+			gqueue[count] = goods;
 			count += 1;
 		}
 	}

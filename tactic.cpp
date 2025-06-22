@@ -164,7 +164,7 @@ U8 PlayerTactic(void)
  *		----		----			-----------
  *		陈泽伟		2005-7-17 15:37	基本功能完成
  ******************************************************************************/
-/*君主产生“内政、协调”、“外交”、“军备”策略几率*/
+/*君主产生"内政、协调"、"外交"、"军备"策略几率*/
 /*const U8 KingTacticOddsIH[5] = {50,40,30,20,10};
 const U8 KingTacticOddsD[5] = {80,70,70,40,20};*/
 
@@ -1498,24 +1498,6 @@ U8 GetEnemyPersons(U8 king, U8 *pqueue)
 	return officers.size();
 }
 
-U8 AddPerson(U8 city, U8 person)
-{
-	// Validate inputs
-	if (city >= CITY_MAX || person >= PERSON_MAX)
-	{
-		return 1;
-	}
-
-	// Add person to city's PersonV vector
-	g_Cities[city].PersonV.push_back(person);
-
-	// Update officer's affiliation if needed
-	// if (g_Persons[person].Belong != g_Cities[city].Belong) {
-	//     g_Persons[person].Belong = g_Cities[city].Belong;
-	// }
-
-	return 0;
-}
 /******************************************************************************
  * Function: DelPerson
  * Description: Removes an officer from a city's roster using remove-and-swap idiom
@@ -1845,6 +1827,25 @@ bool LoadCityJson(U8 idx)
 		return false;
 	}
 }
+
+// C wrapper functions for calling from C code
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+U8 SaveCityJsonC(U8 idx)
+{
+	return SaveCityJson(idx) ? 1 : 0;
+}
+
+U8 LoadCityJsonC(U8 idx)
+{
+	return LoadCityJson(idx) ? 1 : 0;
+}
+
+#ifdef __cplusplus
+}
+#endif
 
 void printCityDebugInfo(U8 cityId) {
 	if (cityId >= CITY_MAX) {
