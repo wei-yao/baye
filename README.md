@@ -36,20 +36,29 @@ mingw32-make
 ```
 
 ### Run
-```sh
-cd bin
-SkySide3gby_Net.exe
+```
+need to copy the following dll from your qt folder to the bin folder
+Qt5Core.dll
+Qt5Gui.dll
+Qt5Network.dll
+Qt5Widgets.dll
+
 ```
 
 ## Notes
 - If you encounter missing MOC files, re-run `createMOC.ps1`.
 - If you change Qt header usage, re-run `createMOC.ps1` before building.
 - If you use a different Qt or MinGW version, update paths accordingly in your environment and scripts.
+- I am using vscode, you can see the recommend debug and build task definition under .vscode folder
 
 ## Troubleshooting
 - Ensure all required Qt DLLs are available in your `PATH` or next to the executable.
 - If you see errors about missing `*.h` or `*.cpp` files, check that MOC generation completed successfully. 
 
-#todo
+## todo
  - add step for what static file needed(qt lib,dat.lib)
- - maybe debug script for vscode
+ - maybe include debug script for vscode to git
+ - convert save format completely to json
+   - persons
+   - orders
+- rewrite the UI using different engine,to enable show more information it's too terrible.
