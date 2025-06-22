@@ -966,6 +966,10 @@ void GetCityProStr(U8 city,U8 pro,U8 *str)
 	showtop = 0;
 	showflag = 1;
 	// printCityDebugInfo(city);
+	
+	// Write city debug log when showing city info
+	//writeAllCitiesDebugLogC("ShowCityPro");
+	
 	while (1)
 	{
 		if (showflag)

@@ -215,6 +215,40 @@ U8 GetCityUndiscoveredGoods(U8 city, U8* gqueue)
    return count;
 }
 
+// Function to initialize ToolsV from old ToolQueue and Tools system
+void InitializeToolsVFromOldSystem()
+{
+    std::cout << "Initializing ToolsV from old ToolQueue/Tools system..." << std::endl;
+    
+    // Clear all existing ToolsV vectors
+    for (U8 city = 0; city < CITY_MAX; city++)
+    {
+        g_Cities[city].ToolsV.clear();
+    }
+    
+    // For each city, read goods from the global g_GoodsQueue array
+    for (U8 city = 0; city < CITY_MAX; city++)
+    {
+        U8 toolQueue = g_Cities[city].ToolQueue;
+        U8 tools = g_Cities[city].Tools;
+        
+        std::cout << "City " << (int)city << ": ToolQueue=" << (int)toolQueue << ", Tools=" << (int)tools << std::endl;
+        
+        // Read goods from g_GoodsQueue starting at ToolQueue position
+        for (U8 i = 0; i < tools; i++)
+        {
+            U8 goods = g_GoodsQueue[toolQueue + i];
+            g_Cities[city].ToolsV.push_back(goods);
+            std::cout << "  Added goods " << (int)goods << " to city " << (int)city << std::endl;
+        }
+        
+        // Update the Tools field to match the vector size
+        g_Cities[city].Tools = g_Cities[city].ToolsV.size();
+    }
+    
+    std::cout << "ToolsV initialization complete!" << std::endl;
+}
+
 #ifdef __cplusplus
 }
 #endif

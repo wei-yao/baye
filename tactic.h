@@ -44,9 +44,18 @@ U8 GetWeekCity(U8 count, U8* cqueue);
 U8 SaveCityJsonC(U8 idx);
 U8 LoadCityJsonC(U8 idx);
 
+// Function to initialize ToolsV from old system
+void InitializeToolsVFromOldSystem(void);
+
+// C wrapper for debug logging (visible to both C and C++)
+void writeAllCitiesDebugLogC(const char* operation);
+
 #ifdef __cplusplus
 }
 #endif
+
+// C wrapper for debug logging (visible to both C and C++)
+//void writeAllCitiesDebugLogC(const char* operation);
 
 // C++ specific functions (cannot have C linkage)
 std::vector<U8> getAllCityPersonsBelonging(U8 city);
@@ -54,7 +63,13 @@ int SmartAssign(U8 city, int k);
 bool SaveCityJson(U8 idx);
 bool LoadCityJson(U8 idx);
 std::string gbk_to_utf8(const char* gbk_str, size_t gbk_len);
+std::string getGoodGbkName(U8 toolId);
+std::string getPersonGbkName(U8 personId);
+std::string getCityDebugString(U8 cityId);
+void writeAllCitiesDebugLog(const std::string& operation = "Debug");
 void printCityDebugInfo(U8 cityId);
 void printCityDebugInfoCout(U8 cityId);
+
+
 
 #endif

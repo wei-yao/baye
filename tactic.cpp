@@ -33,6 +33,9 @@
 #include <cstring>
 #include <iconv.h>
 #include <locale>
+#include <sstream>
+#include <iomanip>
+#include <ctime>
 // #include <wincon.h>
 using namespace std;
 
@@ -138,7 +141,7 @@ U8 PlayerTactic(void)
 				break;
 			case 0xfe:
 				ngc = 3;
-				printCityDebugInfoCout(cset);
+				printCityDebugInfoCout(cset);		
 				ShowCityPro(cset);		
 				break;
 			default:
@@ -1206,10 +1209,12 @@ void OldCityToNewCity(OldCityType old_cities[38], U8 o_PersonsQueue[200])
 		g_Cities[i].Tools = old_cities[i].Tools;
 		g_Cities[i].autoManage = 0;
 		g_Cities[i].PersonV = GetAllCityPersonsFromLegacy(i, o_PersonsQueue);
+
 		U8 tmpName[5];
 		GetCityName(i, tmpName);
 		g_Cities[i].Name = gbk_to_utf8((const char*)tmpName, 4);
 	}
+	InitializeToolsVFromOldSystem();
 }
 
 // Copy all person IDs  from new city to person queue
@@ -1716,6 +1721,176 @@ std::string gbk_to_utf8(const char* gbk_str, size_t gbk_len) {
     return result;
 }
 
+// Function to get tool name in UTF-8 from tool ID
+std::string getGoodGbkName(U8 toolId) {
+    // Safety check: ensure toolId is valid (GOODS_MAX = 33)
+    if (toolId == 0 || toolId >= 33) {
+        return "Unknown";
+    }
+    
+    U8 nameBuf[10];
+    // Get the base tool ID (remove high bit if it's discovered)
+    U8 baseToolId = toolId & 0x7f;
+    
+    // Additional safety check for base tool ID
+    if (baseToolId >= 33) {
+        return "Invalid";
+    }
+    
+    // Clear the buffer first
+    memset(nameBuf, 0, sizeof(nameBuf));
+    
+    // Add extra safety check for the buffer
+    if (nameBuf == nullptr) {
+        return "BufferError";
+    }
+    
+    GetGoodsName(baseToolId, nameBuf);
+    
+    // Check if the name buffer is valid after the call
+    if (nameBuf[0] == 0) {
+        return "Empty";
+    }
+    
+    // Convert GBK to UTF-8 for JSON storage
+    std::string utf8Name = gbk_to_utf8((const char*)nameBuf, strlen((const char*)nameBuf));
+    if (utf8Name.empty()) {
+        return "ConversionError";
+    }
+    
+    return utf8Name;
+}
+
+// Function to get person name in UTF-8 from person ID
+std::string getPersonGbkName(U8 personId) {
+    // Safety check: ensure personId is valid (PERSON_MAX = 200)
+    if (personId >= 200) {
+        return "Unknown";
+    }
+    
+    U8 nameBuf[10];
+    // Clear the buffer first
+    memset(nameBuf, 0, sizeof(nameBuf));
+    
+    // Add extra safety check for the buffer
+    if (nameBuf == nullptr) {
+        return "BufferError";
+    }
+    
+    GetPersonName(personId, nameBuf);
+    
+    // Check if the name buffer is valid after the call
+    if (nameBuf[0] == 0) {
+        return "Empty";
+    }
+    
+    // Convert GBK to UTF-8 for JSON storage
+    std::string utf8Name = gbk_to_utf8((const char*)nameBuf, strlen((const char*)nameBuf));
+    if (utf8Name.empty()) {
+        return "ConversionError";
+    }
+    
+    return utf8Name;
+}
+
+// Function to get comprehensive debug information for a city
+std::string getCityDebugString(U8 cityId) {
+    try {
+        if (cityId >= CITY_MAX) {
+            return "Invalid city ID";
+        }
+        
+        std::stringstream debug;
+        const auto& city = g_Cities[cityId];
+        
+        // City header
+        debug << "=== City " << (int)cityId << " (" << city.Name << ") ===" << std::endl;
+        debug << "Belong: " << (int)city.Belong << ", SatrapId: " << (int)city.SatrapId << std::endl;
+        
+        // Add king's name if city belongs to a faction
+        if (city.Belong > 0) {
+            U8 kingId = city.Belong - 1;  // Convert from 1-based to 0-based index
+            if (kingId < PERSON_MAX) {
+                try {
+                    std::string kingName = getPersonGbkName(kingId);
+                    debug << "King: " << kingName << std::endl;
+                } catch (...) {
+                    debug << "King: Error getting king name" << std::endl;
+                }
+            } else {
+                debug << "King: Invalid King ID" << std::endl;
+            }
+        } else {
+            debug << "King: None (Unclaimed City)" << std::endl;
+        }
+        
+        debug << "Population: " << city.Population << "/" << city.PopulationLimit << std::endl;
+        debug << "Food: " << city.Food << ", Money: " << city.Money << std::endl;
+        debug << std::endl;
+        
+        // Persons section
+        debug << "--- PERSONS (" << city.PersonV.size() << ") ---" << std::endl;
+        if (city.PersonV.empty()) {
+            debug << "No persons in city" << std::endl;
+        } else {
+            for (const auto& personId : city.PersonV) {
+                try {
+                    std::string personName = getPersonGbkName(personId);
+                    std::string status;
+                    
+                    if (personId >= 200) {
+                        status = "INVALID_ID";
+                    } else {
+                        const auto& person = g_Persons[personId];
+                        if (person.Belong == 0) {
+                            status = "OFF_CITY";  // 在野武将
+                        } else if (person.Belong == city.Belong) {
+                            status = "IN_CITY";   // 属于该城市势力
+                        } else {
+                            status = "CAPTIVE";   // 俘虏
+                        }
+                    }
+                    
+                    debug << "  ID:" << std::setw(3) << (int)personId 
+                          << " Name:" << std::setw(10) << personName 
+                          << " Status:" << status << std::endl;
+                } catch (...) {
+                    debug << "  ID:" << std::setw(3) << (int)personId 
+                          << " Name:ERROR     Status:ERROR" << std::endl;
+                }
+            }
+        }
+        debug << std::endl;
+        
+        // Tools section
+        debug << "--- TOOLS (" << city.ToolsV.size() << ") ---" << std::endl;
+        if (city.ToolsV.empty()) {
+            debug << "No tools in city" << std::endl;
+        } else {
+            for (const auto& toolId : city.ToolsV) {
+                try {
+                    std::string toolName = getGoodGbkName(toolId);
+                    std::string discovered = (toolId & 0x80) ? "FOUND" : "NOT_FOUND";
+                    
+                    debug << "  ID:" << std::setw(3) << (int)toolId 
+                          << " Name:" << std::setw(10) << toolName 
+                          << " Status:" << discovered << std::endl;
+                } catch (...) {
+                    debug << "  ID:" << std::setw(3) << (int)toolId 
+                          << " Name:ERROR     Status:ERROR" << std::endl;
+                }
+            }
+        }
+        debug << std::endl;
+        
+        return debug.str();
+    } catch (const std::exception& e) {
+        return "ERROR in getCityDebugString: " + std::string(e.what());
+    } catch (...) {
+        return "ERROR: Unknown error in getCityDebugString";
+    }
+}
+
 #include "json.hpp"
 using json = nlohmann::json;
 
@@ -1756,22 +1931,43 @@ bool SaveCityJson(U8 idx)
 		city["ToolsV"] = g_Cities[i].ToolsV;
 		city["usedPersonsV"] = json(g_Cities[i].usedPersonsV);
 
+		// Add GBK names for all persons in the city
+		std::vector<std::string> personNames;
+		for (const auto& personId : g_Cities[i].PersonV)
+		{
+			std::string personName = getPersonGbkName(personId);
+			personNames.push_back(personName);
+		}
+		city["PersonNames"] = personNames;
+
+		// Add GBK names for all tools in the city
+		std::vector<std::string> toolNames;
+		
+		std::cout << "City " << (int)i << " ToolsV: " << g_Cities[i].ToolsV.size() << std::endl;
+		for (const auto& toolId : g_Cities[i].ToolsV) {
+			std::cout << (int)toolId << " ";
+		}
+		std::cout << std::endl;
+		for (size_t j = 0; j < g_Cities[i].ToolsV.size(); j++)
+		{
+			const auto toolId = g_Cities[i].ToolsV[j];
+			std::string toolName = getGoodGbkName(toolId);
+			toolNames.push_back(toolName);
+		}
+		city["ToolNames"] = toolNames;
 		citiesJson.push_back(city);
 	}
 
-	try
-	{
-		// Write JSON to file with pretty printing
+	// Write JSON to file with pretty printing
+	try {
 		std::ofstream o(filename);
-		o << citiesJson.dump(4); // indent with 4 spaces
+		o << citiesJson.dump(4);
 		o.close();
-		return true;
+	} catch (const std::exception& e) {
+		std::cerr << "JSON serialization error: " << e.what() << std::endl;
 	}
-	catch (const std::exception &e)
-	{
-		// Handle any file writing errors
-		return false;
-	}
+	writeAllCitiesDebugLog("SaveCityJson");
+	return true;
 }
 
 bool LoadCityJson(U8 idx)
@@ -1816,7 +2012,27 @@ bool LoadCityJson(U8 idx)
 			g_Cities[i].PersonV = city["PersonV"].get<std::vector<U8>>();
 			g_Cities[i].ToolsV = city["ToolsV"].get<std::vector<U8>>();
 			g_Cities[i].usedPersonsV = city["usedPersonsV"].get<std::set<U8>>();
-			g_Cities[i].Name =city["Name"];
+			g_Cities[i].Name = city["Name"];
+
+			// Load PersonNames if present (optional, for future use)
+			if (city.contains("PersonNames"))
+			{
+				// PersonNames are loaded but not stored in the current data structure
+				// They can be used for validation or debugging purposes
+				auto personNames = city["PersonNames"].get<std::vector<std::string>>();
+				// Note: We don't store PersonNames in the current data structure
+				// as they can be reconstructed from PersonV using GetPersonName()
+			}
+
+			// Load ToolNames if present (optional, for future use)
+			if (city.contains("ToolNames"))
+			{
+				// ToolNames are loaded but not stored in the current data structure
+				// They can be used for validation or debugging purposes
+				auto toolNames = city["ToolNames"].get<std::vector<std::string>>();
+				// Note: We don't store ToolNames in the current data structure
+				// as they can be reconstructed from ToolsV using GetGoodsName()
+			}
 		}
 
 		return true;
@@ -1841,6 +2057,11 @@ U8 SaveCityJsonC(U8 idx)
 U8 LoadCityJsonC(U8 idx)
 {
 	return LoadCityJson(idx) ? 1 : 0;
+}
+
+void writeAllCitiesDebugLogC(const char* operation)
+{
+	writeAllCitiesDebugLog(std::string(operation));
 }
 
 #ifdef __cplusplus
@@ -1887,5 +2108,42 @@ void printCityDebugInfoCout(U8 cityId) {
 		std::cout << "ID: " << std::setw(3) << (int)personId 
 				 << ", Name: " << gbk_to_utf8((char*)nameBuf, strlen((const char*)nameBuf)) << std::endl;
 	}
+}
+
+// Function to write debug information for all cities to debug.log
+void writeAllCitiesDebugLog(const std::string& operation) {
+    try {
+        // Open debug log file
+        std::ofstream debugLog("debug.log");
+        if (!debugLog.is_open()) {
+            std::cerr << "ERROR: Could not open debug.log for writing" << std::endl;
+            return;
+        }
+        
+        debugLog << "=== " << operation << " - All Cities Debug Info ===" << std::endl;
+        debugLog << "Timestamp: " << std::time(nullptr) << std::endl;
+        debugLog << std::endl;
+        
+        // Write debug info for each city
+        for (int i = 0; i < CITY_MAX; i++) {
+            try {
+                debugLog << getCityDebugString(i);
+            } catch (const std::exception& e) {
+                debugLog << "ERROR: Failed to get debug string for city " << i << ": " << e.what() << std::endl;
+            } catch (...) {
+                debugLog << "ERROR: Unknown error getting debug string for city " << i << std::endl;
+            }
+        }
+        
+        debugLog << "=== " << operation << " completed ===" << std::endl;
+        debugLog << std::endl;
+        debugLog.close();
+        
+        std::cout << "Debug log written successfully for operation: " << operation << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "ERROR in writeAllCitiesDebugLog: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "ERROR: Unknown error in writeAllCitiesDebugLog" << std::endl;
+    }
 }
 
