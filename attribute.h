@@ -159,8 +159,12 @@ typedef struct Person				/*人才属性 (12 Bytes) */
 	U8 Age;				/*年龄*/
 }PersonType;
 
-typedef struct NewPerson				/*人才属性 (12 Bytes) */
+
+//todo: add new filed like gbkName, 
+// support third equipment
+class NewPerson				/*人才属性 (12 Bytes) */
 {
+public:
 	U8 Id;				/*编号*/
 	U8 Belong;			/*归属*/
 	U8 Level;			/*等级*/
@@ -174,9 +178,84 @@ typedef struct NewPerson				/*人才属性 (12 Bytes) */
 	U16 Arms;			/*兵力*/
 	U8 Equip[2];			/*装备*/
 	U8 Age;				/*年龄*/
-  U8 city;      /* 出现城市编号 */
-  std::string Name;        /*名称*/
-} NewPersonType;
+	U8 city;      /* 出现城市编号 */
+	std::string Name;        /*名称*/
+
+	
+	// Constructor
+	NewPerson() : Id(0), Belong(0), Level(0), Force(0), IQ(0), Devotion(0), 
+		Character(0), Experience(0), Thew(0), ArmsType(0), Arms(0), Age(0), city(0) {
+		Equip[0] = 0;
+		Equip[1] = 0;
+	}
+	
+	// Constructor from PersonType
+	NewPerson(const PersonType& person) : Id(person.Id), Belong(person.Belong), Level(person.Level),
+		Force(person.Force), IQ(person.IQ), Devotion(person.Devotion), Character(person.Character),
+		Experience(person.Experience), Thew(person.Thew), ArmsType(person.ArmsType), Arms(person.Arms),
+		Age(person.Age), city(0), Name("") {
+		Equip[0] = person.Equip[0];
+		Equip[1] = person.Equip[1];
+	}
+	
+	// Constructor from PersonType pointer
+	NewPerson(const PersonType* person) : Id(0), Belong(0), Level(0), Force(0), IQ(0), Devotion(0), 
+		Character(0), Experience(0), Thew(0), ArmsType(0), Arms(0), Age(0), city(0), Name("") {
+		if (person != nullptr) {
+			Id = person->Id;
+			Belong = person->Belong;
+			Level = person->Level;
+			Force = person->Force;
+			IQ = person->IQ;
+			Devotion = person->Devotion;
+			Character = person->Character;
+			Experience = person->Experience;
+			Thew = person->Thew;
+			ArmsType = person->ArmsType;
+			Arms = person->Arms;
+			Age = person->Age;
+			Equip[0] = person->Equip[0];
+			Equip[1] = person->Equip[1];
+		} else {
+			Equip[0] = 0;
+			Equip[1] = 0;
+		}
+	}
+	
+	// Copy constructor
+	NewPerson(const NewPerson& other) : Id(other.Id), Belong(other.Belong), Level(other.Level),
+		Force(other.Force), IQ(other.IQ), Devotion(other.Devotion), Character(other.Character),
+		Experience(other.Experience), Thew(other.Thew), ArmsType(other.ArmsType), Arms(other.Arms),
+		Age(other.Age), city(other.city), Name(other.Name) {
+		Equip[0] = other.Equip[0];
+		Equip[1] = other.Equip[1];
+	}
+	
+	// Assignment operator
+	NewPerson& operator=(const NewPerson& other) {
+		if (this != &other) {
+			Id = other.Id;
+			Belong = other.Belong;
+			Level = other.Level;
+			Force = other.Force;
+			IQ = other.IQ;
+			Devotion = other.Devotion;
+			Character = other.Character;
+			Experience = other.Experience;
+			Thew = other.Thew;
+			ArmsType = other.ArmsType;
+			Arms = other.Arms;
+			Age = other.Age;
+			city = other.city;
+			Name = other.Name;
+			Equip[0] = other.Equip[0];
+			Equip[1] = other.Equip[1];
+		}
+		return *this;
+	}
+};
+
+typedef NewPerson NewPersonType;
 
 // maybe still use the current framework, addperson, delperson, getcitypersons
 //for assign: need to list all persons

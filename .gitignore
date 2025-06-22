@@ -8,3 +8,8 @@ bin/
 *.o
 *.json
 debug.log
+*.log
+android-sources
+ios-sources
+obj
+*.png
