@@ -2638,13 +2638,13 @@ int getLogOnlyUserKingC() {
         logActivity("ORDER_TYPE_TEST_START", "OrderType comparison test");
         
         // Create array of OrderTypeNew with ORDER_MAX length
-        OrderTypeNew newOrders[ORDER_MAX];
+        OrderTypeOld oldOrders[ORDER_MAX];
         
         // Cast ORDERQUEUE to OrderType array
-        OrderType* oldOrders = (OrderType*)ORDERQUEUE;
+        OrderType* newOrders = (OrderType*)ORDERQUEUE;
         
         // Initialize newOrders with content from ORDERQUEUE using memcpy
-        memcpy(newOrders, oldOrders, ORDER_MAX * sizeof(OrderType));
+        memcpy(oldOrders, newOrders,ORDER_MAX * sizeof(OrderType));
         
         // Compare members between old and new order types
         bool allMatch = true;
@@ -2713,12 +2713,13 @@ int getLogOnlyUserKingC() {
             }
         }
         
+		bool isSizeMatch = sizeof(OrderTypeOld) == sizeof(OrderType);
         // Log size comparison
-        logActivity("ORDER_TYPE_SIZE_COMPARISON", "sizeof(OrderType)=" + std::to_string(sizeof(OrderType)) + 
-                   " sizeof(OrderTypeNew)=" + std::to_string(sizeof(OrderTypeNew)));
+        logActivity("ORDER_TYPE_SIZE_COMPARISON", "sizeof(OrderType)=" + std::to_string(sizeof(OrderTypeOld)) + 
+                   " sizeof(OrderTypeNew)=" + std::to_string(sizeof(OrderType)));
         
         // Log results
-        if (allMatch) {
+        if (allMatch && isSizeMatch) {
             logActivity("ORDER_TYPE_TEST_RESULT", "SUCCESS: All " + std::to_string(ORDER_MAX) + " orders match perfectly");
         } else {
             logActivity("ORDER_TYPE_TEST_RESULT", "FAILURE: " + std::to_string(mismatchCount) + " orders have mismatches");
@@ -2727,7 +2728,7 @@ int getLogOnlyUserKingC() {
         logActivity("ORDER_TYPE_TEST_END", "OrderType comparison test completed");
         
         std::cout << "OrderType comparison test completed. Check activity.log for results." << std::endl;
-        std::cout << "Size comparison: OrderType=" << sizeof(OrderType) << " bytes, OrderTypeNew=" << sizeof(OrderTypeNew) << " bytes" << std::endl;
+        std::cout << "Size comparison: OrderType=" << sizeof(OrderTypeOld) << " bytes, OrderTypeNew=" << sizeof(OrderType) << " bytes" << std::endl;
         std::cout << "Match result: " << (allMatch ? "SUCCESS" : "FAILURE") << std::endl;
     }
 

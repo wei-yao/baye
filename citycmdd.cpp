@@ -967,6 +967,13 @@ void KingDeadNote(U8 king)
 	U8 i;
 	OrderType *inode;
 	
+	if(Order->OrderId == 0)
+	{
+		std::cout << "invalid order " << getOrderDetailedStr(Order) << std::endl;
+		logActivityC("INVALID_ORDER", getOrderDetailedStr(Order).c_str());
+		return(1);
+	}
+
 	inode = (OrderType *) ORDERQUEUE;
 	//todo: check if is max out
 	for (i = 0;i < ORDER_MAX;i ++)

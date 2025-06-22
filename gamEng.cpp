@@ -669,6 +669,7 @@ bool GamLoadRcd(U8 idx)
 	gam_fread((U8 *)FIGHTERS_IDX,1,FIGHT_ORDER_MAX,fp);
 	gam_fread((U8 *)FIGHTERS,10,FIGHT_ORDER_MAX,fp);
 	gam_fread((U8 *)ORDERQUEUE,sizeof(OrderType),ORDER_MAX,fp);
+	testOrderTypeComparison();
 
 	// OldCityType old_cities[CITY_MAX];
 	// memset(old_cities, 0, CITY_MAX * sizeof(OldCityType));
@@ -734,12 +735,14 @@ bool GamSaveRcd(U8 idx)
 	
 	gam_fwrite((U8 *)FIGHTERS_IDX,1,FIGHT_ORDER_MAX,fp);
 	gam_fwrite((U8 *)FIGHTERS,10,FIGHT_ORDER_MAX,fp);
+	// we don't read order from the original dat.lib, therefore the only issue is the
+	// back save compatibility issue. we can modify it freely.
 	gam_fwrite((U8 *)ORDERQUEUE,sizeof(OrderType),ORDER_MAX,fp);
 	
 	// gam_fwrite((U8 *)g_Cities,sizeof(CityType),CITY_MAX,fp);
 	
 	gam_fclose(fp);
 	SaveCityJsonC(idx);
-	testOrderTypeComparison();
+	//testOrderTypeComparison();
 	return true;	
 }
