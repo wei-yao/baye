@@ -1,6 +1,14 @@
 #ifndef TAC_TIC_HEADER
 #define TAC_TIC_HEADER
 #include<vector>
+#include "order.h"
+
+// Global flag to control order logging - only log when person belongs to user king
+extern bool g_LogOnlyUserKing;
+
+// Functions to control the logging flag
+void setLogOnlyUserKing(bool enabled);
+bool getLogOnlyUserKing();
 
 void AITacticDiplomatism(U8 city);
  U8 PlayerTactic();
@@ -60,6 +68,50 @@ void writeAllCitiesDebugLog(const std::string& operation = "Debug");
 void printCityDebugInfo(U8 cityId);
 void printCityDebugInfoCout(U8 cityId);
 
+// Person debug functions
+std::string getPersonDebugString(U8 personId);
+void printPersonDebugInfo(U8 personId);
+void printPersonDebugInfoCout(U8 personId);
+void printAllPersonsDebugInfo();
+void printAllPersonsDebugInfoCout();
+void writeAllPersonsDebugLog(const std::string& operation = "Debug");
 
+// C wrapper functions for person debug functions
+void writeAllPersonsDebugLogC(const char* operation);
+void printAllPersonsDebugInfoC();
+void printAllPersonsDebugInfoCoutC();
+void printPersonDebugInfoC(U8 personId);
+void printPersonDebugInfoCoutC(U8 personId);
+
+// Activity logging functions
+void logActivity(const std::string& activity, const std::string& details = "");
+void logOrderCreated(const OrderType* order);
+void logOrderExecuted(const OrderType* order);
+void logPersonReturned(U8 personId, U8 cityId, const std::string& reason = "");
+void logPersonRemoved(U8 personId, U8 cityId, const std::string& reason = "");
+void logOrderDeleted(const OrderType* order);
+void logGameTurn();
+void logComputerTactic(U8 cityId, const std::string& tacticType);
+
+// Helper function for order logging
+std::string getOrderDetailedStr(const OrderType* order);
+
+// C wrapper functions for activity logging
+void logActivityC(const char* activity, const char* details);
+void logOrderCreatedC(const OrderType* order);
+void logOrderExecutedC(const OrderType* order);
+void logPersonReturnedC(U8 personId, U8 cityId, const char* reason);
+void logPersonRemovedC(U8 personId, U8 cityId, const char* reason);
+void logOrderDeletedC(const OrderType* order);
+void logGameTurnC();
+void logComputerTacticC(U8 cityId, const char* tacticType);
+
+// C wrapper functions to control logging flag
+void setLogOnlyUserKingC(int enabled);
+int getLogOnlyUserKingC();
+
+// Test function for activity logging
+void testActivityLogging();
+void testOrderTypeComparison();
 
 #endif

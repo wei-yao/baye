@@ -80,6 +80,33 @@ typedef struct OrderStruct	/*命令结构*/
 	U8 TimeCount;		/*执行累时*/
 }OrderType;
 
+class OrderTypeNew {
+public:
+    U8 OrderId;     /*命令编号*/
+    U8 Person;      /*执行武将*/
+    U8 City;        /*所在城市*/
+    U8 Object;      /*目标*/
+    U16 Arms;       /*士兵数量*/
+    U16 Food;       /*粮食数量*/
+    U16 Money;      /*金钱数量*/
+    U8 Consume;     /*消耗时间*/
+    U8 TimeCount;   /*执行累时*/
+    
+    // Default constructor - initializes all members to 0
+    OrderTypeNew() : OrderId(0), Person(0), City(0), Object(0), 
+                  Arms(0), Food(0), Money(0), Consume(0), TimeCount(0) {}
+    
+    // Parameterized constructor for creating orders with specific values
+    OrderTypeNew(U8 orderId, U8 person, U8 city, U8 object, U8 timeCount) 
+        : OrderId(orderId), Person(person), City(city), Object(object), 
+          Arms(0), Food(0), Money(0), Consume(0), TimeCount(timeCount) {}
+    
+    // Full parameterized constructor
+    OrderTypeNew(U8 orderId, U8 person, U8 city, U8 object, U16 arms, 
+              U16 food, U16 money, U8 consume, U8 timeCount)
+        : OrderId(orderId), Person(person), City(city), Object(object), 
+          Arms(arms), Food(food), Money(money), Consume(consume), TimeCount(timeCount) {}
+};
 typedef struct OrderQueue
 {
 	OrderType iOrder;

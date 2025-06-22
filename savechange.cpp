@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "attribute.h"
 #include "paccount.h"
+#include "tactic.h"
 //#include "sources.h"
 //#include "order.h"
 //#include "sharefun.h"
@@ -51,6 +52,7 @@ U8 AddPerson(U8 city,U8 person)
        return(0);
 
    g_Cities[city].PersonV.push_back(person);
+   logPersonReturnedC(person, city, "Order Completion");
 //    qnum  = g_Cities[city].PersonQueue + g_Cities[city].Persons;
 
 //    for (i = PERSON_MAX - 1;i > qnum;i --)

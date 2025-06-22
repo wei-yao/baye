@@ -173,8 +173,9 @@
 			order.Person = p;
 			order.City = city;
 			order.TimeCount = 0;
-			AddOrderHead(&order);
-			DelPerson(city,p);
+			if (AddOrderHead(&order) == 0) {
+				DelPerson(city,p);
+			}
 		}
 		break;
 	} while (1);

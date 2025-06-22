@@ -398,8 +398,9 @@ extern int ngsecond1;
 				order.Person = p;
 				order.City = city;
 				order.TimeCount = 0;
-				AddOrderHead(&order);
-				DelPerson(city,p);
+				if (AddOrderHead(&order) == 0) {
+					DelPerson(city,p);
+				}
 				break;
 			}
 			else
@@ -492,8 +493,9 @@ extern int ngsecond1;
 				order.Person = p;
 				order.City = city;
 				order.TimeCount = 0;
-				AddOrderHead(&order);
-				DelPerson(city,p);
+				if (AddOrderHead(&order) == 0) {
+					DelPerson(city,p);
+				}
 			}
 			else
 			{
@@ -635,8 +637,9 @@ extern int ngsecond1;
 				order.Person = p;
 				order.City = city;
 				order.TimeCount = 0;
-				AddOrderHead(&order);
-				DelPerson(city,p);
+				if (AddOrderHead(&order) == 0) {
+					DelPerson(city,p);
+				}
 			}
 			else
 			{
@@ -726,8 +729,9 @@ extern int ngsecond1;
 				order.Person = p;
 				order.City = city;
 				order.TimeCount = 0;
-				AddOrderHead(&order);
-				DelPerson(city,p);
+				if (AddOrderHead(&order) == 0) {
+					DelPerson(city,p);
+				}
 			}
 			else
 			{
@@ -818,8 +822,9 @@ extern int ngsecond1;
 				order.Person = p;
 				order.City = city;
 				order.TimeCount = 0;
-				AddOrderHead(&order);
-				DelPerson(city,p);
+				if (AddOrderHead(&order) == 0) {
+					DelPerson(city,p);
+				}
 			}
 			else
 			{
@@ -904,8 +909,9 @@ extern int ngsecond1;
 					order.City = city;
 					order.Object = pp;
 					order.TimeCount = 0;
-					AddOrderHead(&order);
-					DelPerson(city,p);
+					if (AddOrderHead(&order) == 0) {
+						DelPerson(city,p);
+					}
 					str = SHARE_MEM;
 					ResLoadToMem(STRING_CONST,P_SAY_STR41,str);
 					ShowMapClear();

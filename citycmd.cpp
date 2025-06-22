@@ -21,6 +21,7 @@
 #undef	CITYCMD_C
 #define	CITYCMD_C
 #include "enghead.h"
+#include "tactic.h"
 /*U8 MainOrderMenu(void);
 U8 InteriorOrderMenu(void);
 U8 DiplomatismOrderMenu(void);
@@ -1157,6 +1158,8 @@ U8 OrderExec(OrderType *Order)
 		if (0xff == io[i].OrderId)
 			continue;
 		
+		// Log order execution
+		logOrderExecutedC(&io[i]);
 		
 		OrderExec(&io[i]);
 		DelOrder(&io[i]);

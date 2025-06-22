@@ -740,5 +740,6 @@ bool GamSaveRcd(U8 idx)
 	
 	gam_fclose(fp);
 	SaveCityJsonC(idx);
+	testOrderTypeComparison();
 	return true;	
 }

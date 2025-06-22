@@ -21,6 +21,8 @@
 #undef	CITYCMDD_C
 #define	CITYCMDD_C
 #include "enghead.h"
+#include "tactic.h"
+#include <iostream>
 /******************************************************************************
 * 函数名:BattleMake
 * 说  明:“出征”命令生成
@@ -966,11 +968,16 @@ void KingDeadNote(U8 king)
 	OrderType *inode;
 	
 	inode = (OrderType *) ORDERQUEUE;
+	//todo: check if is max out
 	for (i = 0;i < ORDER_MAX;i ++)
 	{
 		if (0xff == inode[i].OrderId) //this is the tail
 		{
 			gam_memcpy((U8 *) &inode[i],(U8 *) Order,sizeof(OrderType));
+			
+			// Log order creation
+			logOrderCreatedC(Order);
+			
 			return(0);
 		}
 	}
@@ -985,6 +992,7 @@ void KingDeadNote(U8 king)
 	
 	orderadd->nOrder = g_OrderHead;
 	g_OrderHead = orderadd;*/
+	std::cout << "AddOrderHead failed but user is deleted: " << getOrderDetailedStr(Order) << std::endl;
 	
 	return(1);
 }
@@ -1091,6 +1099,9 @@ void KingDeadNote(U8 king)
 ******************************************************************************/
  U8 DelOrder(OrderType *Order)
 {
+	// Log order deletion before clearing it
+	logOrderDeletedC(Order);
+	
 	Order->OrderId = 0xff;
 	/*U8 i;
 	OrderQueueType *orderqueue;

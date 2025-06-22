@@ -151,8 +151,9 @@
 			order.Person = p;
 			order.City = city;
 			order.TimeCount = 0;
-			AddOrderHead(&order);
-			DelPerson(city,p);
+			if (AddOrderHead(&order) == 0) {
+				DelPerson(city,p);
+			}
 		}
 		break;
 	} while (1);
@@ -358,8 +359,9 @@
 					order.City = city;
 					order.Object = ocity;
 					order.TimeCount = odis;
-					AddOrderHead(&order);
-					DelPerson(city,p);
+					if (AddOrderHead(&order) == 0) {
+						DelPerson(city,p);
+					}
 					break;
 				}
 				else
@@ -466,8 +468,9 @@
 					order.City = city;
 					order.Object = ocity;
 					order.TimeCount = odis;
-					AddOrderHead(&order);
-					DelPerson(city,p);
+					if (AddOrderHead(&order) == 0) {
+						DelPerson(city,p);
+					}
 					break;
 				}
 				else
@@ -542,8 +545,9 @@
 				order.City = city;
 				order.Object = pqptr[pcode];
 				order.TimeCount = 10;
-				AddOrderHead(&order);
-				DelPerson(city,pp);
+				if (AddOrderHead(&order) == 0) {
+					DelPerson(city,pp);
+				}
 			}
 			else
 			{
@@ -617,8 +621,9 @@
 				order.City = city;
 				order.Object = pqptr[pcode];
 				order.TimeCount = 10;
-				AddOrderHead(&order);
-				DelPerson(city,pp);
+				if (AddOrderHead(&order) == 0) {
+					DelPerson(city,pp);
+				}
 			}
 			else
 			{
@@ -698,8 +703,9 @@
 				order.City = city;
 				order.Object = pqptr[pcode];
 				order.TimeCount = 10;
-				AddOrderHead(&order);
-				DelPerson(city,pp);
+				if (AddOrderHead(&order) == 0) {
+					DelPerson(city,pp);
+				}
 			}
 			else
 			{
@@ -796,8 +802,9 @@
 				order.City = city;
 				order.Object = pqptr[pcode];
 				order.TimeCount = 10;
-				AddOrderHead(&order);
-				DelPerson(city,pp);
+				if (AddOrderHead(&order) == 0) {
+					DelPerson(city,pp);
+				}
 			}
 			else
 			{

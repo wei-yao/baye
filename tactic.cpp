@@ -23,6 +23,7 @@
 #include "enghead.h"
 #include "tactic.h"
 #include "mainwindow.h"
+#include "config.h"
 #include <vector>
 #include <algorithm>
 #include <fstream>
@@ -50,36 +51,26 @@ extern int g_modAIHighAttack;
 extern int g_modAIHeroUpLevel;
 extern int g_startFlag;
 
+// Global flag to control order logging - only log when person belongs to user king
+bool g_LogOnlyUserKing = true; // Default to true - only log user king activities
+
+// Functions to control the logging flag
+void setLogOnlyUserKing(bool enabled) {
+    g_LogOnlyUserKing = enabled;
+}
+
+bool getLogOnlyUserKing() {
+    return g_LogOnlyUserKing;
+}
+
+// Helper function to check if person belongs to user king
+bool isPersonUserKing(U8 personId) {
+    if (personId >= PERSON_MAX) return false;
+    return (g_Persons[personId].Belong == (g_PlayerKing + 1));
+}
+
 bool GamSaveRcd(U8 idx);
 // U8 o_PersonsQueue[PERSON_MAX];
-
-/*void ComputerTacticInterior(U8 city);
-void ComputerTacticDiplomatism(U8 city);
-void ComputerTacticArmament(U8 city);
-
- U8 GetCitySet(CitySetType *pos);
- U8 OrderMenu(void);
- U8 ShowCityPro(U8 city);
- U8 CityCommon(U8 city,U8 order);
- U8 PersonUpDatadate(void);
- U8 CitiesUpDataDate(void);
- U8 RandEvents(void);
- U8 EventStateDeal(void);
- void PolicyExec(void);
- U8 AddPerson(U8 city,U8 person);
- U8 DelPerson(U8 city,U8 person);
- U8 AddOrderHead(OrderType *Order);
- U8 AddOrderEnd(OrderType *Order);
- U8 GetCityPersons(U8 city,U8 *pqueue);
- U8 GetCityCaptives(U8 city,U8 *pqueue);
- U8 MenuComm(MenuType *menu);
- U8 ShowPersonControl(U8 *person,U8 pcount,U8 x0,U8 y0,U8 x1,U8 y1);
- U16 GetFood(U16 min,U16 max);
- U16 GetMoney(U16 min,U16 max);
- U16 GetArmy(U16 min,U16 max);
- U8 SearchRoad(U8 sc,U8 xs,U8 ys,U8 ob,U8 xo,U8 yo);
- void RevenueMoney(void);
- void HarvestryFood(void);*/
 
 /******************************************************************************
  * 函数名:PlayerTactic
@@ -229,19 +220,29 @@ void ComputerTactic(void)
 		if (TacticOddsIH[g_Persons[b - 1].Character] > rnd) /*执行内政、协调策略*/
 		{
 			ComputerTacticInterior(i);
+			
+			// Log computer tactic
+			logComputerTacticC(i, "Interior");
 
 			// ComputerTacticHarmonize(i, isAuto);
 		}
 		else if (TacticOddsD[g_Persons[b - 1].Character] > rnd) /*执行外交策略*/
 		{
 			if (isAuto)
+			{
 				AITacticDiplomatism(i);
+				logComputerTacticC(i, "AI_Diplomatism");
+			}
 			else
+			{
 				ComputerTacticDiplomatism(i);
+				logComputerTacticC(i, "Diplomatism");
+			}
 		}
 		else if (!isAuto) /*执行军备策略*/
 		{
 			ComputerTacticArmament(i, isAuto);
+			logComputerTacticC(i, "Armament");
 		}
 	}
 }
@@ -272,6 +273,7 @@ void ComputerTacticInterior(U8 city)
 	U32 *Population;
 	CityType *cptr;
 
+    memset(&order, 0, sizeof(OrderType));
 	cptr = &g_Cities[city];
 	f = &cptr->Farming;
 	fl = cptr->FarmingLimit;
@@ -347,18 +349,18 @@ void ComputerTacticInterior(U8 city)
 				order.OrderId = FATHER;
 				break;
 			}
-		case 4:
-			// if(isAuto){
-			// 	int minCity=-1;
-			// 	for (int ci = 0;ci < CITY_MAX;ci ++)
-			// 	{
-			// 		if (g_Cities[ci].Belong == (g_PlayerKing + 1) && ci != city && (minCity==-1 || g_Cities[ci].PersonV))
-			// 		{
+		// case 4:
+		// 	// if(isAuto){
+		// 	// 	int minCity=-1;
+		// 	// 	for (int ci = 0;ci < CITY_MAX;ci ++)
+		// 	// 	{
+		// 	// 		if (g_Cities[ci].Belong == (g_PlayerKing + 1) && ci != city && (minCity==-1 || g_Cities[ci].PersonV))
+		// 	// 		{
 
-			// 		}
-			// 	}
-			// }
-			break;
+		// 	// 		}
+		// 	// 	}
+		// 	// }
+		// 	break;
 		default: /*搜寻*/
 			order.OrderId = SEARCH;
 			break;
@@ -368,12 +370,13 @@ void ComputerTacticInterior(U8 city)
 		order.City = city;
 		order.Object = city;
 		order.TimeCount = 0;
-		AddOrderHead(&order);
+		if (AddOrderHead(&order) == 0) {
+			DelPerson(city, pqptr[i]);
+		}
 		if (cptr->Belong == g_PlayerKing + 1)
 		{
-			logMessageFromCppFormat("order type %d", order.OrderId);
+			std::cout<< "ComputerTacticInterior: Adding order for person " << (int)pqptr[i] << " in city " << (int)city << "order id" <<order.OrderId<<std::endl;
 		}
-		DelPerson(city, pqptr[i]);
 	}
 }
 
@@ -509,8 +512,9 @@ void ComputerTacticDiplomatism(U8 city)
 		order.Person = pqptr[i];
 		order.City = city;
 		order.TimeCount = 0;
-		AddOrderHead(&order);
-		DelPerson(city, pqptr[i]);
+		if (AddOrderHead(&order) == 0) {
+			DelPerson(city, pqptr[i]);
+		}
 	}
 }
 
@@ -581,8 +585,9 @@ void AITacticDiplomatism(U8 city)
 		order.City = city;
 		order.TimeCount = 0;
 		logMessageFromCppFormat(" 外交 order type %d", order.OrderId);
-		AddOrderHead(&order);
-		DelPerson(city, pqptr[i]);
+		if (AddOrderHead(&order) == 0) {
+			DelPerson(city, pqptr[i]);
+		}
 	}
 }
 
@@ -676,8 +681,9 @@ void ComputerTacticHarmonize(U8 city, bool isAuto)
 		order.Person = pqptr[i];
 		order.City = city;
 		order.TimeCount = 0;
-		AddOrderHead(&order);
-		DelPerson(city, pqptr[i]);
+		if (AddOrderHead(&order) == 0) {
+			DelPerson(city, pqptr[i]);
+		}
 	}
 }
 
@@ -802,7 +808,7 @@ void ComputerTacticArmament(U8 city, bool isAuto)
 
 	fcount = GetRoundEnemyCity(city, cqptr);
 	rnd = rand() % 10; // 1/10 attack
-	if (!fcount || rnd)
+	if (!fcount || rnd || g_DisableComputerAttacks) // Added global disable check
 	{
 		return;
 	}
@@ -968,6 +974,9 @@ U8 GameDevDrv(void)
 
 		/*环境更新*/
 		ConditionUpdate();
+		
+		// Log game turn completion
+		logGameTurnC();
 	}
 }
 
@@ -1531,6 +1540,10 @@ U8 DelPerson(U8 city, U8 person)
 	if (newEnd != personV.end())
 	{
 		personV.erase(newEnd, personV.end());
+		
+		// Log person removal
+		logPersonRemovedC(person, city, "Order Assignment");
+		
 		return 0;
 	}
 
@@ -1972,6 +1985,8 @@ bool SaveCityJson(U8 idx)
 		std::cerr << "JSON serialization error: " << e.what() << std::endl;
 	}
 	writeAllCitiesDebugLog("SaveCityJson");
+	printAllPersonsDebugInfo();
+	writeAllPersonsDebugLog();
 	return true;
 }
 
@@ -2060,11 +2075,6 @@ U8 LoadCityJsonC(U8 idx)
 	return LoadCityJson(idx) ? 1 : 0;
 }
 
-void writeAllCitiesDebugLogC(const char* operation)
-{
-	writeAllCitiesDebugLog(std::string(operation));
-}
-
 void printCityDebugInfo(U8 cityId) {
 	if (cityId >= CITY_MAX) {
 		logMessageFromCppFormat("Invalid city ID %d", cityId);
@@ -2143,4 +2153,591 @@ void writeAllCitiesDebugLog(const std::string& operation) {
         std::cerr << "ERROR: Unknown error in writeAllCitiesDebugLog" << std::endl;
     }
 }
+
+// Function to get comprehensive debug information for a person
+std::string getPersonDebugString(U8 personId) {
+    try {
+        if (personId >= PERSON_MAX) {
+            return "Invalid person ID";
+        }
+        
+        std::stringstream debug;
+        const auto& person = g_Persons[personId];
+        
+        // Get person name
+        std::string personName = getPersonGbkName(personId);
+        
+        // Person header
+        debug << "=== Person " << (int)personId << " (" << personName << ") ===" << std::endl;
+        
+        // Basic properties
+        debug << "ID: " << (int)person.Id << std::endl;
+        debug << "Belong: " << (int)person.Belong;
+        if (person.Belong > 0) {
+            U8 kingId = person.Belong - 1;  // Convert from 1-based to 0-based index
+            if (kingId < PERSON_MAX) {
+                try {
+                    std::string kingName = getPersonGbkName(kingId);
+                    debug << " (King: " << kingName << ")";
+                } catch (...) {
+                    debug << " (King: Error getting king name)";
+                }
+            } else {
+                debug << " (King: Invalid King ID)";
+            }
+        } else {
+            debug << " (Unaffiliated)";
+        }
+        debug << std::endl;
+        
+        // Stats
+        debug << "Level: " << (int)person.Level << std::endl;
+        debug << "Force: " << (int)person.Force << std::endl;
+        debug << "IQ: " << (int)person.IQ << std::endl;
+        debug << "Devotion: " << (int)person.Devotion << std::endl;
+        debug << "Character: " << (int)person.Character << std::endl;
+        debug << "Experience: " << (int)person.Experience << std::endl;
+        debug << "Thew: " << (int)person.Thew << std::endl;
+        debug << "Age: " << (int)person.Age << std::endl;
+        
+        // Military info
+        debug << "ArmsType: " << (int)person.ArmsType << std::endl;
+        debug << "Arms: " << person.Arms << std::endl;
+        
+        // Equipment
+        debug << "Equipment: ";
+        if (person.Equip[0] || person.Equip[1]) {
+            if (person.Equip[0]) {
+                std::string equip1Name = getGoodGbkName(person.Equip[0]);
+                debug << "Slot1: " << equip1Name << " (ID:" << (int)person.Equip[0] << ")";
+            }
+            if (person.Equip[1]) {
+                if (person.Equip[0]) debug << ", ";
+                std::string equip2Name = getGoodGbkName(person.Equip[1]);
+                debug << "Slot2: " << equip2Name << " (ID:" << (int)person.Equip[1] << ")";
+            }
+        } else {
+            debug << "None";
+        }
+        debug << std::endl;
+        
+        // Location info
+        U8 currentCity = GetPersonCity(personId);
+        if (currentCity != 0xff) {
+            debug << "Current City: " << (int)currentCity << " (" << g_Cities[currentCity].Name << ")" << std::endl;
+        } else {
+            debug << "Current City: Not in any city (possibly on mission)" << std::endl;
+        }
+        
+        debug << std::endl;
+        return debug.str();
+    } catch (const std::exception& e) {
+        return "ERROR in getPersonDebugString: " + std::string(e.what());
+    } catch (...) {
+        return "ERROR: Unknown error in getPersonDebugString";
+    }
+}
+
+// Function to print person debug info to console
+// Function to write debug information for all persons to debug.log
+void writeAllPersonsDebugLog(const std::string& operation) {
+    try {
+        // Open debug log file
+        std::ofstream debugLog("debug.log", std::ios::app);  // Append mode
+        if (!debugLog.is_open()) {
+            std::cerr << "ERROR: Could not open debug.log for writing" << std::endl;
+            return;
+        }
+        
+        debugLog << "=== " << operation << " - All Persons Debug Info ===" << std::endl;
+        debugLog << "Timestamp: " << std::time(nullptr) << std::endl;
+        debugLog << std::endl;
+        
+        // Write debug info for each person
+        for (int i = 0; i < PERSON_MAX; i++) {
+            try {
+                // Only output persons that have valid data (Id != 0)
+               
+                debugLog << getPersonDebugString(i);
+                
+            } catch (const std::exception& e) {
+                debugLog << "ERROR: Failed to get debug string for person " << i << ": " << e.what() << std::endl;
+            } catch (...) {
+                debugLog << "ERROR: Unknown error getting debug string for person " << i << std::endl;
+            }
+        }
+        
+        debugLog << "=== " << operation << " completed ===" << std::endl;
+        debugLog << std::endl;
+        debugLog.close();
+        
+        std::cout << "Debug log written successfully for operation: " << operation << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "ERROR in writeAllPersonsDebugLog: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "ERROR: Unknown error in writeAllPersonsDebugLog" << std::endl;
+    }
+}
+
+// Function to print all persons debug info to console
+void printAllPersonsDebugInfo() {
+    logMessageFromCppFormat("=== All Persons Debug Info ===");
+    
+    for (int i = 0; i < PERSON_MAX; i++) {
+        // Only output persons that have valid data (Id != 0)
+		cout<<" person "<<i<<" "<<getPersonDebugString(i)<<endl;
+        // if (g_Persons[i].Id != 0) {
+        //     printPersonDebugInfo(i);
+        // }
+    }
+    
+    logMessageFromCppFormat("=== All Persons Debug Info Completed ===");
+}
+
+// ============================================================================
+// ACTIVITY LOGGING SYSTEM
+// ============================================================================
+
+// Function to get order type name from order ID
+std::string getOrderTypeName(U8 orderId) {
+    switch (orderId) {
+        case ASSART: return "开垦";
+        case ACCRACTBUSINESS: return "招商";
+        case SEARCH: return "搜寻";
+        case FATHER: return "治理";
+        case INSPECTION: return "出巡";
+        case SURRENDER: return "招降";
+        case KILL: return "处斩";
+        case BANISH: return "流放";
+        case LARGESS: return "赏赐";
+        case CONFISCATE: return "没收";
+        case EXCHANGE: return "交易";
+        case TREAT: return "宴请";
+        case TRANSPORTATION: return "输送";
+        case MOVE: return "移动";
+        case ALIENATE: return "离间";
+        case CANVASS: return "招揽";
+        case COUNTERESPIONAGE: return "策反";
+        case REALIENATE: return "反间";
+        case INDUCE: return "劝降";
+        case RECONNOITRE: return "侦察";
+        case CONSCRIPTION: return "征兵";
+        case DISTRIBUTE: return "分配";
+        case DEPREDATE: return "掠夺";
+        case BATTLE: return "出征";
+        default: return "未知命令";
+    }
+}
+
+// Function to get detailed string for order logging
+std::string getOrderDetailedStr(const OrderType* order) {
+    if (!order) return "Invalid Order";
+    
+    try {
+        std::string personName = getPersonGbkName(order->Person);
+        std::string orderType = getOrderTypeName(order->OrderId);
+        std::string cityName = g_Cities[order->City].Name;
+        
+        std::string details = "Person=" + personName + 
+                             " (ID:" + std::to_string(order->Person) + "), " +
+                             "Order=" + orderType + 
+                             " (ID:" + std::to_string(order->OrderId) + "), " +
+                             "City=" + cityName + 
+                             " (ID:" + std::to_string(order->City) + ")";
+        
+        if (order->Object != order->City) {
+            std::string objectName = (order->Object < CITY_MAX) ? 
+                g_Cities[order->Object].Name : "Person ID " + std::to_string(order->Object);
+            details += ", Target=" + objectName + " (ID:" + std::to_string(order->Object) + ")";
+        }
+        
+        return details;
+    } catch (const std::exception& e) {
+        return "Error generating order details: " + std::string(e.what());
+    } catch (...) {
+        return "Unknown error generating order details";
+    }
+}
+
+// Function to log activity to activity.log
+void logActivity(const std::string& activity, const std::string& details ) {
+    try {
+        std::ofstream activityLog("activity.log", std::ios::app);
+        if (!activityLog.is_open()) {
+            std::cerr << "ERROR: Could not open activity.log for writing" << std::endl;
+            return;
+        }
+        
+        // Get current timestamp
+        std::time_t now = std::time(nullptr);
+        std::string timestamp = std::ctime(&now);
+        timestamp.pop_back(); // Remove newline
+        
+        // Format: [Timestamp] Activity: Details
+        activityLog << "[" << timestamp << "] " << activity;
+        if (!details.empty()) {
+            activityLog << ": " << details;
+        }
+        activityLog << std::endl;
+        
+        activityLog.close();
+    } catch (const std::exception& e) {
+        std::cerr << "ERROR in logActivity: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "ERROR: Unknown error in logActivity" << std::endl;
+    }
+}
+
+// Function to log order creation
+void logOrderCreated(const OrderType* order) {
+    if (!order) return;
+    
+    // Check if we should only log user king activities
+    if (g_LogOnlyUserKing && !isPersonUserKing(order->Person)) {
+        return;
+    }
+    
+    try {
+        std::string details = getOrderDetailedStr(order);
+        logActivity("ORDER_CREATED", details);
+    } catch (const std::exception& e) {
+        logActivity("ORDER_CREATED_ERROR", "Failed to log order creation: " + std::string(e.what()));
+    } catch (...) {
+        logActivity("ORDER_CREATED_ERROR", "Unknown error logging order creation");
+    }
+}
+
+// Function to log order execution
+void logOrderExecuted(const OrderType* order) {
+    if (!order) return;
+    
+    // Check if we should only log user king activities
+    if (g_LogOnlyUserKing && !isPersonUserKing(order->Person)) {
+        return;
+    }
+    
+    try {
+        std::string details = getOrderDetailedStr(order);
+        logActivity("ORDER_EXECUTED", details);
+    } catch (const std::exception& e) {
+        logActivity("ORDER_EXECUTED_ERROR", "Failed to log order execution: " + std::string(e.what()));
+    } catch (...) {
+        logActivity("ORDER_EXECUTED_ERROR", "Unknown error logging order execution");
+    }
+}
+
+// Function to log person return to city
+void logPersonReturned(U8 personId, U8 cityId, const std::string& reason) {
+    // Check if we should only log user king activities
+    if (g_LogOnlyUserKing && !isPersonUserKing(personId)) {
+        return;
+    }
+    
+    try {
+        std::string personName = getPersonGbkName(personId);
+        std::string cityName = g_Cities[cityId].Name;
+        
+        std::string details = "Person=" + personName + 
+                             " (ID:" + std::to_string(personId) + "), " +
+                             "City=" + cityName + 
+                             " (ID:" + std::to_string(cityId) + ")";
+        
+        if (!reason.empty()) {
+            details += ", Reason=" + reason;
+        }
+        
+        logActivity("PERSON_RETURNED", details);
+    } catch (const std::exception& e) {
+        logActivity("PERSON_RETURNED_ERROR", "Failed to log person return: " + std::string(e.what()));
+    } catch (...) {
+        logActivity("PERSON_RETURNED_ERROR", "Unknown error logging person return");
+    }
+}
+
+// Function to log person removal from city
+void logPersonRemoved(U8 personId, U8 cityId, const std::string& reason) {
+    // Check if we should only log user king activities
+    if (g_LogOnlyUserKing && !isPersonUserKing(personId)) {
+        return;
+    }
+    
+    try {
+        std::string personName = getPersonGbkName(personId);
+        std::string cityName = g_Cities[cityId].Name;
+        
+        std::string details = "Person=" + personName + 
+                             " (ID:" + std::to_string(personId) + "), " +
+                             "City=" + cityName + 
+                             " (ID:" + std::to_string(cityId) + ")";
+        
+        if (!reason.empty()) {
+            details += ", Reason=" + reason;
+        }
+        
+        logActivity("PERSON_REMOVED", details);
+    } catch (const std::exception& e) {
+        logActivity("PERSON_REMOVED_ERROR", "Failed to log person removal: " + std::string(e.what()));
+    } catch (...) {
+        logActivity("PERSON_REMOVED_ERROR", "Unknown error logging person removal");
+    }
+}
+
+// Function to log order deletion
+void logOrderDeleted(const OrderType* order) {
+    if (!order) return;
+    
+    // Check if we should only log user king activities
+    if (g_LogOnlyUserKing && !isPersonUserKing(order->Person)) {
+        return;
+    }
+    
+    try {
+        std::string details = getOrderDetailedStr(order);
+        logActivity("ORDER_DELETED", details);
+    } catch (const std::exception& e) {
+        logActivity("ORDER_DELETED_ERROR", "Failed to log order deletion: " + std::string(e.what()));
+    } catch (...) {
+        logActivity("ORDER_DELETED_ERROR", "Unknown error logging order deletion");
+    }
+}
+
+// Function to log game turn/cycle
+void logGameTurn() {
+    try {
+        std::string details = "Year=" + std::to_string(g_YearDate) + 
+                             ", Month=" + std::to_string(g_MonthDate);
+        
+        logActivity("GAME_TURN", details);
+    } catch (const std::exception& e) {
+        logActivity("GAME_TURN_ERROR", "Failed to log game turn: " + std::string(e.what()));
+    } catch (...) {
+        logActivity("GAME_TURN_ERROR", "Unknown error logging game turn");
+    }
+}
+
+// Function to log computer tactic generation
+void logComputerTactic(U8 cityId, const std::string& tacticType) {
+    try {
+        std::string cityName = g_Cities[cityId].Name;
+        
+        std::string details = "City=" + cityName + 
+                             " (ID:" + std::to_string(cityId) + "), " +
+                             "Tactic=" + tacticType;
+        
+        logActivity("COMPUTER_TACTIC", details);
+    } catch (const std::exception& e) {
+        logActivity("COMPUTER_TACTIC_ERROR", "Failed to log computer tactic: " + std::string(e.what()));
+    } catch (...) {
+        logActivity("COMPUTER_TACTIC_ERROR", "Unknown error logging computer tactic");
+    }
+}
+
+// C wrapper functions for activity logging
+
+    void logActivityC(const char* activity, const char* details) {
+        std::string actStr = activity ? activity : "";
+        std::string detStr = details ? details : "";
+        logActivity(actStr, detStr);
+    }
+    
+    void logOrderCreatedC(const OrderType* order) {
+        logOrderCreated(order);
+    }
+    
+    void logOrderExecutedC(const OrderType* order) {
+        logOrderExecuted(order);
+    }
+    
+    void logPersonReturnedC(U8 personId, U8 cityId, const char* reason) {
+        std::string reasonStr = reason ? reason : "";
+        logPersonReturned(personId, cityId, reasonStr);
+    }
+    
+    void logPersonRemovedC(U8 personId, U8 cityId, const char* reason) {
+        std::string reasonStr = reason ? reason : "";
+        logPersonRemoved(personId, cityId, reasonStr);
+    }
+    
+    void logOrderDeletedC(const OrderType* order) {
+        logOrderDeleted(order);
+    }
+    
+    void logGameTurnC() {
+        logGameTurn();
+    }
+    
+    void logComputerTacticC(U8 cityId, const char* tacticType) {
+        std::string tacticStr = tacticType ? tacticType : "";
+        logComputerTactic(cityId, tacticStr);
+    }
+    
+    // Test function to verify logging system
+    void testActivityLogging() {
+        logActivity("TEST_START", "Activity logging system test");
+        
+        // Test with flag enabled (default)
+        logActivity("TEST_FLAG_STATUS", "LogOnlyUserKing = " + std::to_string(getLogOnlyUserKing()));
+        
+        // Test order creation logging
+        OrderType testOrder;
+        testOrder.OrderId = ASSART;
+        testOrder.Person = 0;
+        testOrder.City = 0;
+        testOrder.Object = 0;
+        testOrder.TimeCount = 0;
+        logOrderCreatedC(&testOrder);
+        
+        // Test person removal logging
+        logPersonRemovedC(0, 0, "Test Removal");
+        
+        // Test person return logging
+        logPersonReturnedC(0, 0, "Test Return");
+        
+        // Test order execution logging
+        logOrderExecutedC(&testOrder);
+        
+        // Test order deletion logging
+        logOrderDeletedC(&testOrder);
+        
+        // Test computer tactic logging
+        logComputerTacticC(0, "Test Tactic");
+        
+        // Test game turn logging
+        logGameTurnC();
+        
+        // Test with flag disabled
+        logActivity("TEST_DISABLE_FLAG", "Disabling LogOnlyUserKing flag");
+        setLogOnlyUserKing(false);
+        logActivity("TEST_FLAG_STATUS", "LogOnlyUserKing = " + std::to_string(getLogOnlyUserKing()));
+        
+        // Test logging again with flag disabled
+        logOrderCreatedC(&testOrder);
+        logPersonRemovedC(0, 0, "Test Removal (Flag Disabled)");
+        logPersonReturnedC(0, 0, "Test Return (Flag Disabled)");
+        
+        // Re-enable flag
+        setLogOnlyUserKing(true);
+        logActivity("TEST_ENABLE_FLAG", "Re-enabling LogOnlyUserKing flag");
+        
+        logActivity("TEST_END", "Activity logging system test completed");
+        
+        std::cout << "Activity logging test completed. Check activity.log for results." << std::endl;
+    }
+
+// C wrapper functions to control logging flag
+void setLogOnlyUserKingC(int enabled) {
+    setLogOnlyUserKing(enabled != 0);
+}
+
+int getLogOnlyUserKingC() {
+    return getLogOnlyUserKing() ? 1 : 0;
+}
+
+    // Test function to compare old and new order types
+    void testOrderTypeComparison() {
+        logActivity("ORDER_TYPE_TEST_START", "OrderType comparison test");
+        
+        // Create array of OrderTypeNew with ORDER_MAX length
+        OrderTypeNew newOrders[ORDER_MAX];
+        
+        // Cast ORDERQUEUE to OrderType array
+        OrderType* oldOrders = (OrderType*)ORDERQUEUE;
+        
+        // Initialize newOrders with content from ORDERQUEUE using memcpy
+        memcpy(newOrders, oldOrders, ORDER_MAX * sizeof(OrderType));
+        
+        // Compare members between old and new order types
+        bool allMatch = true;
+        int mismatchCount = 0;
+        
+        for (int i = 0; i < ORDER_MAX; i++) {
+            bool orderMatch = true;
+            
+            if (newOrders[i].OrderId != oldOrders[i].OrderId) {
+                logActivity("ORDER_TYPE_MISMATCH", "Order " + std::to_string(i) + " OrderId: old=" + 
+                           std::to_string(oldOrders[i].OrderId) + " new=" + std::to_string(newOrders[i].OrderId));
+                orderMatch = false;
+            }
+            
+            if (newOrders[i].Person != oldOrders[i].Person) {
+                logActivity("ORDER_TYPE_MISMATCH", "Order " + std::to_string(i) + " Person: old=" + 
+                           std::to_string(oldOrders[i].Person) + " new=" + std::to_string(newOrders[i].Person));
+                orderMatch = false;
+            }
+            
+            if (newOrders[i].City != oldOrders[i].City) {
+                logActivity("ORDER_TYPE_MISMATCH", "Order " + std::to_string(i) + " City: old=" + 
+                           std::to_string(oldOrders[i].City) + " new=" + std::to_string(newOrders[i].City));
+                orderMatch = false;
+            }
+            
+            if (newOrders[i].Object != oldOrders[i].Object) {
+                logActivity("ORDER_TYPE_MISMATCH", "Order " + std::to_string(i) + " Object: old=" + 
+                           std::to_string(oldOrders[i].Object) + " new=" + std::to_string(newOrders[i].Object));
+                orderMatch = false;
+            }
+            
+            if (newOrders[i].Arms != oldOrders[i].Arms) {
+                logActivity("ORDER_TYPE_MISMATCH", "Order " + std::to_string(i) + " Arms: old=" + 
+                           std::to_string(oldOrders[i].Arms) + " new=" + std::to_string(newOrders[i].Arms));
+                orderMatch = false;
+            }
+            
+            if (newOrders[i].Food != oldOrders[i].Food) {
+                logActivity("ORDER_TYPE_MISMATCH", "Order " + std::to_string(i) + " Food: old=" + 
+                           std::to_string(oldOrders[i].Food) + " new=" + std::to_string(newOrders[i].Food));
+                orderMatch = false;
+            }
+            
+            if (newOrders[i].Money != oldOrders[i].Money) {
+                logActivity("ORDER_TYPE_MISMATCH", "Order " + std::to_string(i) + " Money: old=" + 
+                           std::to_string(oldOrders[i].Money) + " new=" + std::to_string(newOrders[i].Money));
+                orderMatch = false;
+            }
+            
+            if (newOrders[i].Consume != oldOrders[i].Consume) {
+                logActivity("ORDER_TYPE_MISMATCH", "Order " + std::to_string(i) + " Consume: old=" + 
+                           std::to_string(oldOrders[i].Consume) + " new=" + std::to_string(newOrders[i].Consume));
+                orderMatch = false;
+            }
+            
+            if (newOrders[i].TimeCount != oldOrders[i].TimeCount) {
+                logActivity("ORDER_TYPE_MISMATCH", "Order " + std::to_string(i) + " TimeCount: old=" + 
+                           std::to_string(oldOrders[i].TimeCount) + " new=" + std::to_string(newOrders[i].TimeCount));
+                orderMatch = false;
+            }
+            
+            if (!orderMatch) {
+                mismatchCount++;
+                allMatch = false;
+            }
+        }
+        
+        // Log size comparison
+        logActivity("ORDER_TYPE_SIZE_COMPARISON", "sizeof(OrderType)=" + std::to_string(sizeof(OrderType)) + 
+                   " sizeof(OrderTypeNew)=" + std::to_string(sizeof(OrderTypeNew)));
+        
+        // Log results
+        if (allMatch) {
+            logActivity("ORDER_TYPE_TEST_RESULT", "SUCCESS: All " + std::to_string(ORDER_MAX) + " orders match perfectly");
+        } else {
+            logActivity("ORDER_TYPE_TEST_RESULT", "FAILURE: " + std::to_string(mismatchCount) + " orders have mismatches");
+        }
+        
+        logActivity("ORDER_TYPE_TEST_END", "OrderType comparison test completed");
+        
+        std::cout << "OrderType comparison test completed. Check activity.log for results." << std::endl;
+        std::cout << "Size comparison: OrderType=" << sizeof(OrderType) << " bytes, OrderTypeNew=" << sizeof(OrderTypeNew) << " bytes" << std::endl;
+        std::cout << "Match result: " << (allMatch ? "SUCCESS" : "FAILURE") << std::endl;
+    }
+
+// Function declarations
+void testActivityLogging();
+void testOrderTypeComparison();
+
+// Uncomment the line below to run the OrderType comparison test
+// testOrderTypeComparison();
+
+
+
 
