@@ -680,7 +680,7 @@ bool GamLoadRcd(U8 idx)
 	//gam_fread((U8 *)g_Cities,sizeof(CityType),CITY_MAX,fp);
 	// OldCityToNewCity(old_cities, personsQueue);
 	gam_fclose(fp);
-	LoadCityJsonC(idx);
+	LoadGameJson(idx);
 	return true;	
 }
 /***********************************************************************
@@ -746,7 +746,7 @@ bool GamSaveRcd(U8 idx)
 	// gam_fwrite((U8 *)g_Cities,sizeof(CityType),CITY_MAX,fp);
 	
 	gam_fclose(fp);
-	SaveCityJsonC(idx);
+	SaveGameJson(idx);
 	//testOrderTypeComparison();
 	return true;	
 }

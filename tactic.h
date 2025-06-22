@@ -58,8 +58,8 @@ void writeAllCitiesDebugLogC(const char* operation);
 // C++ specific functions (cannot have C linkage)
 std::vector<U8> getAllCityPersonsBelonging(U8 city);
 int SmartAssign(U8 city, int k);
-bool SaveCityJson(U8 idx);
-bool LoadCityJson(U8 idx);
+bool SaveGameJson(U8 idx);
+bool LoadGameJson(U8 idx);
 std::string gbk_to_utf8(const char* gbk_str, size_t gbk_len);
 std::string getGoodGbkName(U8 toolId);
 std::string getPersonGbkName(U8 personId);

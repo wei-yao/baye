@@ -1935,10 +1935,10 @@ std::string getCityDebugString(U8 cityId) {
 #include "json.hpp"
 using json = nlohmann::json;
 
-bool SaveCityJson(U8 idx)
+bool SaveGameJson(U8 idx)
 {
 	// Create filename
-	std::string filename = "city_" + std::to_string(idx) + ".json";
+	std::string filename = "save\\city_" + std::to_string(idx) + ".json";
 
 	// Convert cities to JSON
 	json citiesJson;
@@ -2013,10 +2013,10 @@ bool SaveCityJson(U8 idx)
 	return true;
 }
 
-bool LoadCityJson(U8 idx)
+bool LoadGameJson(U8 idx)
 {
 	// Create filename
-	std::string filename = "city_" + std::to_string(idx) + ".json";
+	std::string filename = "save\\city_" + std::to_string(idx) + ".json";
 
 	try
 	{
@@ -2087,16 +2087,6 @@ bool LoadCityJson(U8 idx)
 	}
 }
 
-// C wrapper functions for calling from C code
-U8 SaveCityJsonC(U8 idx)
-{
-	return SaveCityJson(idx) ? 1 : 0;
-}
-
-U8 LoadCityJsonC(U8 idx)
-{
-	return LoadCityJson(idx) ? 1 : 0;
-}
 
 void printCityDebugInfoCout(U8 cityId) {
 	if (cityId >= CITY_MAX) {
