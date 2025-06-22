@@ -37,6 +37,7 @@
 #include <sstream>
 #include <iomanip>
 #include <ctime>
+#include <map>
 // #include <wincon.h>
 using namespace std;
 
@@ -804,7 +805,7 @@ void ComputerTacticArmament(U8 city, bool isAuto)
 		}
 	}
 
-	SmartAssign(city, 5);
+	SmartAssign(city, 10);
 
 	fcount = GetRoundEnemyCity(city, cqptr);
 	rnd = rand() % 10; // 1/10 attack
@@ -1774,11 +1775,27 @@ std::string getGoodGbkName(U8 toolId) {
     return utf8Name;
 }
 
+// Static cache for person names to improve performance
+static std::map<U8, std::string> personNameCache;
+static bool personNameCacheInitialized = false;
+
+// Function to clear the person name cache (useful when data changes)
+void clearPersonNameCache() {
+    personNameCache.clear();
+    personNameCacheInitialized = false;
+}
+
 // Function to get person name in UTF-8 from person ID
 std::string getPersonGbkName(U8 personId) {
     // Safety check: ensure personId is valid (PERSON_MAX = 200)
     if (personId >= 200) {
         return "Unknown";
+    }
+    
+    // Check cache first
+    auto it = personNameCache.find(personId);
+    if (it != personNameCache.end()) {
+        return it->second;
     }
     
     U8 nameBuf[10];
@@ -1794,15 +1811,21 @@ std::string getPersonGbkName(U8 personId) {
     
     // Check if the name buffer is valid after the call
     if (nameBuf[0] == 0) {
-        return "Empty";
+        std::string result = "Empty";
+        personNameCache[personId] = result;
+        return result;
     }
     
     // Convert GBK to UTF-8 for JSON storage
     std::string utf8Name = gbk_to_utf8((const char*)nameBuf, strlen((const char*)nameBuf));
     if (utf8Name.empty()) {
-        return "ConversionError";
+        std::string result = "ConversionError";
+        personNameCache[personId] = result;
+        return result;
     }
     
+    // Cache the result
+    personNameCache[personId] = utf8Name;
     return utf8Name;
 }
 
@@ -2075,26 +2098,6 @@ U8 LoadCityJsonC(U8 idx)
 	return LoadCityJson(idx) ? 1 : 0;
 }
 
-void printCityDebugInfo(U8 cityId) {
-	if (cityId >= CITY_MAX) {
-		logMessageFromCppFormat("Invalid city ID %d", cityId);
-		return;
-	}
-
-	// Print city info
-	logMessageFromCppFormat("City %d (%s):", cityId, g_Cities[cityId].Name.c_str());
-	
-	// Get and print unaffiliated persons in city 
-	logMessageFromCppFormat("在野武将:");
-	for (const auto& personId : g_Cities[cityId].PersonV) {
-		if (g_Persons[personId].Belong) {
-			continue;
-		}
-		U8 nameBuf[10];
-		GetPersonName(personId, nameBuf);
-		logMessageFromCppFormat("ID: %3d, Name: %s", personId, gbk_to_utf8((char*)nameBuf, 10).c_str());
-	}
-}
 void printCityDebugInfoCout(U8 cityId) {
 	if (cityId >= CITY_MAX) {
 		std::cout << "Invalid city ID " << (int)cityId << std::endl;
@@ -2110,10 +2113,8 @@ void printCityDebugInfoCout(U8 cityId) {
 		if (g_Persons[personId].Belong) {
 			continue;
 		}
-		U8 nameBuf[10];
-		GetPersonName(personId, nameBuf);
 		std::cout << "ID: " << std::setw(3) << (int)personId 
-				 << ", Name: " << gbk_to_utf8((char*)nameBuf, strlen((const char*)nameBuf)) << std::endl;
+				 << ", Name: " << getPersonGbkName(personId) << std::endl;
 	}
 }
 

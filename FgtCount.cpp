@@ -175,8 +175,16 @@ const U8 FgtIntMove[6]={MOV_QIBING,MOV_BUBING,MOV_GOBING,MOV_SHUIJUN,MOV_JIBING,
 		if(ptr->move != 0)
 			pos->move += ptr->move;
 	}
-	if(pos->move > FGT_MVMAX)
+	
+	// Set maximum movement speed for user king's persons
+	if (per->Belong == g_PlayerKing + 1 && per->Equip[0])
+	{
 		pos->move = FGT_MVMAX;
+	}
+	else if(pos->move > FGT_MVMAX)
+	{
+		pos->move = FGT_MVMAX;
+	}
 }
 /***********************************************************************
  * 说明:     计算普通攻击的兵力伤害

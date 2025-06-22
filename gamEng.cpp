@@ -651,6 +651,10 @@ bool GamLoadRcd(U8 idx)
 	gam_fread((U8 *)&g_MonthDate,1,1,fp);
 	gam_fread((U8 *)&g_CityPos,sizeof(CitySetType),1,fp);
 	gam_fread((U8 *)g_Persons,sizeof(PersonType),PERSON_MAX,fp);
+	for(int i = 0; i < PERSON_MAX; i++) {
+		PersonType& person = g_Persons[i];
+		person.Id = i;
+	}
 	// U8 personsQueue[PERSON_MAX];
 	// gam_fread((U8 *)personsQueue,1,PERSON_MAX,fp);
 	gam_fread((U8 *)g_GoodsQueue,1,GOODS_MAX,fp);

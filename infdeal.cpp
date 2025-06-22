@@ -238,9 +238,14 @@
 						break;
 					default:continue;break;/*无灾害*/
 					}
+					// Only show notification for famine, disable for other disasters
 					if ((STATE_NORMAL != *state) && (ccb == g_PlayerKing + 1))
 					{
-						ReportCalamity(i);
+						// Only report famine, skip drought, flood, and rebellion notifications
+						if (*state == STATE_FAMINE)
+						{
+							ReportCalamity(i);
+						}
 					}
 				}
 				break;

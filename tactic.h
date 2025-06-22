@@ -114,4 +114,6 @@ int getLogOnlyUserKingC();
 void testActivityLogging();
 void testOrderTypeComparison();
 
+void clearPersonNameCache();
+
 #endif
