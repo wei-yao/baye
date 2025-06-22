@@ -14566,3 +14566,589 @@
 [Sun Jun 22 05:46:59 2025] PERSON_RETURNED: Person=关羽 (ID:79), City=云南 (ID:30), Reason=Order Completion
 [Sun Jun 22 05:46:59 2025] PERSON_RETURNED: Person=黄忠 (ID:11), City=安定 (ID:3), Reason=Order Completion
 [Sun Jun 22 05:47:08 2025] GAME_TURN: Year=1295, Month=10
+[Sun Jun 22 15:20:47 2025] ORDER_CREATED: Person=韩遂 (ID:56), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:47 2025] PERSON_REMOVED: Person=韩遂 (ID:56), City=西凉 (ID:0), Reason=Order Assignment
+[Sun Jun 22 15:20:47 2025] ORDER_CREATED: Person=马超 (ID:57), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:47 2025] PERSON_REMOVED: Person=马超 (ID:57), City=西凉 (ID:0), Reason=Order Assignment
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=北平 (ID:1), Tactic=Armament
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=襄平 (ID:2), Tactic=Interior
+[Sun Jun 22 15:20:47 2025] ORDER_CREATED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:47 2025] PERSON_REMOVED: Person=成宜 (ID:64), City=安定 (ID:3), Reason=Order Assignment
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=晋阳 (ID:4), Tactic=Interior
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=平原 (ID:5), Tactic=Armament
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=南皮 (ID:6), Tactic=Armament
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=北海 (ID:7), Tactic=Interior
+[Sun Jun 22 15:20:47 2025] ORDER_CREATED: Person=马腾 (ID:5), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] PERSON_REMOVED: Person=马腾 (ID:5), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:47 2025] ORDER_CREATED: Person=庞德 (ID:58), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] PERSON_REMOVED: Person=庞德 (ID:58), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:47 2025] ORDER_CREATED: Person=程银 (ID:60), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] PERSON_REMOVED: Person=程银 (ID:60), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:47 2025] ORDER_CREATED: Person=李堪 (ID:61), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] PERSON_REMOVED: Person=李堪 (ID:61), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:47 2025] ORDER_CREATED: Person=张横 (ID:62), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] PERSON_REMOVED: Person=张横 (ID:62), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:47 2025] ORDER_CREATED: Person=梁兴 (ID:63), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] PERSON_REMOVED: Person=梁兴 (ID:63), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:47 2025] ORDER_CREATED: Person=马玩 (ID:65), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] PERSON_REMOVED: Person=马玩 (ID:65), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:47 2025] ORDER_CREATED: Person=杨秋 (ID:66), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] PERSON_REMOVED: Person=杨秋 (ID:66), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=河内 (ID:9), Tactic=Armament
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=长安 (ID:10), Tactic=Diplomatism
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City= (ID:11), Tactic=Armament
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=濮阳 (ID:12), Tactic=Armament
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=徐州 (ID:13), Tactic=Diplomatism
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=汉中 (ID:14), Tactic=Armament
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=洛阳 (ID:15), Tactic=Armament
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=许昌 (ID:16), Tactic=Interior
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=小沛 (ID:17), Tactic=Diplomatism
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=下邳 (ID:18), Tactic=Interior
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=宛城 (ID:20), Tactic=Diplomatism
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=寿春 (ID:21), Tactic=Diplomatism
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=成都 (ID:24), Tactic=Armament
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=襄阳 (ID:26), Tactic=Armament
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=江夏 (ID:27), Tactic=Armament
+[Sun Jun 22 15:20:47 2025] COMPUTER_TACTIC: City=长沙 (ID:33), Tactic=Armament
+[Sun Jun 22 15:20:47 2025] ORDER_EXECUTED: Person=韩遂 (ID:56), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:47 2025] PERSON_RETURNED: Person=韩遂 (ID:56), City=西凉 (ID:0), Reason=Order Completion
+[Sun Jun 22 15:20:47 2025] ORDER_DELETED: Person=韩遂 (ID:56), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:47 2025] ORDER_EXECUTED: Person=马超 (ID:57), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:47 2025] PERSON_RETURNED: Person=马超 (ID:57), City=西凉 (ID:0), Reason=Order Completion
+[Sun Jun 22 15:20:47 2025] ORDER_DELETED: Person=马超 (ID:57), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:47 2025] ORDER_EXECUTED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:47 2025] PERSON_RETURNED: Person=成宜 (ID:64), City=安定 (ID:3), Reason=Order Completion
+[Sun Jun 22 15:20:47 2025] ORDER_DELETED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:47 2025] ORDER_EXECUTED: Person=马腾 (ID:5), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] PERSON_RETURNED: Person=马腾 (ID:5), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:47 2025] ORDER_DELETED: Person=马腾 (ID:5), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] ORDER_EXECUTED: Person=庞德 (ID:58), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] PERSON_RETURNED: Person=庞德 (ID:58), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:47 2025] ORDER_DELETED: Person=庞德 (ID:58), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] ORDER_EXECUTED: Person=程银 (ID:60), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] PERSON_RETURNED: Person=程银 (ID:60), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:47 2025] ORDER_DELETED: Person=程银 (ID:60), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] ORDER_EXECUTED: Person=李堪 (ID:61), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] PERSON_RETURNED: Person=李堪 (ID:61), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:47 2025] ORDER_DELETED: Person=李堪 (ID:61), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] ORDER_EXECUTED: Person=张横 (ID:62), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] PERSON_RETURNED: Person=张横 (ID:62), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:47 2025] ORDER_DELETED: Person=张横 (ID:62), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] ORDER_EXECUTED: Person=梁兴 (ID:63), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] PERSON_RETURNED: Person=梁兴 (ID:63), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:47 2025] ORDER_DELETED: Person=梁兴 (ID:63), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] ORDER_EXECUTED: Person=马玩 (ID:65), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] PERSON_RETURNED: Person=马玩 (ID:65), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:47 2025] ORDER_DELETED: Person=马玩 (ID:65), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] ORDER_EXECUTED: Person=杨秋 (ID:66), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] PERSON_RETURNED: Person=杨秋 (ID:66), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:47 2025] ORDER_DELETED: Person=杨秋 (ID:66), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:47 2025] GAME_TURN: Year=2746, Month=2
+[Sun Jun 22 15:20:48 2025] ORDER_CREATED: Person=韩遂 (ID:56), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:48 2025] PERSON_REMOVED: Person=韩遂 (ID:56), City=西凉 (ID:0), Reason=Order Assignment
+[Sun Jun 22 15:20:48 2025] ORDER_CREATED: Person=马超 (ID:57), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:48 2025] PERSON_REMOVED: Person=马超 (ID:57), City=西凉 (ID:0), Reason=Order Assignment
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=北平 (ID:1), Tactic=Armament
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=襄平 (ID:2), Tactic=Diplomatism
+[Sun Jun 22 15:20:48 2025] ORDER_CREATED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:48 2025] PERSON_REMOVED: Person=成宜 (ID:64), City=安定 (ID:3), Reason=Order Assignment
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=晋阳 (ID:4), Tactic=Armament
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=平原 (ID:5), Tactic=Armament
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=南皮 (ID:6), Tactic=Armament
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=北海 (ID:7), Tactic=Armament
+[Sun Jun 22 15:20:48 2025] ORDER_CREATED: Person=马腾 (ID:5), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] PERSON_REMOVED: Person=马腾 (ID:5), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:48 2025] ORDER_CREATED: Person=庞德 (ID:58), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] PERSON_REMOVED: Person=庞德 (ID:58), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:48 2025] ORDER_CREATED: Person=程银 (ID:60), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] PERSON_REMOVED: Person=程银 (ID:60), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:48 2025] ORDER_CREATED: Person=李堪 (ID:61), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] PERSON_REMOVED: Person=李堪 (ID:61), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:48 2025] ORDER_CREATED: Person=张横 (ID:62), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] PERSON_REMOVED: Person=张横 (ID:62), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:48 2025] ORDER_CREATED: Person=梁兴 (ID:63), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] PERSON_REMOVED: Person=梁兴 (ID:63), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:48 2025] ORDER_CREATED: Person=马玩 (ID:65), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] PERSON_REMOVED: Person=马玩 (ID:65), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:48 2025] ORDER_CREATED: Person=杨秋 (ID:66), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] PERSON_REMOVED: Person=杨秋 (ID:66), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=河内 (ID:9), Tactic=Armament
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=长安 (ID:10), Tactic=Interior
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City= (ID:11), Tactic=Armament
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=濮阳 (ID:12), Tactic=Interior
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=徐州 (ID:13), Tactic=Interior
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=汉中 (ID:14), Tactic=Interior
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=洛阳 (ID:15), Tactic=Armament
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=许昌 (ID:16), Tactic=Interior
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=小沛 (ID:17), Tactic=Interior
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=下邳 (ID:18), Tactic=Interior
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=宛城 (ID:20), Tactic=Armament
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=寿春 (ID:21), Tactic=Armament
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=成都 (ID:24), Tactic=Armament
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=襄阳 (ID:26), Tactic=Armament
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=江夏 (ID:27), Tactic=Armament
+[Sun Jun 22 15:20:48 2025] COMPUTER_TACTIC: City=长沙 (ID:33), Tactic=Armament
+[Sun Jun 22 15:20:48 2025] ORDER_EXECUTED: Person=韩遂 (ID:56), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:48 2025] PERSON_RETURNED: Person=韩遂 (ID:56), City=西凉 (ID:0), Reason=Order Completion
+[Sun Jun 22 15:20:48 2025] ORDER_DELETED: Person=韩遂 (ID:56), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:48 2025] ORDER_EXECUTED: Person=马超 (ID:57), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:48 2025] PERSON_RETURNED: Person=马超 (ID:57), City=西凉 (ID:0), Reason=Order Completion
+[Sun Jun 22 15:20:48 2025] ORDER_DELETED: Person=马超 (ID:57), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:48 2025] ORDER_EXECUTED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:48 2025] PERSON_RETURNED: Person=成宜 (ID:64), City=安定 (ID:3), Reason=Order Completion
+[Sun Jun 22 15:20:48 2025] ORDER_DELETED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:48 2025] ORDER_EXECUTED: Person=马腾 (ID:5), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] PERSON_RETURNED: Person=马腾 (ID:5), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:48 2025] ORDER_DELETED: Person=马腾 (ID:5), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] ORDER_EXECUTED: Person=庞德 (ID:58), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] PERSON_RETURNED: Person=庞德 (ID:58), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:48 2025] ORDER_DELETED: Person=庞德 (ID:58), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] ORDER_EXECUTED: Person=程银 (ID:60), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] PERSON_RETURNED: Person=程银 (ID:60), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:48 2025] ORDER_DELETED: Person=程银 (ID:60), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] ORDER_EXECUTED: Person=李堪 (ID:61), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] PERSON_RETURNED: Person=李堪 (ID:61), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:48 2025] ORDER_DELETED: Person=李堪 (ID:61), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] ORDER_EXECUTED: Person=张横 (ID:62), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] PERSON_RETURNED: Person=张横 (ID:62), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:48 2025] ORDER_DELETED: Person=张横 (ID:62), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] ORDER_EXECUTED: Person=梁兴 (ID:63), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] PERSON_RETURNED: Person=梁兴 (ID:63), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:48 2025] ORDER_DELETED: Person=梁兴 (ID:63), Order=开垦 (ID:1), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] ORDER_EXECUTED: Person=马玩 (ID:65), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] PERSON_RETURNED: Person=马玩 (ID:65), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:48 2025] ORDER_DELETED: Person=马玩 (ID:65), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] ORDER_EXECUTED: Person=杨秋 (ID:66), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] PERSON_RETURNED: Person=杨秋 (ID:66), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:48 2025] ORDER_DELETED: Person=杨秋 (ID:66), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:48 2025] GAME_TURN: Year=2746, Month=3
+[Sun Jun 22 15:20:49 2025] ORDER_CREATED: Person=韩遂 (ID:56), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:49 2025] PERSON_REMOVED: Person=韩遂 (ID:56), City=西凉 (ID:0), Reason=Order Assignment
+[Sun Jun 22 15:20:49 2025] ORDER_CREATED: Person=马超 (ID:57), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:49 2025] PERSON_REMOVED: Person=马超 (ID:57), City=西凉 (ID:0), Reason=Order Assignment
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=北平 (ID:1), Tactic=Armament
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=襄平 (ID:2), Tactic=Armament
+[Sun Jun 22 15:20:49 2025] ORDER_CREATED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:49 2025] PERSON_REMOVED: Person=成宜 (ID:64), City=安定 (ID:3), Reason=Order Assignment
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=晋阳 (ID:4), Tactic=Interior
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=平原 (ID:5), Tactic=Interior
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=南皮 (ID:6), Tactic=Diplomatism
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=北海 (ID:7), Tactic=Armament
+[Sun Jun 22 15:20:49 2025] ORDER_CREATED: Person=马腾 (ID:5), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] PERSON_REMOVED: Person=马腾 (ID:5), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:49 2025] ORDER_CREATED: Person=庞德 (ID:58), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] PERSON_REMOVED: Person=庞德 (ID:58), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:49 2025] ORDER_CREATED: Person=程银 (ID:60), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] PERSON_REMOVED: Person=程银 (ID:60), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:49 2025] ORDER_CREATED: Person=李堪 (ID:61), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] PERSON_REMOVED: Person=李堪 (ID:61), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:49 2025] ORDER_CREATED: Person=张横 (ID:62), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] PERSON_REMOVED: Person=张横 (ID:62), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:49 2025] ORDER_CREATED: Person=梁兴 (ID:63), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] PERSON_REMOVED: Person=梁兴 (ID:63), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:49 2025] ORDER_CREATED: Person=马玩 (ID:65), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] PERSON_REMOVED: Person=马玩 (ID:65), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:49 2025] ORDER_CREATED: Person=杨秋 (ID:66), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] PERSON_REMOVED: Person=杨秋 (ID:66), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=河内 (ID:9), Tactic=Armament
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=长安 (ID:10), Tactic=Interior
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City= (ID:11), Tactic=Armament
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=濮阳 (ID:12), Tactic=Armament
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=徐州 (ID:13), Tactic=Armament
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=汉中 (ID:14), Tactic=Armament
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=洛阳 (ID:15), Tactic=Interior
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=许昌 (ID:16), Tactic=Armament
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=小沛 (ID:17), Tactic=Armament
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=下邳 (ID:18), Tactic=Diplomatism
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=宛城 (ID:20), Tactic=Armament
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=寿春 (ID:21), Tactic=Interior
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=成都 (ID:24), Tactic=Armament
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=襄阳 (ID:26), Tactic=Armament
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=江夏 (ID:27), Tactic=Armament
+[Sun Jun 22 15:20:49 2025] COMPUTER_TACTIC: City=长沙 (ID:33), Tactic=Interior
+[Sun Jun 22 15:20:49 2025] ORDER_EXECUTED: Person=韩遂 (ID:56), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:49 2025] PERSON_RETURNED: Person=韩遂 (ID:56), City=西凉 (ID:0), Reason=Order Completion
+[Sun Jun 22 15:20:49 2025] ORDER_DELETED: Person=韩遂 (ID:56), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:49 2025] ORDER_EXECUTED: Person=马超 (ID:57), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:49 2025] PERSON_RETURNED: Person=马超 (ID:57), City=西凉 (ID:0), Reason=Order Completion
+[Sun Jun 22 15:20:49 2025] ORDER_DELETED: Person=马超 (ID:57), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:49 2025] ORDER_EXECUTED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:49 2025] PERSON_RETURNED: Person=成宜 (ID:64), City=安定 (ID:3), Reason=Order Completion
+[Sun Jun 22 15:20:49 2025] ORDER_DELETED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:49 2025] ORDER_EXECUTED: Person=马腾 (ID:5), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] PERSON_RETURNED: Person=马腾 (ID:5), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:49 2025] ORDER_DELETED: Person=马腾 (ID:5), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] ORDER_EXECUTED: Person=庞德 (ID:58), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] PERSON_RETURNED: Person=庞德 (ID:58), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:49 2025] ORDER_DELETED: Person=庞德 (ID:58), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] ORDER_EXECUTED: Person=程银 (ID:60), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] PERSON_RETURNED: Person=程银 (ID:60), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:49 2025] ORDER_DELETED: Person=程银 (ID:60), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] ORDER_EXECUTED: Person=李堪 (ID:61), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] PERSON_RETURNED: Person=李堪 (ID:61), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:49 2025] ORDER_DELETED: Person=李堪 (ID:61), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] ORDER_EXECUTED: Person=张横 (ID:62), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] PERSON_RETURNED: Person=张横 (ID:62), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:49 2025] ORDER_DELETED: Person=张横 (ID:62), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] ORDER_EXECUTED: Person=梁兴 (ID:63), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] PERSON_RETURNED: Person=梁兴 (ID:63), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:49 2025] ORDER_DELETED: Person=梁兴 (ID:63), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] ORDER_EXECUTED: Person=马玩 (ID:65), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] PERSON_RETURNED: Person=马玩 (ID:65), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:49 2025] ORDER_DELETED: Person=马玩 (ID:65), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] ORDER_EXECUTED: Person=杨秋 (ID:66), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] PERSON_RETURNED: Person=杨秋 (ID:66), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:49 2025] ORDER_DELETED: Person=杨秋 (ID:66), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:49 2025] GAME_TURN: Year=2746, Month=4
+[Sun Jun 22 15:20:50 2025] ORDER_CREATED: Person=韩遂 (ID:56), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:50 2025] PERSON_REMOVED: Person=韩遂 (ID:56), City=西凉 (ID:0), Reason=Order Assignment
+[Sun Jun 22 15:20:50 2025] ORDER_CREATED: Person=马超 (ID:57), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:50 2025] PERSON_REMOVED: Person=马超 (ID:57), City=西凉 (ID:0), Reason=Order Assignment
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=北平 (ID:1), Tactic=Armament
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=襄平 (ID:2), Tactic=Interior
+[Sun Jun 22 15:20:50 2025] ORDER_CREATED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:50 2025] PERSON_REMOVED: Person=成宜 (ID:64), City=安定 (ID:3), Reason=Order Assignment
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=晋阳 (ID:4), Tactic=Armament
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=南皮 (ID:6), Tactic=Armament
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=北海 (ID:7), Tactic=Interior
+[Sun Jun 22 15:20:50 2025] ORDER_CREATED: Person=马腾 (ID:5), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] PERSON_REMOVED: Person=马腾 (ID:5), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:50 2025] ORDER_CREATED: Person=庞德 (ID:58), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] PERSON_REMOVED: Person=庞德 (ID:58), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:50 2025] ORDER_CREATED: Person=程银 (ID:60), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] PERSON_REMOVED: Person=程银 (ID:60), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:50 2025] ORDER_CREATED: Person=李堪 (ID:61), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] PERSON_REMOVED: Person=李堪 (ID:61), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:50 2025] ORDER_CREATED: Person=张横 (ID:62), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] PERSON_REMOVED: Person=张横 (ID:62), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:50 2025] ORDER_CREATED: Person=梁兴 (ID:63), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] PERSON_REMOVED: Person=梁兴 (ID:63), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:50 2025] ORDER_CREATED: Person=马玩 (ID:65), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] PERSON_REMOVED: Person=马玩 (ID:65), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:50 2025] ORDER_CREATED: Person=杨秋 (ID:66), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] PERSON_REMOVED: Person=杨秋 (ID:66), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=河内 (ID:9), Tactic=Armament
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=长安 (ID:10), Tactic=Diplomatism
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City= (ID:11), Tactic=Armament
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=濮阳 (ID:12), Tactic=Diplomatism
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=徐州 (ID:13), Tactic=Diplomatism
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=汉中 (ID:14), Tactic=Interior
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=洛阳 (ID:15), Tactic=Interior
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=许昌 (ID:16), Tactic=Interior
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=小沛 (ID:17), Tactic=Interior
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=下邳 (ID:18), Tactic=Interior
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=宛城 (ID:20), Tactic=Armament
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=寿春 (ID:21), Tactic=Interior
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=成都 (ID:24), Tactic=Armament
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=襄阳 (ID:26), Tactic=Armament
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=江夏 (ID:27), Tactic=Armament
+[Sun Jun 22 15:20:50 2025] COMPUTER_TACTIC: City=长沙 (ID:33), Tactic=Armament
+[Sun Jun 22 15:20:50 2025] ORDER_EXECUTED: Person=韩遂 (ID:56), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:50 2025] PERSON_RETURNED: Person=韩遂 (ID:56), City=西凉 (ID:0), Reason=Order Completion
+[Sun Jun 22 15:20:50 2025] ORDER_DELETED: Person=韩遂 (ID:56), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:50 2025] ORDER_EXECUTED: Person=马超 (ID:57), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:50 2025] PERSON_RETURNED: Person=马超 (ID:57), City=西凉 (ID:0), Reason=Order Completion
+[Sun Jun 22 15:20:50 2025] ORDER_DELETED: Person=马超 (ID:57), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:50 2025] ORDER_EXECUTED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:50 2025] PERSON_RETURNED: Person=成宜 (ID:64), City=安定 (ID:3), Reason=Order Completion
+[Sun Jun 22 15:20:50 2025] ORDER_DELETED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:50 2025] ORDER_EXECUTED: Person=马腾 (ID:5), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] PERSON_RETURNED: Person=马腾 (ID:5), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:50 2025] ORDER_DELETED: Person=马腾 (ID:5), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] ORDER_EXECUTED: Person=庞德 (ID:58), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] PERSON_RETURNED: Person=庞德 (ID:58), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:50 2025] ORDER_DELETED: Person=庞德 (ID:58), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] ORDER_EXECUTED: Person=程银 (ID:60), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] PERSON_RETURNED: Person=程银 (ID:60), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:50 2025] ORDER_DELETED: Person=程银 (ID:60), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] ORDER_EXECUTED: Person=李堪 (ID:61), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] PERSON_RETURNED: Person=李堪 (ID:61), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:50 2025] ORDER_DELETED: Person=李堪 (ID:61), Order=招商 (ID:2), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] ORDER_EXECUTED: Person=张横 (ID:62), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] PERSON_RETURNED: Person=张横 (ID:62), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:50 2025] ORDER_DELETED: Person=张横 (ID:62), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] ORDER_EXECUTED: Person=梁兴 (ID:63), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] PERSON_RETURNED: Person=梁兴 (ID:63), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:50 2025] ORDER_DELETED: Person=梁兴 (ID:63), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] ORDER_EXECUTED: Person=马玩 (ID:65), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] PERSON_RETURNED: Person=马玩 (ID:65), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:50 2025] ORDER_DELETED: Person=马玩 (ID:65), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] ORDER_EXECUTED: Person=杨秋 (ID:66), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] PERSON_RETURNED: Person=杨秋 (ID:66), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:50 2025] ORDER_DELETED: Person=杨秋 (ID:66), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:50 2025] GAME_TURN: Year=2746, Month=5
+[Sun Jun 22 15:20:51 2025] ORDER_CREATED: Person=韩遂 (ID:56), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:51 2025] PERSON_REMOVED: Person=韩遂 (ID:56), City=西凉 (ID:0), Reason=Order Assignment
+[Sun Jun 22 15:20:51 2025] ORDER_CREATED: Person=马超 (ID:57), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:51 2025] PERSON_REMOVED: Person=马超 (ID:57), City=西凉 (ID:0), Reason=Order Assignment
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=北平 (ID:1), Tactic=Armament
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=襄平 (ID:2), Tactic=Armament
+[Sun Jun 22 15:20:51 2025] ORDER_CREATED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:51 2025] PERSON_REMOVED: Person=成宜 (ID:64), City=安定 (ID:3), Reason=Order Assignment
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=晋阳 (ID:4), Tactic=Armament
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=南皮 (ID:6), Tactic=Armament
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=北海 (ID:7), Tactic=Interior
+[Sun Jun 22 15:20:51 2025] ORDER_CREATED: Person=马腾 (ID:5), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] PERSON_REMOVED: Person=马腾 (ID:5), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:51 2025] ORDER_CREATED: Person=庞德 (ID:58), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] PERSON_REMOVED: Person=庞德 (ID:58), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:51 2025] ORDER_CREATED: Person=程银 (ID:60), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] PERSON_REMOVED: Person=程银 (ID:60), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:51 2025] ORDER_CREATED: Person=李堪 (ID:61), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] PERSON_REMOVED: Person=李堪 (ID:61), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:51 2025] ORDER_CREATED: Person=张横 (ID:62), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] PERSON_REMOVED: Person=张横 (ID:62), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:51 2025] ORDER_CREATED: Person=梁兴 (ID:63), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] PERSON_REMOVED: Person=梁兴 (ID:63), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:51 2025] ORDER_CREATED: Person=马玩 (ID:65), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] PERSON_REMOVED: Person=马玩 (ID:65), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:51 2025] ORDER_CREATED: Person=杨秋 (ID:66), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] PERSON_REMOVED: Person=杨秋 (ID:66), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=河内 (ID:9), Tactic=Armament
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=长安 (ID:10), Tactic=Interior
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City= (ID:11), Tactic=Armament
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=濮阳 (ID:12), Tactic=Interior
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=徐州 (ID:13), Tactic=Interior
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=汉中 (ID:14), Tactic=Armament
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=洛阳 (ID:15), Tactic=Interior
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=许昌 (ID:16), Tactic=Armament
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=小沛 (ID:17), Tactic=Diplomatism
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=下邳 (ID:18), Tactic=Armament
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=宛城 (ID:20), Tactic=Interior
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=寿春 (ID:21), Tactic=Armament
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=成都 (ID:24), Tactic=Armament
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=襄阳 (ID:26), Tactic=Armament
+[Sun Jun 22 15:20:51 2025] COMPUTER_TACTIC: City=江夏 (ID:27), Tactic=Armament
+[Sun Jun 22 15:20:51 2025] ORDER_EXECUTED: Person=韩遂 (ID:56), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:51 2025] PERSON_RETURNED: Person=韩遂 (ID:56), City=西凉 (ID:0), Reason=Order Completion
+[Sun Jun 22 15:20:51 2025] ORDER_DELETED: Person=韩遂 (ID:56), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:51 2025] ORDER_EXECUTED: Person=马超 (ID:57), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:51 2025] PERSON_RETURNED: Person=马超 (ID:57), City=西凉 (ID:0), Reason=Order Completion
+[Sun Jun 22 15:20:51 2025] ORDER_DELETED: Person=马超 (ID:57), Order=开垦 (ID:1), City=西凉 (ID:0)
+[Sun Jun 22 15:20:51 2025] ORDER_EXECUTED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:51 2025] PERSON_RETURNED: Person=成宜 (ID:64), City=安定 (ID:3), Reason=Order Completion
+[Sun Jun 22 15:20:51 2025] ORDER_DELETED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:51 2025] ORDER_EXECUTED: Person=马腾 (ID:5), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] PERSON_RETURNED: Person=马腾 (ID:5), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:51 2025] ORDER_DELETED: Person=马腾 (ID:5), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] ORDER_EXECUTED: Person=庞德 (ID:58), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] PERSON_RETURNED: Person=庞德 (ID:58), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:51 2025] ORDER_DELETED: Person=庞德 (ID:58), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] ORDER_EXECUTED: Person=程银 (ID:60), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] PERSON_RETURNED: Person=程银 (ID:60), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:51 2025] ORDER_DELETED: Person=程银 (ID:60), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] ORDER_EXECUTED: Person=李堪 (ID:61), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] PERSON_RETURNED: Person=李堪 (ID:61), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:51 2025] ORDER_DELETED: Person=李堪 (ID:61), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] ORDER_EXECUTED: Person=张横 (ID:62), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] PERSON_RETURNED: Person=张横 (ID:62), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:51 2025] ORDER_DELETED: Person=张横 (ID:62), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] ORDER_EXECUTED: Person=梁兴 (ID:63), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] PERSON_RETURNED: Person=梁兴 (ID:63), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:51 2025] ORDER_DELETED: Person=梁兴 (ID:63), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] ORDER_EXECUTED: Person=马玩 (ID:65), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] PERSON_RETURNED: Person=马玩 (ID:65), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:51 2025] ORDER_DELETED: Person=马玩 (ID:65), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] ORDER_EXECUTED: Person=杨秋 (ID:66), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] PERSON_RETURNED: Person=杨秋 (ID:66), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:51 2025] ORDER_DELETED: Person=杨秋 (ID:66), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:51 2025] GAME_TURN: Year=2746, Month=6
+[Sun Jun 22 15:20:52 2025] ORDER_CREATED: Person=韩遂 (ID:56), Order=招揽 (ID:16), City=西凉 (ID:0), Target=Person ID 60 (ID:60)
+[Sun Jun 22 15:20:52 2025] PERSON_REMOVED: Person=韩遂 (ID:56), City=西凉 (ID:0), Reason=Order Assignment
+[Sun Jun 22 15:20:52 2025] ORDER_CREATED: Person=马超 (ID:57), Order=招揽 (ID:16), City=西凉 (ID:0), Target=Person ID 57 (ID:57)
+[Sun Jun 22 15:20:52 2025] PERSON_REMOVED: Person=马超 (ID:57), City=西凉 (ID:0), Reason=Order Assignment
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=西凉 (ID:0), Tactic=AI_Diplomatism
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=北平 (ID:1), Tactic=Interior
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=襄平 (ID:2), Tactic=Interior
+[Sun Jun 22 15:20:52 2025] ORDER_CREATED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:52 2025] PERSON_REMOVED: Person=成宜 (ID:64), City=安定 (ID:3), Reason=Order Assignment
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=晋阳 (ID:4), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=平原 (ID:5), Tactic=Interior
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=南皮 (ID:6), Tactic=Interior
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=北海 (ID:7), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=河内 (ID:9), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=长安 (ID:10), Tactic=Interior
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City= (ID:11), Tactic=Diplomatism
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=濮阳 (ID:12), Tactic=Interior
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=徐州 (ID:13), Tactic=Interior
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=汉中 (ID:14), Tactic=Interior
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=洛阳 (ID:15), Tactic=Diplomatism
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=许昌 (ID:16), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=小沛 (ID:17), Tactic=Diplomatism
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=下邳 (ID:18), Tactic=Interior
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=宛城 (ID:20), Tactic=Interior
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=寿春 (ID:21), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=成都 (ID:24), Tactic=Diplomatism
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=襄阳 (ID:26), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=江夏 (ID:27), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=长沙 (ID:33), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] ORDER_EXECUTED: Person=韩遂 (ID:56), Order=招揽 (ID:16), City=西凉 (ID:0), Target=Person ID 60 (ID:60)
+[Sun Jun 22 15:20:52 2025] PERSON_RETURNED: Person=韩遂 (ID:56), City=西凉 (ID:0), Reason=Order Completion
+[Sun Jun 22 15:20:52 2025] ORDER_DELETED: Person=韩遂 (ID:56), Order=招揽 (ID:16), City=西凉 (ID:0), Target=Person ID 60 (ID:60)
+[Sun Jun 22 15:20:52 2025] ORDER_EXECUTED: Person=马超 (ID:57), Order=招揽 (ID:16), City=西凉 (ID:0), Target=Person ID 57 (ID:57)
+[Sun Jun 22 15:20:52 2025] PERSON_RETURNED: Person=马超 (ID:57), City=西凉 (ID:0), Reason=Order Completion
+[Sun Jun 22 15:20:52 2025] ORDER_DELETED: Person=马超 (ID:57), Order=招揽 (ID:16), City=西凉 (ID:0), Target=Person ID 57 (ID:57)
+[Sun Jun 22 15:20:52 2025] ORDER_EXECUTED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:52 2025] PERSON_RETURNED: Person=成宜 (ID:64), City=安定 (ID:3), Reason=Order Completion
+[Sun Jun 22 15:20:52 2025] ORDER_DELETED: Person=成宜 (ID:64), Order=开垦 (ID:1), City=安定 (ID:3)
+[Sun Jun 22 15:20:52 2025] GAME_TURN: Year=2746, Month=7
+[Sun Jun 22 15:20:52 2025] ORDER_CREATED: Person=韩遂 (ID:56), Order=招揽 (ID:16), City=西凉 (ID:0), Target=Person ID 61 (ID:61)
+[Sun Jun 22 15:20:52 2025] PERSON_REMOVED: Person=韩遂 (ID:56), City=西凉 (ID:0), Reason=Order Assignment
+[Sun Jun 22 15:20:52 2025] ORDER_CREATED: Person=马超 (ID:57), Order=招揽 (ID:16), City=西凉 (ID:0), Target=Person ID 97 (ID:97)
+[Sun Jun 22 15:20:52 2025] PERSON_REMOVED: Person=马超 (ID:57), City=西凉 (ID:0), Reason=Order Assignment
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=西凉 (ID:0), Tactic=AI_Diplomatism
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=北平 (ID:1), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=襄平 (ID:2), Tactic=Diplomatism
+[Sun Jun 22 15:20:52 2025] ORDER_CREATED: Person=成宜 (ID:64), Order=招商 (ID:2), City=安定 (ID:3)
+[Sun Jun 22 15:20:52 2025] PERSON_REMOVED: Person=成宜 (ID:64), City=安定 (ID:3), Reason=Order Assignment
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=晋阳 (ID:4), Tactic=Interior
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=平原 (ID:5), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=南皮 (ID:6), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=北海 (ID:7), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] ORDER_CREATED: Person=马腾 (ID:5), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] PERSON_REMOVED: Person=马腾 (ID:5), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:52 2025] ORDER_CREATED: Person=庞德 (ID:58), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] PERSON_REMOVED: Person=庞德 (ID:58), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:52 2025] ORDER_CREATED: Person=程银 (ID:60), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] PERSON_REMOVED: Person=程银 (ID:60), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:52 2025] ORDER_CREATED: Person=李堪 (ID:61), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] PERSON_REMOVED: Person=李堪 (ID:61), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:52 2025] ORDER_CREATED: Person=张横 (ID:62), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] PERSON_REMOVED: Person=张横 (ID:62), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:52 2025] ORDER_CREATED: Person=梁兴 (ID:63), Order=搜寻 (ID:3), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] PERSON_REMOVED: Person=梁兴 (ID:63), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:52 2025] ORDER_CREATED: Person=马玩 (ID:65), Order=搜寻 (ID:3), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] PERSON_REMOVED: Person=马玩 (ID:65), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:52 2025] ORDER_CREATED: Person=杨秋 (ID:66), Order=搜寻 (ID:3), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] PERSON_REMOVED: Person=杨秋 (ID:66), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=天水 (ID:8), Tactic=Interior
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=河内 (ID:9), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=长安 (ID:10), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City= (ID:11), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=濮阳 (ID:12), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=徐州 (ID:13), Tactic=Interior
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=汉中 (ID:14), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=洛阳 (ID:15), Tactic=Diplomatism
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=许昌 (ID:16), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=小沛 (ID:17), Tactic=Diplomatism
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=下邳 (ID:18), Tactic=Interior
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=宛城 (ID:20), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=寿春 (ID:21), Tactic=Interior
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=成都 (ID:24), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=襄阳 (ID:26), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=江夏 (ID:27), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] COMPUTER_TACTIC: City=长沙 (ID:33), Tactic=Armament
+[Sun Jun 22 15:20:52 2025] ORDER_EXECUTED: Person=韩遂 (ID:56), Order=招揽 (ID:16), City=西凉 (ID:0), Target=Person ID 61 (ID:61)
+[Sun Jun 22 15:20:52 2025] PERSON_RETURNED: Person=韩遂 (ID:56), City=西凉 (ID:0), Reason=Order Completion
+[Sun Jun 22 15:20:52 2025] ORDER_DELETED: Person=韩遂 (ID:56), Order=招揽 (ID:16), City=西凉 (ID:0), Target=Person ID 61 (ID:61)
+[Sun Jun 22 15:20:52 2025] ORDER_EXECUTED: Person=马超 (ID:57), Order=招揽 (ID:16), City=西凉 (ID:0), Target=Person ID 97 (ID:97)
+[Sun Jun 22 15:20:52 2025] PERSON_RETURNED: Person=马超 (ID:57), City=西凉 (ID:0), Reason=Order Completion
+[Sun Jun 22 15:20:52 2025] ORDER_DELETED: Person=马超 (ID:57), Order=招揽 (ID:16), City=西凉 (ID:0), Target=Person ID 97 (ID:97)
+[Sun Jun 22 15:20:52 2025] ORDER_EXECUTED: Person=成宜 (ID:64), Order=招商 (ID:2), City=安定 (ID:3)
+[Sun Jun 22 15:20:52 2025] PERSON_RETURNED: Person=成宜 (ID:64), City=安定 (ID:3), Reason=Order Completion
+[Sun Jun 22 15:20:52 2025] ORDER_DELETED: Person=成宜 (ID:64), Order=招商 (ID:2), City=安定 (ID:3)
+[Sun Jun 22 15:20:52 2025] ORDER_EXECUTED: Person=马腾 (ID:5), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] PERSON_RETURNED: Person=马腾 (ID:5), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:52 2025] ORDER_DELETED: Person=马腾 (ID:5), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] ORDER_EXECUTED: Person=庞德 (ID:58), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] PERSON_RETURNED: Person=庞德 (ID:58), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:52 2025] ORDER_DELETED: Person=庞德 (ID:58), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] ORDER_EXECUTED: Person=程银 (ID:60), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] PERSON_RETURNED: Person=程银 (ID:60), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:52 2025] ORDER_DELETED: Person=程银 (ID:60), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] ORDER_EXECUTED: Person=李堪 (ID:61), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] PERSON_RETURNED: Person=李堪 (ID:61), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:52 2025] ORDER_DELETED: Person=李堪 (ID:61), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] ORDER_EXECUTED: Person=张横 (ID:62), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] PERSON_RETURNED: Person=张横 (ID:62), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:52 2025] ORDER_DELETED: Person=张横 (ID:62), Order=出巡 (ID:5), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] ORDER_EXECUTED: Person=梁兴 (ID:63), Order=搜寻 (ID:3), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] PERSON_RETURNED: Person=梁兴 (ID:63), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:52 2025] ORDER_DELETED: Person=梁兴 (ID:63), Order=搜寻 (ID:3), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] ORDER_EXECUTED: Person=马玩 (ID:65), Order=搜寻 (ID:3), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] PERSON_RETURNED: Person=马玩 (ID:65), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:52 2025] ORDER_DELETED: Person=马玩 (ID:65), Order=搜寻 (ID:3), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] ORDER_EXECUTED: Person=杨秋 (ID:66), Order=搜寻 (ID:3), City=天水 (ID:8)
+[Sun Jun 22 15:20:52 2025] PERSON_RETURNED: Person=杨秋 (ID:66), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:52 2025] ORDER_DELETED: Person=杨秋 (ID:66), Order=搜寻 (ID:3), City=天水 (ID:8)
+[Sun Jun 22 15:20:53 2025] GAME_TURN: Year=2746, Month=8
+[Sun Jun 22 15:20:54 2025] ORDER_CREATED: Person=韩遂 (ID:56), Order=出巡 (ID:5), City=西凉 (ID:0)
+[Sun Jun 22 15:20:54 2025] PERSON_REMOVED: Person=韩遂 (ID:56), City=西凉 (ID:0), Reason=Order Assignment
+[Sun Jun 22 15:20:54 2025] ORDER_CREATED: Person=马超 (ID:57), Order=治理 (ID:4), City=西凉 (ID:0)
+[Sun Jun 22 15:20:54 2025] PERSON_REMOVED: Person=马超 (ID:57), City=西凉 (ID:0), Reason=Order Assignment
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=西凉 (ID:0), Tactic=Interior
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=北平 (ID:1), Tactic=Armament
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=襄平 (ID:2), Tactic=Diplomatism
+[Sun Jun 22 15:20:54 2025] ORDER_CREATED: Person=成宜 (ID:64), Order=招商 (ID:2), City=安定 (ID:3)
+[Sun Jun 22 15:20:54 2025] PERSON_REMOVED: Person=成宜 (ID:64), City=安定 (ID:3), Reason=Order Assignment
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=晋阳 (ID:4), Tactic=Diplomatism
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=平原 (ID:5), Tactic=Armament
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=南皮 (ID:6), Tactic=Armament
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=北海 (ID:7), Tactic=Diplomatism
+[Sun Jun 22 15:20:54 2025] ORDER_CREATED: Person=马腾 (ID:5), Order=招揽 (ID:16), City=天水 (ID:8), Target=Person ID 47 (ID:47)
+[Sun Jun 22 15:20:54 2025] PERSON_REMOVED: Person=马腾 (ID:5), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:54 2025] ORDER_CREATED: Person=庞德 (ID:58), Order=招揽 (ID:16), City=天水 (ID:8), Target=Person ID 83 (ID:83)
+[Sun Jun 22 15:20:54 2025] PERSON_REMOVED: Person=庞德 (ID:58), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:54 2025] ORDER_CREATED: Person=程银 (ID:60), Order=招揽 (ID:16), City=天水 (ID:8), Target=会稽 (ID:29)
+[Sun Jun 22 15:20:54 2025] PERSON_REMOVED: Person=程银 (ID:60), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:54 2025] ORDER_CREATED: Person=李堪 (ID:61), Order=招揽 (ID:16), City=天水 (ID:8), Target=Person ID 104 (ID:104)
+[Sun Jun 22 15:20:54 2025] PERSON_REMOVED: Person=李堪 (ID:61), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:54 2025] ORDER_CREATED: Person=张横 (ID:62), Order=招揽 (ID:16), City=天水 (ID:8), Target=Person ID 98 (ID:98)
+[Sun Jun 22 15:20:54 2025] PERSON_REMOVED: Person=张横 (ID:62), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:54 2025] ORDER_CREATED: Person=梁兴 (ID:63), Order=招揽 (ID:16), City=天水 (ID:8), Target=武陵 (ID:32)
+[Sun Jun 22 15:20:54 2025] PERSON_REMOVED: Person=梁兴 (ID:63), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:54 2025] ORDER_CREATED: Person=马玩 (ID:65), Order=招揽 (ID:16), City=天水 (ID:8), Target=Person ID 95 (ID:95)
+[Sun Jun 22 15:20:54 2025] PERSON_REMOVED: Person=马玩 (ID:65), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:54 2025] ORDER_CREATED: Person=杨秋 (ID:66), Order=招揽 (ID:16), City=天水 (ID:8), Target=建业 (ID:22)
+[Sun Jun 22 15:20:54 2025] PERSON_REMOVED: Person=杨秋 (ID:66), City=天水 (ID:8), Reason=Order Assignment
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=天水 (ID:8), Tactic=AI_Diplomatism
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=河内 (ID:9), Tactic=Interior
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=长安 (ID:10), Tactic=Armament
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City= (ID:11), Tactic=Armament
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=濮阳 (ID:12), Tactic=Armament
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=徐州 (ID:13), Tactic=Interior
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=汉中 (ID:14), Tactic=Armament
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=洛阳 (ID:15), Tactic=Diplomatism
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=许昌 (ID:16), Tactic=Armament
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=小沛 (ID:17), Tactic=Armament
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=下邳 (ID:18), Tactic=Diplomatism
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=宛城 (ID:20), Tactic=Interior
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=寿春 (ID:21), Tactic=Interior
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=成都 (ID:24), Tactic=Interior
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=襄阳 (ID:26), Tactic=Interior
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=江夏 (ID:27), Tactic=Armament
+[Sun Jun 22 15:20:54 2025] COMPUTER_TACTIC: City=长沙 (ID:33), Tactic=Armament
+[Sun Jun 22 15:20:54 2025] ORDER_EXECUTED: Person=韩遂 (ID:56), Order=出巡 (ID:5), City=西凉 (ID:0)
+[Sun Jun 22 15:20:54 2025] PERSON_RETURNED: Person=韩遂 (ID:56), City=西凉 (ID:0), Reason=Order Completion
+[Sun Jun 22 15:20:54 2025] ORDER_DELETED: Person=韩遂 (ID:56), Order=出巡 (ID:5), City=西凉 (ID:0)
+[Sun Jun 22 15:20:54 2025] ORDER_EXECUTED: Person=马超 (ID:57), Order=治理 (ID:4), City=西凉 (ID:0)
+[Sun Jun 22 15:20:54 2025] PERSON_RETURNED: Person=马超 (ID:57), City=西凉 (ID:0), Reason=Order Completion
+[Sun Jun 22 15:20:54 2025] ORDER_DELETED: Person=马超 (ID:57), Order=治理 (ID:4), City=西凉 (ID:0)
+[Sun Jun 22 15:20:54 2025] ORDER_EXECUTED: Person=成宜 (ID:64), Order=招商 (ID:2), City=安定 (ID:3)
+[Sun Jun 22 15:20:54 2025] PERSON_RETURNED: Person=成宜 (ID:64), City=安定 (ID:3), Reason=Order Completion
+[Sun Jun 22 15:20:54 2025] ORDER_DELETED: Person=成宜 (ID:64), Order=招商 (ID:2), City=安定 (ID:3)
+[Sun Jun 22 15:20:54 2025] ORDER_EXECUTED: Person=马腾 (ID:5), Order=招揽 (ID:16), City=天水 (ID:8), Target=Person ID 47 (ID:47)
+[Sun Jun 22 15:20:54 2025] PERSON_RETURNED: Person=马腾 (ID:5), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:54 2025] ORDER_DELETED: Person=马腾 (ID:5), Order=招揽 (ID:16), City=天水 (ID:8), Target=Person ID 47 (ID:47)
+[Sun Jun 22 15:20:54 2025] ORDER_EXECUTED: Person=庞德 (ID:58), Order=招揽 (ID:16), City=天水 (ID:8), Target=Person ID 83 (ID:83)
+[Sun Jun 22 15:20:54 2025] PERSON_RETURNED: Person=庞德 (ID:58), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:54 2025] ORDER_DELETED: Person=庞德 (ID:58), Order=招揽 (ID:16), City=天水 (ID:8), Target=Person ID 83 (ID:83)
+[Sun Jun 22 15:20:54 2025] ORDER_EXECUTED: Person=程银 (ID:60), Order=招揽 (ID:16), City=天水 (ID:8), Target=会稽 (ID:29)
+[Sun Jun 22 15:20:54 2025] PERSON_RETURNED: Person=程银 (ID:60), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:54 2025] ORDER_DELETED: Person=程银 (ID:60), Order=招揽 (ID:16), City=天水 (ID:8), Target=会稽 (ID:29)
+[Sun Jun 22 15:20:54 2025] ORDER_EXECUTED: Person=李堪 (ID:61), Order=招揽 (ID:16), City=天水 (ID:8), Target=Person ID 104 (ID:104)
+[Sun Jun 22 15:20:54 2025] PERSON_RETURNED: Person=李堪 (ID:61), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:54 2025] ORDER_DELETED: Person=李堪 (ID:61), Order=招揽 (ID:16), City=天水 (ID:8), Target=Person ID 104 (ID:104)
+[Sun Jun 22 15:20:54 2025] ORDER_EXECUTED: Person=张横 (ID:62), Order=招揽 (ID:16), City=天水 (ID:8), Target=Person ID 98 (ID:98)
+[Sun Jun 22 15:20:54 2025] PERSON_RETURNED: Person=张横 (ID:62), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:54 2025] ORDER_DELETED: Person=张横 (ID:62), Order=招揽 (ID:16), City=天水 (ID:8), Target=Person ID 98 (ID:98)
+[Sun Jun 22 15:20:54 2025] ORDER_EXECUTED: Person=梁兴 (ID:63), Order=招揽 (ID:16), City=天水 (ID:8), Target=武陵 (ID:32)
+[Sun Jun 22 15:20:54 2025] PERSON_RETURNED: Person=梁兴 (ID:63), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:54 2025] ORDER_DELETED: Person=梁兴 (ID:63), Order=招揽 (ID:16), City=天水 (ID:8), Target=武陵 (ID:32)
+[Sun Jun 22 15:20:54 2025] ORDER_EXECUTED: Person=马玩 (ID:65), Order=招揽 (ID:16), City=天水 (ID:8), Target=Person ID 95 (ID:95)
+[Sun Jun 22 15:20:55 2025] PERSON_RETURNED: Person=马玩 (ID:65), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:55 2025] ORDER_DELETED: Person=马玩 (ID:65), Order=招揽 (ID:16), City=天水 (ID:8), Target=Person ID 95 (ID:95)
+[Sun Jun 22 15:20:55 2025] ORDER_EXECUTED: Person=杨秋 (ID:66), Order=招揽 (ID:16), City=天水 (ID:8), Target=建业 (ID:22)
+[Sun Jun 22 15:20:55 2025] PERSON_RETURNED: Person=杨秋 (ID:66), City=天水 (ID:8), Reason=Order Completion
+[Sun Jun 22 15:20:55 2025] ORDER_DELETED: Person=杨秋 (ID:66), Order=招揽 (ID:16), City=天水 (ID:8), Target=建业 (ID:22)
+[Sun Jun 22 15:20:55 2025] GAME_TURN: Year=2746, Month=9

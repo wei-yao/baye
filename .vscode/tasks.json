@@ -1,0 +1,38 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "generate-moc",
+            "type": "shell",
+            "command": "./createMOC.ps1",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": [],
+            "detail": "Generate MOC files for Qt classes"
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "mingw32-make.exe",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "build and link"
+        },    
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "mingw32-make.exe clean",
+            "group": {
+                "kind": "clean",
+                "isDefault": false
+            },
+            "problemMatcher": [],
+            "detail": "build and link"
+        },     
+    ]
+}

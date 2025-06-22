@@ -1,4 +1,4 @@
-# SkySide3gby_Net Build Instructions
+# 步步高三国霸业 windows 版
 
 ## Prerequisites
 
@@ -36,20 +36,34 @@ mingw32-make
 ```
 
 ### Run
-```sh
-cd bin
-SkySide3gby_Net.exe
+```
+need to copy the following dll from your qt folder to the bin folder
+Qt5Core.dll
+Qt5Gui.dll
+Qt5Network.dll
+Qt5Widgets.dll
+
 ```
 
 ## Notes
 - If you encounter missing MOC files, re-run `createMOC.ps1`.
 - If you change Qt header usage, re-run `createMOC.ps1` before building.
 - If you use a different Qt or MinGW version, update paths accordingly in your environment and scripts.
+- I am using vscode, you can see the recommend debug and build task definition under .vscode folder
+
+## key change
+ - 增加自动内政，自动招降（降低招降难度）
+ - 自动征兵，分配给带将数最高的10个人
+ - 存储城市信息为json方便改动
+ - convert all file to c++ and use vector to modernlize the code (in progress)
 
 ## Troubleshooting
 - Ensure all required Qt DLLs are available in your `PATH` or next to the executable.
 - If you see errors about missing `*.h` or `*.cpp` files, check that MOC generation completed successfully. 
 
-#todo
+## todo
  - add step for what static file needed(qt lib,dat.lib)
- - maybe debug script for vscode
+ - convert save format completely to json
+   - persons
+   - orders
+- rewrite the UI using different engine,to enable show more information it's too terrible.
