@@ -37,7 +37,7 @@ SOURCES += \
     pstring.c \
     pconst.c \
     citycmd.c \
-    citycmdb.c \
+    citycmdb.cpp \
     citycmdc.c \
     citycmdd.c \
     citycmde.c \

@@ -2,7 +2,7 @@
 *Copyright (c)2005 , 东莞步步高教育电子分公司
 *All rights reserved.
 **
-文件名称：	citycmdb.c
+文件名称：	citycmdb.cpp
 *文件标识：	步步高电子词典的游戏引擎模块
 *摘要：		封装引擎对系统显示程序调用的入口
 **
@@ -14,16 +14,31 @@
 *	版本    日期     作者     改动内容和原因
 *   ----------------------------------------------------
 *	1.0    2005-6-3 14:45  陈泽伟     基本的功能完成
+*	2.0    2024-12-19      AI Assistant   转换为C++版本
 ***********************************************************************/
 
+#include <cstdlib>
+#include <cstring>
+#include <cstdint>
 #include "stdsys.h"
 #include "comm.h"
 #undef	CITYCMDB_C
 #define	CITYCMDB_C
 #include "enghead.h"
 
+// C++ namespace for game functions
+namespace GameEngine {
+
 extern int g_stat;
 extern int ngsecond1;
+
+} // namespace GameEngine
+
+// Global variables accessible from C code
+extern "C" {
+    extern int g_stat;
+    extern int ngsecond1;
+}
 
 /******************************************************************************
 * 函数名:OrderMenu
@@ -37,12 +52,13 @@ extern int ngsecond1;
 *		姓名		日期			说明
 *		----		----			-----------
 *		陈泽伟		2005-6-13 15:21	基本功能完成
+*		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
- U8 OrderMenu(void)
+extern "C" U8 OrderMenu(void)
 {
 	U8 rav;
 	
-	while (1)
+	while (true)
 	{
         //usleep(1000);
         //GamShowFrame(g_VisScr);
@@ -94,10 +110,10 @@ extern int ngsecond1;
 *		姓名		日期			说明
 *		----		----			-----------
 *		陈泽伟		2005-6-13 15:33	基本功能完成
+*		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-U8 MainOrderMenu(void)
+extern "C" U8 MainOrderMenu(void)
 {
-
 	RECT pRect;
 	U8 mstr[25];
 	ResLoadToMem(STRING_CONST,MENU_MAINSTR,mstr);
@@ -110,7 +126,6 @@ U8 MainOrderMenu(void)
 	pRect.ey = WK_SY + 10 + ((WK_EY - (WK_SY + 10)) / ASC_HGT) * ASC_HGT;
 #endif
 	return(PlcSplMenu(&pRect,0,mstr));
-	
 }
 
 /******************************************************************************
@@ -125,8 +140,9 @@ U8 MainOrderMenu(void)
 *		姓名		日期			说明
 *		----		----			-----------
 *		陈泽伟		2005-6-13 15:33	基本功能完成
+*		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-U8 InteriorOrderMenu(void)
+extern "C" U8 InteriorOrderMenu(void)
 {
 	RECT pRect;
 	U8 mstr[85];
@@ -140,7 +156,6 @@ U8 InteriorOrderMenu(void)
 	pRect.ey = WK_SY + 10 + 4 + ((WK_EY - (WK_SY + 10 + 4)) / ASC_HGT) * ASC_HGT;
 #endif
 	return(PlcSplMenu(&pRect,0,mstr));
-	
 }
 
 /******************************************************************************
@@ -155,10 +170,10 @@ U8 InteriorOrderMenu(void)
 *		姓名		日期			说明
 *		----		----			-----------
 *		陈泽伟		2005-6-13 15:36	基本功能完成
+*		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-U8 DiplomatismOrderMenu(void)
+extern "C" U8 DiplomatismOrderMenu(void)
 {
-	
 	RECT pRect;
 	U8 mstr[30];
 	ResLoadToMem(STRING_CONST,MENU_DIPLOMATISMSTR,mstr);
@@ -171,7 +186,6 @@ U8 DiplomatismOrderMenu(void)
 	pRect.ey = WK_SY + 10 + 4 + ((WK_EY - (WK_SY + 10 + 4)) / ASC_HGT) * ASC_HGT;
 #endif
 	return(PlcSplMenu(&pRect,0,mstr));
-	
 }
 
 /******************************************************************************
@@ -186,11 +200,10 @@ U8 DiplomatismOrderMenu(void)
 *		姓名		日期			说明
 *		----		----			-----------
 *		陈泽伟		2005-6-13 15:36	基本功能完成
+*		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-U8 ArmamentOrderMenu(void)
+extern "C" U8 ArmamentOrderMenu(void)
 {
-	
-	
 	RECT pRect;
 	U8 mstr[30];
 	ResLoadToMem(STRING_CONST,MENU_ARMAMENTSTR,mstr);
@@ -203,7 +216,6 @@ U8 ArmamentOrderMenu(void)
 	pRect.ey = WK_SY + 10 + 4 + ((WK_EY - (WK_SY + 10 + 4)) / ASC_HGT) * ASC_HGT;
 #endif
 	return(PlcSplMenu(&pRect,0,mstr));
-	
 }
 
 /******************************************************************************
@@ -218,111 +230,99 @@ U8 ArmamentOrderMenu(void)
 *		姓名		日期			说明
 *		----		----			-----------
 *		陈泽伟		2005-6-16 14:39	基本功能完成
+*		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
- U8 CityCommon(U8 city,U8 cmd)
+extern "C" U8 CityCommon(U8 city,U8 cmd)
 {
-	
 	if (CITY_MAX <= city)
 		return(0);
 	
-	/*while (1)
+	switch(cmd)
 	{
-		switch(OrderMenu())*/
-		switch(cmd)
-		{
-		/*内政指令*/
-		/*case APPOINT:		任命
-			break;*/
-		case ASSART:		/*开垦*/
-			AssartMake(city);
-			break;
-		case ACCRACTBUSINESS:	/*招商*/
-			AccractbusinessMake(city);
-			break;
-		case SEARCH:		/*搜寻*/
-			SearchMake(city);
-			break;
-		case FATHER:		/*治理*/
-			FatherMake(city);
-			break;
-		case INSPECTION:	/*出巡*/
-			InspectionMake(city);
-			break;
-		case SURRENDER:		/*招降*/
-			SurrenderMake(city);
-			break;
-		case KILL:		/*处斩*/
-			KillMake(city);
-			break;
-		case BANISH:		/*流放*/
-			BanishMake(city);
-			break;
-		case LARGESS:		/*赏赐*/
-			LargessMake(city);
-			break;
-		case CONFISCATE:	/*没收*/
-			ConfiscateMake(city);
-			break;
-		case EXCHANGE:		/*交易*/
-			ExchangeMake(city);
-			break;
-		case TREAT:		/*宴请*/
-			TreatMake(city);
-			break;
-		case TRANSPORTATION:	/*输送*/
-			TransportationMake(city);
-			break;
-		case MOVE:		/*移动*/
-			MoveMake(city);
-			break;
-			
-		/*外交指令*/
-		case ALIENATE:		/*离间*/
-			AlienateMake(city);
-			break;
-		case CANVASS:		/*招揽*/
-			CanvassMake(city);
-			break;
-		case COUNTERESPIONAGE:	/*策反*/
-			CounterespiongeMake(city);
-			break;
-		case REALIENATE:	/*反间*/
-		    RealienateMake(city);
-			break;
-		case INDUCE:		/*劝降*/
-			InduceMake(city);
-			break;
-		/*case TRIBUTE:		朝贡
-			break;*/
-	
-		/*军备指令*/
-		case RECONNOITRE:	/*侦察*/
-			ReconnoitreMake(city);
-			break;
-		case CONSCRIPTION:	/*征兵*/
-			ConscriptionMake(city);
-			break;
-		case DISTRIBUTE:	/*分配*/
-			DistributeMake(city);
-			break;
-		case DEPREDATE:		/*掠夺*/
-			DepredateMake(city);
-			break;
-		case BATTLE:		/*出征*/
-			BattleMake(city);
-				
-			break;
+	/*内政指令*/
+	case ASSART:		/*开垦*/
+		AssartMake(city);
+		break;
+	case ACCRACTBUSINESS:	/*招商*/
+		AccractbusinessMake(city);
+		break;
+	case SEARCH:		/*搜寻*/
+		SearchMake(city);
+		break;
+	case FATHER:		/*治理*/
+		FatherMake(city);
+		break;
+	case INSPECTION:	/*出巡*/
+		InspectionMake(city);
+		break;
+	case SURRENDER:		/*招降*/
+		SurrenderMake(city);
+		break;
+	case KILL:		/*处斩*/
+		KillMake(city);
+		break;
+	case BANISH:		/*流放*/
+		BanishMake(city);
+		break;
+	case LARGESS:		/*赏赐*/
+		LargessMake(city);
+		break;
+	case CONFISCATE:	/*没收*/
+		ConfiscateMake(city);
+		break;
+	case EXCHANGE:		/*交易*/
+		ExchangeMake(city);
+		break;
+	case TREAT:		/*宴请*/
+		TreatMake(city);
+		break;
+	case TRANSPORTATION:	/*输送*/
+		TransportationMake(city);
+		break;
+	case MOVE:		/*移动*/
+		MoveMake(city);
+		break;
 		
-		/*case 0xff:
-			break;*/
-		}
-	/*}*/
+	/*外交指令*/
+	case ALIENATE:		/*离间*/
+		AlienateMake(city);
+		break;
+	case CANVASS:		/*招揽*/
+		CanvassMake(city);
+		break;
+	case COUNTERESPIONAGE:	/*策反*/
+		CounterespiongeMake(city);
+		break;
+	case REALIENATE:	/*反间*/
+	    RealienateMake(city);
+		break;
+	case INDUCE:		/*劝降*/
+		InduceMake(city);
+		break;
+	
+	/*军备指令*/
+	case RECONNOITRE:	/*侦察*/
+		ReconnoitreMake(city);
+		break;
+	case CONSCRIPTION:	/*征兵*/
+		ConscriptionMake(city);
+		break;
+	case DISTRIBUTE:	/*分配*/
+		DistributeMake(city);
+		break;
+	case DEPREDATE:		/*掠夺*/
+		DepredateMake(city);
+		break;
+	case BATTLE:		/*出征*/
+		BattleMake(city);
+		break;
+	}
 	return(1);
 }
 
 /******************************************************************************
-* 函数名:AppointDrv
-* 说  明:“任命”命令生成
+* 函数名:AssartMake
+* 说  明:"开垦"命令生成
 *
 * 入口参数：所在城市编号
 *
@@ -332,27 +332,9 @@ U8 ArmamentOrderMenu(void)
 *		姓名		日期			说明
 *		----		----			-----------
 *		陈泽伟		2005-6-3 17:30	基本功能完成
+*		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-/* U8 AppointMake(U8 city)
-{
-	return(1);
-}*/
-
-
-/******************************************************************************
-* 函数名:AppointMake
-* 说  明:“开垦”命令生成
-*
-* 入口参数：所在城市编号
-*
-* 出口参数：1 -- 成功，0 -- 失败
-*
-* 修改历史:
-*		姓名		日期			说明
-*		----		----			-----------
-*		陈泽伟		2005-6-3 17:30	基本功能完成
-******************************************************************************/
- U8 AssartMake(U8 city)
+extern "C" U8 AssartMake(U8 city)
 {
 	U8 *pqptr;
 	U8 pcount;
@@ -389,7 +371,6 @@ U8 ArmamentOrderMenu(void)
 		pcount = GetCityPersons(city,pqptr);
 		if (!pcount)
 		{
-			/*ShowConstStrMsg(STR_NOPERSON);*/
 			break;
 		}
 		do
@@ -406,7 +387,7 @@ U8 ArmamentOrderMenu(void)
 					continue;
 				}
 				
-				fa = g_Persons[p].IQ / 10 * (rand() % 4 + 2) + (g_Persons[p].IQ >> 1);
+				fa = g_Persons[p].IQ / 10 * (std::rand() % 4 + 2) + (g_Persons[p].IQ >> 1);
 				*f += fa;
 				if (*f > fl)
 				{
@@ -428,14 +409,14 @@ U8 ArmamentOrderMenu(void)
 				return(1);
 			}
 			break;
-		} while (1);
-	} while (1);
+		} while (true);
+	} while (true);
 	return(1);
 }
 
 /******************************************************************************
-* 函数名:AppointMake
-* 说  明:“招商”命令生成
+* 函数名:AccractbusinessMake
+* 说  明:"招商"命令生成
 *
 * 入口参数：所在城市编号
 *
@@ -445,8 +426,9 @@ U8 ArmamentOrderMenu(void)
 *		姓名		日期			说明
 *		----		----			-----------
 *		陈泽伟		2005-6-3 17:30	基本功能完成
+*		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
- U8 AccractbusinessMake(U8 city)
+extern "C" U8 AccractbusinessMake(U8 city)
 {
 	U8 *pqptr;
 	U8 pcount;
@@ -484,7 +466,6 @@ U8 ArmamentOrderMenu(void)
 		pcount = GetCityPersons(city,pqptr);
 		if (!pcount)
 		{
-			/*ShowConstStrMsg(STR_NOPERSON);*/
 			break;
 		}
 		do
@@ -500,7 +481,7 @@ U8 ArmamentOrderMenu(void)
 					continue;
 				}
 				
-				ca = g_Persons[p].IQ / 10 * (rand() % 4 + 2) + g_Persons[p].IQ >> 1;
+				ca = g_Persons[p].IQ / 10 * (std::rand() % 4 + 2) + g_Persons[p].IQ >> 1;
 				*c += ca;
 				if (*c > cl)
 				{
@@ -521,17 +502,17 @@ U8 ArmamentOrderMenu(void)
 				return(1);
 			}
 			break;
-		} while (1);
-	} while (1);
+		} while (true);
+	} while (true);
 	
 	return(1);
 }
 
 /******************************************************************************
 * 函数名:ShowDMsg
-* 说  明:显示开发信息
+* 说  明:显示内政命令执行结果
 *
-* 入口参数：city -- 城市，person -- 开发人，upval -- 提升值，flag -- （0 -- 农业 1 -- 商业 3 -- 民忠 3 -- 防灾）
+* 入口参数：city -- 城市编号，person -- 人物编号，upval -- 增加值，flag -- 标志
 *
 * 出口参数：无
 *
@@ -539,8 +520,9 @@ U8 ArmamentOrderMenu(void)
 *		姓名		日期			说明
 *		----		----			-----------
 *		陈泽伟		2005-8-16 15:38	基本功能完成
+*		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
-void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
+extern "C" void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 {
 	U8 *str,*astr;
 	
@@ -577,10 +559,9 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 	ShowGReport(person,str);
 }
 
-
 /******************************************************************************
-* 函数名:AppointMake
-* 说  明:“搜寻”命令生成
+* 函数名:SearchMake
+* 说  明:"搜寻"命令生成
 *
 * 入口参数：所在城市编号
 *
@@ -590,8 +571,9 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 *		姓名		日期			说明
 *		----		----			-----------
 *		陈泽伟		2005-6-3 17:30	基本功能完成
+*		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
- U8 SearchMake(U8 city)
+extern "C" U8 SearchMake(U8 city)
 {
 	U8 *str;
 	U8 *pqptr;
@@ -620,7 +602,6 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 		pcount = GetCityPersons(city,pqptr);
 		if (!pcount)
 		{
-			/*ShowConstStrMsg(STR_NOPERSON);*/
 			break;
 		}
 		do
@@ -639,7 +620,7 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 				OrderConsumeThew(p,SEARCH);
 				OrderConsumeMoney(city,SEARCH);
 				
-				psay = rand() % 3;
+				psay = std::rand() % 3;
 				if (p == g_PlayerKing)
 				{
 					psay += P_SAY_STR24;
@@ -664,15 +645,15 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 				return(1);
 			}
 			break;
-		} while (1);
-	} while (1);
+		} while (true);
+	} while (true);
 	
 	return(1);
 }
 
 /******************************************************************************
 * 函数名:FatherMake
-* 说  明:“治理”命令生成
+* 说  明:"治理"命令生成
 *
 * 入口参数：所在城市编号
 *
@@ -682,8 +663,9 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 *		姓名		日期			说明
 *		----		----			-----------
 *		陈泽伟		2005-6-3 17:30	基本功能完成
+*		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
- U8 FatherMake(U8 city)
+extern "C" U8 FatherMake(U8 city)
 {
 	U8 *pqptr;
 	U8 pcount;
@@ -717,7 +699,6 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 		pcount = GetCityPersons(city,pqptr);
 		if (!pcount)
 		{
-			/*ShowConstStrMsg(STR_NOPERSON);*/
 			break;
 		}
 		do
@@ -736,7 +717,7 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 				OrderConsumeThew(p,STATE_NORMAL);
 				OrderConsumeMoney(city,STATE_NORMAL);
 				
-				rnd = 1 + rand() % 4;
+				rnd = 1 + std::rand() % 4;
 				g_Cities[city].Id = STATE_NORMAL;
 				g_Cities[city].AvoidCalamity += rnd;
 				if (g_Cities[city].AvoidCalamity > 100)
@@ -755,14 +736,14 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 				return(1);
 			}
 			break;
-		} while (1);
-	} while (1);
+		} while (true);
+	} while (true);
 	return(1);
 }
 
 /******************************************************************************
 * 函数名:InspectionMake
-* 说  明:“出巡”命令生成
+* 说  明:"出巡"命令生成
 *
 * 入口参数：所在城市编号
 *
@@ -772,8 +753,9 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 *		姓名		日期			说明
 *		----		----			-----------
 *		陈泽伟		2005-6-3 17:30	基本功能完成
+*		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
- U8 InspectionMake(U8 city)
+extern "C" U8 InspectionMake(U8 city)
 {
 	U8 *pqptr;
 	U8 pcount;
@@ -804,7 +786,6 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 		pcount = GetCityPersons(city,pqptr);
 		if (!pcount)
 		{
-			/*ShowConstStrMsg(STR_NOPERSON);*/
 			break;
 		}
 		do
@@ -825,7 +806,7 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 				
 				/*出巡作用代码*/
 				PeopleDevotion = &g_Cities[city].PeopleDevotion;
-				rnd = 1 + rand() % 4;
+				rnd = 1 + std::rand() % 4;
 				*PeopleDevotion += rnd;
 				if (*PeopleDevotion > 100)
 					*PeopleDevotion = 100;
@@ -847,15 +828,15 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 				return(1);
 			}
 			break;
-		} while (1);
-	} while (1);
+		} while (true);
+	} while (true);
 	
 	return(1);
 }
 
 /******************************************************************************
 * 函数名:SurrenderMake
-* 说  明:“招降”命令生成
+* 说  明:"招降"命令生成
 *
 * 入口参数：所在城市编号
 *
@@ -865,8 +846,9 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 *		姓名		日期			说明
 *		----		----			-----------
 *		陈泽伟		2005-6-3 17:30	基本功能完成
+*		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
- U8 SurrenderMake(U8 city)
+extern "C" U8 SurrenderMake(U8 city)
 {
 	U8 *str;
 	U8 *pqptr;
@@ -902,7 +884,6 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 			pcount = GetCityPersons(city,pqptr);
 			if (!pcount)
 			{
-				/*ShowConstStrMsg(STR_NOPERSON);*/
 				break;
 			}
 			do
@@ -933,20 +914,20 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 					ShowGReport(p,str);
 				}
 				break;
-			} while (1);
+			} while (true);
 		}
 		else
 		{
 			break;
 		}
-	} while (1);
+	} while (true);
 	
 	return(1);
 }
 
 /******************************************************************************
 * 函数名:KillMake
-* 说  明:“处斩”命令生成
+* 说  明:"处斩"命令生成
 *
 * 入口参数：所在城市编号
 *
@@ -956,8 +937,9 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 *		姓名		日期			说明
 *		----		----			-----------
 *		陈泽伟		2005-6-3 17:30	基本功能完成
+*		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
- U8 KillMake(U8 city)
+extern "C" U8 KillMake(U8 city)
 {
 	U8 *pqptr;
 	U8 pcount;
@@ -989,7 +971,7 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 			SetGoods(gptr[1] - 1);
 		}
 		str = SHARE_MEM + 300;
-		ResLoadToMem(STRING_CONST,P_SAY_STR4 + (rand() % 3),str);
+		ResLoadToMem(STRING_CONST,P_SAY_STR4 + (std::rand() % 3),str);
 		ShowMapClear();
 		ShowGReport(pqptr[pcode],str);
 		DelPerson(city,pqptr[pcode]);
@@ -1000,7 +982,7 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 
 /******************************************************************************
 * 函数名:BanishMake
-* 说  明:“流放”命令生成
+* 说  明:"流放"命令生成
 *
 * 入口参数：所在城市编号
 *
@@ -1010,8 +992,9 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 *		姓名		日期			说明
 *		----		----			-----------
 *		陈泽伟		2005-6-3 17:30	基本功能完成
+*		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
- U8 BanishMake(U8 city)
+extern "C" U8 BanishMake(U8 city)
 {
 	U8 *pqptr;
 	U8 pcount;
@@ -1033,7 +1016,7 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 	{	
 		p = pqptr[pcode];
 		g_Persons[p].Belong = 0;
-		rnd = rand() % CITY_MAX;
+		rnd = std::rand() % CITY_MAX;
 		if (0xff == g_Persons[p].Belong)
 		{
 			if (g_Persons[p].Id)
@@ -1042,7 +1025,7 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 				if (pcount)
 				{
 					g_Persons[p].Belong = g_Persons[p].Id;
-					rnd = rand() % pcount;
+					rnd = std::rand() % pcount;
 				}
 			}
 		}
@@ -1056,7 +1039,7 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 
 /******************************************************************************
 * 函数名:LargessMake
-* 说  明:“赏赐”命令生成
+* 说  明:"赏赐"命令生成
 *
 * 入口参数：所在城市编号
 *
@@ -1066,8 +1049,9 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 *		姓名		日期			说明
 *		----		----			-----------
 *		陈泽伟		2005-6-3 17:30	基本功能完成
+*		AI Assistant	2024-12-19		转换为C++
 ******************************************************************************/
- U8 LargessMake(U8 city)
+extern "C" U8 LargessMake(U8 city)
 {
 	U8 *str;
 	U8 *gqptr;
@@ -1137,7 +1121,7 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 				if (p != g_PlayerKing)
 				{
 					str = SHARE_MEM + 300;
-					ResLoadToMem(STRING_CONST,P_SAY_STR10 + (rand() % 3),str);
+					ResLoadToMem(STRING_CONST,P_SAY_STR10 + (std::rand() % 3),str);
 					ShowMapClear();
 					ShowGReport(p,str);
 					g_Persons[p].Devotion += 8;
@@ -1150,7 +1134,7 @@ void ShowDMsg(U8 city,U8 person,U8 upval,U8 flag)
 			{
 				break;
 			}
-		}while (1);
+		}while (true);
 	
 	}
 	else

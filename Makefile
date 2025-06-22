@@ -35,7 +35,6 @@ generate-moc:
 	@echo "Generating MOC files..."
 	powershell -ExecutionPolicy Bypass -File ./createMOC.ps1
 
-
 # Compile source files to object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@if not exist $(OBJ_DIR) mkdir $(OBJ_DIR)
@@ -53,9 +52,7 @@ $(OBJ_DIR)/moc_%.o: $(MOC_DIR)/%.cpp
 $(TARGET): $(OBJ_FILES)
 	@if not exist $(BIN_DIR) mkdir $(BIN_DIR)
 	$(CXX) -o $(TARGET) $(OBJ_FILES) $(LDFLAGS)
-
 	@echo "build successful..."
-
 
 # Clean up
 clean:
