@@ -656,7 +656,7 @@ const U32 FgtDigMask[10]={1,10,100,1000,10000,100000,1000000,10000000,100000000,
  U16 PlcArmsMax(U8 id)
 {
 	U16	up;
-	PersonType	*per;
+	NewPerson *per;
 	
 	per = &g_Persons[id];
 	up = (U16)(per->Force + per->IQ) * 10 + (U16)per->Level * 100;

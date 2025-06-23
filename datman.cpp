@@ -260,6 +260,7 @@ U32	GetResStartAddrRlb(U16 id);
                     ||ResId == 110 ||ResId == 111 ||ResId == 112 ||ResId == 113
                     ||ResId == 114 ||ResId == 115 ||ResId == 116 )
             {
+                //todo: might want to change this function to load resource from json
                 return ResLoadToConOld(ResId,(U8)idx,cbnk);
             }
             else

@@ -78,7 +78,7 @@ U8 g_PlayerKing;		/*玩家君主*/
 U16 g_YearDate;			/*当前日期*/
 U8 g_MonthDate;			/*当前日期*/
 U8 g_PIdx;			/*历史时期*/
-PersonType g_Persons[PERSON_MAX];		/*存放人才属性指针 */
+NewPerson g_Persons[PERSON_MAX];		/*存放人才属性指针 */
 
 CityType g_Cities[CITY_MAX];	/*存放城市属性指针*/
 // vector<CityType> g_Cities;

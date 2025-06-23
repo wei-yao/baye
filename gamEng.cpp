@@ -34,8 +34,8 @@ void GamShowKing(U8 pTop);
 void GamRevCity(U8 cycnt,U8 *tbuf,U8 *pos);
 U8 GamPicMenu(U16 picID,U16 speID);
 void GamRcdIFace(void);
-bool GamSaveRcd(U8 idx);
-bool GamLoadRcd(U8 idx);
+bool SaveGame(U8 idx);
+bool LoadGame(U8 idx);
 void GamBaYeEng(void);
 extern int g_stat;
 extern int ng;
@@ -131,7 +131,7 @@ U8 GamVarInit(void)
 	if (NULL == g_FgtAtkRng)
 		return 1;
 
-	// g_Persons = (PersonType *) gam_malloc(sizeof(PersonType) * PERSON_MAX + 4);	/* 3004 */
+	// g_Persons = (NewPerson *) gam_malloc(sizeof(NewPerson) * PERSON_MAX + 4);	/* 3004 */
 	if (NULL == g_Persons)
 		return 1;
 	g_OrderHead = (OrderQueueType *) NULL;
@@ -540,9 +540,9 @@ void GamShowErrInf(U8 idx)
 				break;
 			case VK_ENTER:				
 				if(flag)
-					pflag = GamLoadRcd(idx);
+					pflag = LoadGame(idx);
 				else
-					pflag = GamSaveRcd(idx);
+					pflag = SaveGame(idx);
 				if(pflag)
 					return idx;
 				GamRcdIFace();
@@ -624,7 +624,7 @@ void GamRcdIFace(void)
  *             ------          ----------      -------------
  *             高国军          2005.5.16       完成基本功能
 ***********************************************************************/
-bool GamLoadRcd(U8 idx)
+bool LoadGame(U8 idx)
 {
 	U8	tbuf[20];
 	gam_FILE	*fp;
@@ -650,11 +650,11 @@ bool GamLoadRcd(U8 idx)
 	gam_fread((U8 *)&g_MoveSpeed,1,1,fp);
 	gam_fread((U8 *)&g_MonthDate,1,1,fp);
 	gam_fread((U8 *)&g_CityPos,sizeof(CitySetType),1,fp);
-	gam_fread((U8 *)g_Persons,sizeof(PersonType),PERSON_MAX,fp);
-	for(int i = 0; i < PERSON_MAX; i++) {
-		PersonType& person = g_Persons[i];
-		person.Id = i;
-	}
+	// gam_fread((U8 *)g_Persons,sizeof(NewPerson),PERSON_MAX,fp);
+	// for(int i = 0; i < PERSON_MAX; i++) {
+	// 	NewPerson& person = g_Persons[i];
+	// 	person.Id = i;
+	// }
 	// U8 personsQueue[PERSON_MAX];
 	// gam_fread((U8 *)personsQueue,1,PERSON_MAX,fp);
 	gam_fread((U8 *)g_GoodsQueue,1,GOODS_MAX,fp);
@@ -692,7 +692,7 @@ bool GamLoadRcd(U8 idx)
  *             ------          ----------      -------------
  *             高国军          2005.5.16       完成基本功能
 ***********************************************************************/
-bool GamSaveRcd(U8 idx)
+bool SaveGame(U8 idx)
 {
 	U8	tbuf[20];
 	gam_FILE	*fp;
@@ -718,7 +718,7 @@ bool GamSaveRcd(U8 idx)
 	gam_fwrite((U8 *)&g_MoveSpeed,1,1,fp);
 	gam_fwrite((U8 *)&g_MonthDate,1,1,fp);
 	gam_fwrite((U8 *)&g_CityPos,sizeof(CitySetType),1,fp);
-	gam_fwrite((U8 *)g_Persons,sizeof(PersonType),PERSON_MAX,fp);
+	//gam_fwrite((U8 *)g_Persons,sizeof(NewPerson),PERSON_MAX,fp);
 	// #todo finally I want to get rid of old field completely and save/load in json
 	// except the inital load
 	// U8 personsQueue[PERSON_MAX];

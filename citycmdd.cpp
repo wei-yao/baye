@@ -589,7 +589,7 @@ U8 TheLoserDeal(U8 city,U8 *lqueue)
 	U8 cking;
 	U8 rnd;
 	U8 p;
-	PersonType *pptr;
+	NewPerson *pptr;
 	
 	cking = 0xff;
 	str = SHARE_MEM + 300;
@@ -661,7 +661,7 @@ U8 TheLoserDeal(U8 city,U8 *lqueue)
 ******************************************************************************/
 void HoldCaptive(U8 person,U8 city)
 {
-	PersonType *pptr;
+	NewPerson *pptr;
 	
 	pptr = &g_Persons[person];
 	pptr->Id = pptr->Belong;
@@ -720,7 +720,7 @@ U8 BeOccupied(U8 person,U8 city)
 	U8 i,pcount,rev;
 	U8 p;
 	U8 *pqptr;
-	PersonType *pptr;
+	NewPerson *pptr;
 	
 	pqptr = SHARE_MEM;
 	pcount = GetCityPersons(city,pqptr);

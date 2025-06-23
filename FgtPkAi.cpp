@@ -129,7 +129,7 @@ bool FgtJiNeng(FGTCMD *pcmd)
 	U8	sklbuf[SKILL_NMAX + 1];
 	bool	same;
 	U16	arms,ranv;
-	PersonType	*per;
+	NewPerson *per;
 	JLPOS		*pos;
 	
 	idx = pcmd->sIdx;

@@ -182,7 +182,7 @@
 	U8 pcount;
 	U8 pcode;
 	U8 p;
-	PersonType *pptr;
+	NewPerson *pptr;
 	
 	pqptr = SHARE_MEM;
 	pcount = GetCityPersons(city,pqptr);

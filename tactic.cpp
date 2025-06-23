@@ -70,7 +70,7 @@ bool isPersonUserKing(U8 personId) {
     return (g_Persons[personId].Belong == (g_PlayerKing + 1));
 }
 
-bool GamSaveRcd(U8 idx);
+bool SaveGame(U8 idx);
 // U8 o_PersonsQueue[PERSON_MAX];
 
 /******************************************************************************
@@ -697,7 +697,7 @@ void RecruitAndAssign(U8 city)
 /// @return max army the person can carry
 int getMaxArmy(U8 person)
 {
-	PersonType *pptr = &g_Persons[person];
+	NewPerson *pptr = &g_Persons[person];
 	int armys = pptr->Level;
 	armys *= 10;
 	armys += pptr->Force + pptr->IQ;
@@ -783,7 +783,7 @@ void ComputerTacticArmament(U8 city, bool isAuto)
 	U8 pcount, fpcount, fcount, t;
 	U16 armys;
 	OrderType order;
-	PersonType *pptr;
+	NewPerson *pptr;
 
 	pqptr = SHARE_MEM;
 	cqptr = SHARE_MEM + PERSON_MAX;
@@ -962,7 +962,7 @@ U8 GameDevDrv(void)
 
 		if (g_autoSave == 1)
 		{
-			GamSaveRcd(0);
+			SaveGame(0);
 		}
 
 		/*提示电脑策略中*/
@@ -1166,7 +1166,14 @@ void LoadPeriod(U8 period)
 	g_YearDate = *((U16 *)ptr);
 
 	ptr = ResLoadToCon(GENERAL_RESID, period, g_CBnkPtr);
-	gam_memcpy((U8 *)g_Persons, ptr, sizeof(PersonType) * PERSON_MAX);
+
+	PersonTypeOld oldPersons[PERSON_MAX];
+	gam_memcpy((U8 *)oldPersons, ptr, sizeof(PersonTypeOld) * PERSON_MAX);
+	for (int i = 0; i < PERSON_MAX; ++i) {
+		// person utf8 name is converted in the constructor
+		g_Persons[i] = NewPerson(oldPersons[i]);
+		g_Persons[i].Id = i;
+	}
 
 	U8 o_PersonsQueue[PERSON_MAX];
 	ptr = ResLoadToCon(GENERAL_QUEUE, period, g_CBnkPtr);
@@ -1192,7 +1199,8 @@ void LoadPeriod(U8 period)
 }
 
 
-
+// 将旧城数据转换为新城数据
+// convert people's data from o_PersonsQueue to city's PersonV
 void OldCityToNewCity(OldCityType old_cities[38], U8 o_PersonsQueue[200])
 {
 	for (int i = 0; i < CITY_MAX; i++)
@@ -1788,8 +1796,8 @@ void clearPersonNameCache() {
 // Function to get person name in UTF-8 from person ID
 std::string getPersonGbkName(U8 personId) {
     // Safety check: ensure personId is valid (PERSON_MAX = 200)
-    if (personId >= 200) {
-        return "Unknown";
+    if (personId >= 200 || personId <=0) {
+        return "Empty";
     }
     
     // Check cache first
@@ -1848,7 +1856,7 @@ std::string getCityDebugString(U8 cityId) {
             U8 kingId = city.Belong - 1;  // Convert from 1-based to 0-based index
             if (kingId < PERSON_MAX) {
                 try {
-                    std::string kingName = getPersonGbkName(kingId);
+                    std::string kingName = g_Persons[kingId].Name;
                     debug << "King: " << kingName << std::endl;
                 } catch (...) {
                     debug << "King: Error getting king name" << std::endl;
@@ -1871,7 +1879,7 @@ std::string getCityDebugString(U8 cityId) {
         } else {
             for (const auto& personId : city.PersonV) {
                 try {
-                    std::string personName = getPersonGbkName(personId);
+                    std::string personName = g_Persons[personId].Name;
                     std::string status;
                     
                     if (personId >= 200) {
@@ -1935,17 +1943,45 @@ std::string getCityDebugString(U8 cityId) {
 #include "json.hpp"
 using json = nlohmann::json;
 
+const string getSaveFileName(U8 idx)
+{
+	return "game_" + std::to_string(idx) + ".json";
+}
+
 bool SaveGameJson(U8 idx)
 {
 	// Create filename
-	std::string filename = "save\\city_" + std::to_string(idx) + ".json";
+	std::string filename = getSaveFileName(idx);
 
-	// Convert cities to JSON
-	json citiesJson;
+	// Serialize persons
+	json personsJson = json::array();
+	for (int i = 0; i < PERSON_MAX; ++i) {
+		const auto& p = g_Persons[i];
+		json person;
+		person["Id"] = p.Id;
+		person["Belong"] = p.Belong;
+		person["Level"] = p.Level;
+		person["Force"] = p.Force;
+		person["IQ"] = p.IQ;
+		person["Devotion"] = p.Devotion;
+		person["Character"] = p.Character;
+		person["Experience"] = p.Experience;
+		person["Thew"] = p.Thew;
+		person["ArmsType"] = p.ArmsType;
+		person["Arms"] = p.Arms;
+		person["Equip0"] = p.Equip[0];
+		person["Equip1"] = p.Equip[1];
+		person["Age"] = p.Age;
+		person["city"] = p.city;
+		person["Name"] = p.Name;
+		personsJson.push_back(person);
+	}
+
+	// Serialize cities (existing logic)
+	json citiesJson = json::array();
 	for (int i = 0; i < CITY_MAX; i++)
 	{
 		json city;
-		// Basic properties
 		city["Id"] = g_Cities[i].Id;
 		city["Belong"] = g_Cities[i].Belong;
 		city["SatrapId"] = g_Cities[i].SatrapId;
@@ -1976,19 +2012,13 @@ bool SaveGameJson(U8 idx)
 		std::vector<std::string> personNames;
 		for (const auto& personId : g_Cities[i].PersonV)
 		{
-			std::string personName = getPersonGbkName(personId);
+			std::string personName = g_Persons[personId].Name;
 			personNames.push_back(personName);
 		}
 		city["PersonNames"] = personNames;
 
 		// Add GBK names for all tools in the city
 		std::vector<std::string> toolNames;
-		
-		std::cout << "City " << (int)i << " ToolsV: " << g_Cities[i].ToolsV.size() << std::endl;
-		for (const auto& toolId : g_Cities[i].ToolsV) {
-			std::cout << (int)toolId << " ";
-		}
-		std::cout << std::endl;
 		for (size_t j = 0; j < g_Cities[i].ToolsV.size(); j++)
 		{
 			const auto toolId = g_Cities[i].ToolsV[j];
@@ -1999,10 +2029,15 @@ bool SaveGameJson(U8 idx)
 		citiesJson.push_back(city);
 	}
 
+	// Compose final output
+	json output;
+	output["persons"] = personsJson;
+	output["cities"] = citiesJson;
+
 	// Write JSON to file with pretty printing
 	try {
 		std::ofstream o(filename);
-		o << citiesJson.dump(4);
+		o << output.dump(4);
 		o.close();
 	} catch (const std::exception& e) {
 		std::cerr << "JSON serialization error: " << e.what() << std::endl;
@@ -2016,65 +2051,68 @@ bool SaveGameJson(U8 idx)
 bool LoadGameJson(U8 idx)
 {
 	// Create filename
-	std::string filename = "save\\city_" + std::to_string(idx) + ".json";
+	std::string filename = getSaveFileName(idx);
 
 	try
 	{
 		// Read JSON from file
 		std::ifstream i(filename);
-		json citiesJson;
-		i >> citiesJson;
+		json saveJson;
+		i >> saveJson;
 
-		// Load cities from JSON
-		for (int i = 0; i < CITY_MAX; i++)
-		{
-			const auto &city = citiesJson[i];
-
-			// Basic properties
-			g_Cities[i].Id = city["Id"];
-			g_Cities[i].Belong = city["Belong"];
-			g_Cities[i].SatrapId = city["SatrapId"];
-			g_Cities[i].FarmingLimit = city["FarmingLimit"];
-			g_Cities[i].Farming = city["Farming"];
-			g_Cities[i].CommerceLimit = city["CommerceLimit"];
-			g_Cities[i].Commerce = city["Commerce"];
-			g_Cities[i].PeopleDevotion = city["PeopleDevotion"];
-			g_Cities[i].AvoidCalamity = city["AvoidCalamity"];
-			g_Cities[i].PopulationLimit = city["PopulationLimit"];
-			g_Cities[i].Population = city["Population"];
-			g_Cities[i].Money = city["Money"];
-			g_Cities[i].Food = city["Food"];
-			g_Cities[i].MothballArms = city["MothballArms"];
-			g_Cities[i].PersonQueue = city["PersonQueue"];
-			g_Cities[i].Persons = city["Persons"];
-			g_Cities[i].ToolQueue = city["ToolQueue"];
-			g_Cities[i].Tools = city["Tools"];
-			g_Cities[i].autoManage = city["autoManage"];
-
-			// Vector and set properties
-			g_Cities[i].PersonV = city["PersonV"].get<std::vector<U8>>();
-			g_Cities[i].ToolsV = city["ToolsV"].get<std::vector<U8>>();
-			g_Cities[i].usedPersonsV = city["usedPersonsV"].get<std::set<U8>>();
-			g_Cities[i].Name = city["Name"];
-
-			// Load PersonNames if present (optional, for future use)
-			if (city.contains("PersonNames"))
-			{
-				// PersonNames are loaded but not stored in the current data structure
-				// They can be used for validation or debugging purposes
-				auto personNames = city["PersonNames"].get<std::vector<std::string>>();
-				// Note: We don't store PersonNames in the current data structure
-				// as they can be reconstructed from PersonV using GetPersonName()
+		// Load persons
+		if (saveJson.contains("persons")) {
+			auto& personsJson = saveJson["persons"];
+			for (int i = 0; i < PERSON_MAX && i < personsJson.size(); ++i) {
+				const auto& p = personsJson[i];
+				g_Persons[i].Id = p.value("Id", 0);
+				g_Persons[i].Belong = p.value("Belong", 0);
+				g_Persons[i].Level = p.value("Level", 0);
+				g_Persons[i].Force = p.value("Force", 0);
+				g_Persons[i].IQ = p.value("IQ", 0);
+				g_Persons[i].Devotion = p.value("Devotion", 0);
+				g_Persons[i].Character = p.value("Character", 0);
+				g_Persons[i].Experience = p.value("Experience", 0);
+				g_Persons[i].Thew = p.value("Thew", 0);
+				g_Persons[i].ArmsType = p.value("ArmsType", 0);
+				g_Persons[i].Arms = p.value("Arms", 0);
+				g_Persons[i].Equip[0] = p.value("Equip0", 0);
+				g_Persons[i].Equip[1] = p.value("Equip1", 0);
+				g_Persons[i].Age = p.value("Age", 0);
+				g_Persons[i].city = p.value("city", 0);
+				g_Persons[i].Name = p.value("Name", "");
 			}
+		}
 
-			// Load ToolNames if present (optional, for future use)
-			if (city.contains("ToolNames"))
+		// Load cities
+		if (saveJson.contains("cities")) {
+			auto& citiesJson = saveJson["cities"];
+			for (int i = 0; i < CITY_MAX && i < citiesJson.size(); i++)
 			{
-				// ToolNames are loaded but not stored in the current data structure
-				// They can be used for validation or debugging purposes
-				auto toolNames = city["ToolNames"].get<std::vector<std::string>>();
-				// Note: We don't store ToolNames in the current data structure
-				// as they can be reconstructed from ToolsV using GetGoodsName()
+				const auto &city = citiesJson[i];
+				g_Cities[i].Id = city["Id"];
+				g_Cities[i].Belong = city["Belong"];
+				g_Cities[i].SatrapId = city["SatrapId"];
+				g_Cities[i].FarmingLimit = city["FarmingLimit"];
+				g_Cities[i].Farming = city["Farming"];
+				g_Cities[i].CommerceLimit = city["CommerceLimit"];
+				g_Cities[i].Commerce = city["Commerce"];
+				g_Cities[i].PeopleDevotion = city["PeopleDevotion"];
+				g_Cities[i].AvoidCalamity = city["AvoidCalamity"];
+				g_Cities[i].PopulationLimit = city["PopulationLimit"];
+				g_Cities[i].Population = city["Population"];
+				g_Cities[i].Money = city["Money"];
+				g_Cities[i].Food = city["Food"];
+				g_Cities[i].MothballArms = city["MothballArms"];
+				g_Cities[i].PersonQueue = city["PersonQueue"];
+				g_Cities[i].Persons = city["Persons"];
+				g_Cities[i].ToolQueue = city["ToolQueue"];
+				g_Cities[i].Tools = city["Tools"];
+				g_Cities[i].autoManage = city["autoManage"];
+				g_Cities[i].PersonV = city["PersonV"].get<std::vector<U8>>();
+				g_Cities[i].ToolsV = city["ToolsV"].get<std::vector<U8>>();
+				g_Cities[i].usedPersonsV = city["usedPersonsV"].get<std::set<U8>>();
+				g_Cities[i].Name = city["Name"];
 			}
 		}
 
@@ -2104,7 +2142,7 @@ void printCityDebugInfoCout(U8 cityId) {
 			continue;
 		}
 		std::cout << "ID: " << std::setw(3) << (int)personId 
-				 << ", Name: " << getPersonGbkName(personId) << std::endl;
+				 << ", Name: " << g_Persons[personId].Name << std::endl;
 	}
 }
 
@@ -2156,7 +2194,7 @@ std::string getPersonDebugString(U8 personId) {
         const auto& person = g_Persons[personId];
         
         // Get person name
-        std::string personName = getPersonGbkName(personId);
+        std::string personName = person.Name;
         
         // Person header
         debug << "=== Person " << (int)personId << " (" << personName << ") ===" << std::endl;
@@ -2168,7 +2206,8 @@ std::string getPersonDebugString(U8 personId) {
             U8 kingId = person.Belong - 1;  // Convert from 1-based to 0-based index
             if (kingId < PERSON_MAX) {
                 try {
-                    std::string kingName = getPersonGbkName(kingId);
+    
+					const auto& kingName = g_Persons[kingId].Name;
                     debug << " (King: " << kingName << ")";
                 } catch (...) {
                     debug << " (King: Error getting king name)";
@@ -2325,7 +2364,7 @@ std::string getOrderDetailedStr(const OrderType* order) {
     if (!order) return "Invalid Order";
     
     try {
-        std::string personName = getPersonGbkName(order->Person);
+        std::string personName = g_Persons[order->Person].Name;
         std::string orderType = getOrderTypeName(order->OrderId);
         std::string cityName = g_Cities[order->City].Name;
         
@@ -2425,7 +2464,7 @@ void logPersonReturned(U8 personId, U8 cityId, const std::string& reason) {
     }
     
     try {
-        std::string personName = getPersonGbkName(personId);
+        std::string personName = g_Persons[personId].Name;
         std::string cityName = g_Cities[cityId].Name;
         
         std::string details = "Person=" + personName + 
@@ -2453,7 +2492,7 @@ void logPersonRemoved(U8 personId, U8 cityId, const std::string& reason) {
     }
     
     try {
-        std::string personName = getPersonGbkName(personId);
+        std::string personName = g_Persons[personId].Name;
         std::string cityName = g_Cities[cityId].Name;
         
         std::string details = "Person=" + personName + 

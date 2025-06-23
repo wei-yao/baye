@@ -110,6 +110,8 @@
 #define THREW_RENEW		4	/*每月恢复体力*/
 #define THREW_TREAT		50	/*宴请恢复体力*/
 
+std::string getPersonGbkName(U8 personId);
+
 typedef struct {
 	U8	idx;			/* 道具序号 */
 	U8	useflag;		/* 使用标志：是被使用还是被装备*/
@@ -157,10 +159,10 @@ typedef struct Person				/*人才属性 (12 Bytes) */
 	U16 Arms;			/*兵力*/
 	U8 Equip[2];			/*装备*/
 	U8 Age;				/*年龄*/
-}PersonType;
+}PersonTypeOld;
 
 
-//todo: add new filed like gbkName, 
+//todo: add person res type to this class
 // support third equipment
 class NewPerson				/*人才属性 (12 Bytes) */
 {
@@ -184,22 +186,23 @@ public:
 	
 	// Constructor
 	NewPerson() : Id(0), Belong(0), Level(0), Force(0), IQ(0), Devotion(0), 
-		Character(0), Experience(0), Thew(0), ArmsType(0), Arms(0), Age(0), city(0) {
+		Character(0), Experience(0), Thew(0), ArmsType(0), Arms(0), Age(0), city(0), Name("") {
 		Equip[0] = 0;
 		Equip[1] = 0;
 	}
 	
-	// Constructor from PersonType
-	NewPerson(const PersonType& person) : Id(person.Id), Belong(person.Belong), Level(person.Level),
+	// Constructor from NewPerson
+	NewPerson(const PersonTypeOld& person) : Id(person.Id), Belong(person.Belong), Level(person.Level),
 		Force(person.Force), IQ(person.IQ), Devotion(person.Devotion), Character(person.Character),
 		Experience(person.Experience), Thew(person.Thew), ArmsType(person.ArmsType), Arms(person.Arms),
 		Age(person.Age), city(0), Name("") {
 		Equip[0] = person.Equip[0];
 		Equip[1] = person.Equip[1];
+		Name = getPersonGbkName(Id);
 	}
 	
-	// Constructor from PersonType pointer
-	NewPerson(const PersonType* person) : Id(0), Belong(0), Level(0), Force(0), IQ(0), Devotion(0), 
+	// Constructor from PersonTypeOld pointer
+	NewPerson(const PersonTypeOld* person) : Id(0), Belong(0), Level(0), Force(0), IQ(0), Devotion(0), 
 		Character(0), Experience(0), Thew(0), ArmsType(0), Arms(0), Age(0), city(0), Name("") {
 		if (person != nullptr) {
 			Id = person->Id;
@@ -216,6 +219,7 @@ public:
 			Age = person->Age;
 			Equip[0] = person->Equip[0];
 			Equip[1] = person->Equip[1];
+			Name = getPersonGbkName(Id);
 		} else {
 			Equip[0] = 0;
 			Equip[1] = 0;

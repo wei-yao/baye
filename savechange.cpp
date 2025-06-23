@@ -31,7 +31,7 @@ extern U8 g_PlayerKing;			/*玩家君主*/
 extern U16 g_YearDate;			/*当前日期*/
 extern U8 g_MonthDate;			/*当前日期*/
 extern U8 g_PIdx;			/*历史时期*/
-extern PersonType *g_Persons;		/*存放人才属性指针*/
+extern NewPerson *g_Persons;		/*存放人才属性指针*/
 extern CityType g_Cities[CITYMAX];	/*存放城市属性指针*/
 // extern U8 g_PersonsQueue[HEROMAX];	/*人才队列*/
 extern U8 g_GoodsQueue[GOODMAX];	/*道具队列*/

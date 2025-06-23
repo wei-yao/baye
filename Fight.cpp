@@ -950,7 +950,7 @@ void FgtDrvState(void)
 	U8	i,state,tmp;
 	U16	arms,hurt;
 	bool	rec,update;
-	PersonType	*per;
+	NewPerson *per;
 	
 	if(g_FgtOver)
 		return;
@@ -1228,7 +1228,7 @@ void FgtChkAtkEnd(void)
 {
 	U8	i,tmp,idx;
 	U8	x,y,*buf;
-	PersonType	*per;
+	NewPerson *per;
 	JLPOS		*pos;
 	
 	buf = SHARE_MEM;

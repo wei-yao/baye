@@ -117,11 +117,11 @@ void CountBaseAttr(U8 i)
 	U8	idx;
 	U16	at,df,lev,thew;
 	JLPOS	*pos;
-	PersonType *per;
+	NewPerson *per;
 
 	pos = &g_GenPos[i];
 	idx = TransIdxToGen(i);
-	per = &g_Persons[idx];
+	per = (NewPerson *)(&g_Persons[idx]);
 	
 	at = per->Force;
 	df = per->IQ;
@@ -156,11 +156,11 @@ const U8 FgtIntMove[6]={MOV_QIBING,MOV_BUBING,MOV_GOBING,MOV_SHUIJUN,MOV_JIBING,
 	U8	lp,arm;
 	GOODS	*ptr;
 	JLPOS	*pos;
-	PersonType *per;
+	NewPerson *per;
 	
 	pos = &g_GenPos[i];
 	i = TransIdxToGen(i);
-	per = &g_Persons[i];
+	per = (NewPerson *)(&g_Persons[i]);
 			
 	arm = per->ArmsType;	
 	pos->move = FgtIntMove[arm];
@@ -226,13 +226,13 @@ const float TerrDfModu[] = {1.0,1.0,1.3,1.15,1.1,1.5,1.2,0.8};	/* 各种地形�
 	U8	pGen,pTer,mModu;
 	U8	*mptr;
 	JLATT	*pAtk;
-	PersonType	*pTyp;
+	NewPerson	*pTyp;
 	
 	pGen = TransIdxToGen(pIdx);
 	if(pGen > PERSON_MAX - 1)
 		return;
 	pAtk = (JLATT *)(&g_GenAtt[idx]);
-	pTyp = (PersonType *)(&g_Persons[pGen]);
+	pTyp = (NewPerson *)(&g_Persons[pGen]);
 	
 	pAtk->level = &(pTyp->Level);
 	pAtk->canny = pTyp->IQ + pTyp->Level + 5;

@@ -113,6 +113,7 @@ int getLogOnlyUserKingC();
 // Test function for activity logging
 void testActivityLogging();
 void testOrderTypeComparison();
+const std::string getSaveFileName(U8 idx);
 
 void clearPersonNameCache();
 

@@ -102,7 +102,7 @@ extern int  g_stat;
 	U8	tmp,tbuf[10],tbuf2[30];
 	U8	*pbuf,*pic;
 	RECT	big,small;
-	PersonType	*per;
+	NewPerson *per;
 	JLPOS	*pos;
 
 	/* 初始化界面 */	
@@ -135,7 +135,7 @@ extern int  g_stat;
 		pic = ResLoadToCon(GEN_HEADPIC1 + g_PIdx,1,g_CBnkPtr);
 		GamPicShowExS(x + 13,y + 2,24,24,idx,pic);
 		FgtLoadToMem2(dFgtHlpGen,pbuf);
-		per = (PersonType *) (&g_Persons[idx]);
+		per = (NewPerson *) (&g_Persons[idx]);
 		if(MAX_LEVEL > per->Level)
 			FgtFormatStr(pbuf,per->Level);
 		else
@@ -769,7 +769,7 @@ U8 FgtGetExp(U16 hurt)
 void FgtResumeMp(U8 idx)
 {
 	U8	maxmp;
-	PersonType *per;
+	NewPerson *per;
 
 	maxmp = TransIdxToGen1(idx);
 	per = &g_Persons[maxmp];

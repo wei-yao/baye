@@ -197,6 +197,8 @@ U8 SearchDrv(OrderType *Order)
 					count = p;
 					count *= 3;
 					count += 1;
+					// whether the person can be found by a certain person
+					// is defined the the resource file
 					infp = ResLoadToCon(GENERAL_CON,g_PIdx,g_CBnkPtr);
 					fo = infp[count];
 					rnd = 0;
@@ -384,7 +386,7 @@ U8 SurrenderDrv(OrderType *Order)
 	U8 p,ob;
 	U8 flag;
 	U8 *str;
-	PersonType *pptr;
+	NewPerson *pptr;
 	
 	p = Order->Person;
 	ob = Order->Object;

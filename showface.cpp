@@ -387,6 +387,7 @@ U8 ShowGoodsProStr(U8 pro,U8 x,U8 y,U8 wid)
 *		姓名		日期			说明
 *		----		----			-----------
 *		陈泽伟		2005-6-10 10:16	基本功能完成
+* todo: if we want to support modify the person Name in json, we need to change this function
 ******************************************************************************/
  void GetPersonName(U8 person,U8 *str)
 {
