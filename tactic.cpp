@@ -1169,11 +1169,7 @@ void LoadPeriod(U8 period)
 
 	PersonTypeOld oldPersons[PERSON_MAX];
 	gam_memcpy((U8 *)oldPersons, ptr, sizeof(PersonTypeOld) * PERSON_MAX);
-	for (int i = 0; i < PERSON_MAX; ++i) {
-		// person utf8 name is converted in the constructor
-		g_Persons[i] = NewPerson(oldPersons[i]);
-		g_Persons[i].Id = i;
-	}
+	
 
 	U8 o_PersonsQueue[PERSON_MAX];
 	ptr = ResLoadToCon(GENERAL_QUEUE, period, g_CBnkPtr);
@@ -1195,6 +1191,13 @@ void LoadPeriod(U8 period)
 	}
 
 	OldCityToNewCity(old_cities, o_PersonsQueue);
+	//wait for other to initialize before get the person name
+	for (int i = 0; i < PERSON_MAX; ++i) {
+		// person utf8 name is converted in the constructor
+		oldPersons[i].Id = i;
+		g_Persons[i] = NewPerson(&oldPersons[i]);
+		
+	}
 	g_MonthDate = 1;
 }
 
@@ -1713,34 +1716,43 @@ U8 GetWeekCity(U8 count, U8 *cqueue)
 }
 
 std::string gbk_to_utf8(const char* gbk_str, size_t gbk_len) {
-    iconv_t cd = iconv_open("UTF-8", "GBK");
-    if (cd == (iconv_t)-1) {
-        std::cerr << "iconv_open error: " << strerror(errno) << std::endl;
-        return "";
-    }
-    
-    // Allocate output buffer (4x input size to be safe - UTF-8 can be longer than GBK)
-    size_t out_buf_size = gbk_len * 4;
-    char* utf8_buf = new char[out_buf_size];
-    
-    char* in_ptr = const_cast<char*>(gbk_str);
-    char* out_ptr = utf8_buf;
-    size_t in_bytes_left = gbk_len;
-    size_t out_bytes_left = out_buf_size;
-    
-    if (iconv(cd, &in_ptr, &in_bytes_left, &out_ptr, &out_bytes_left) == (size_t)-1) {
-        std::cerr << "iconv error: " << strerror(errno) << std::endl;
+
+    try {
+        iconv_t cd = iconv_open("UTF-8", "GBK");
+        if (cd == (iconv_t)-1) {
+            std::cerr << "iconv_open error: " << strerror(errno) << std::endl;
+            return "";
+        }
+        
+        // Allocate output buffer (4x input size to be safe - UTF-8 can be longer than GBK)
+        size_t out_buf_size = gbk_len * 4;
+        char* utf8_buf = new char[out_buf_size];
+        
+        char* in_ptr = const_cast<char*>(gbk_str);
+        char* out_ptr = utf8_buf;
+        size_t in_bytes_left = gbk_len;
+        size_t out_bytes_left = out_buf_size;
+        
+        if (iconv(cd, &in_ptr, &in_bytes_left, &out_ptr, &out_bytes_left) == (size_t)-1) {
+            std::cerr << "iconv error: " << strerror(errno) << std::endl;
+            delete[] utf8_buf;
+            iconv_close(cd);
+            return "";
+        }
+        
+        // Create string from buffer, using the correct length
+        std::string result(utf8_buf, out_buf_size - out_bytes_left);
+        
         delete[] utf8_buf;
         iconv_close(cd);
+        return result;
+    } catch (const std::exception& e) {
+        std::cerr << "Exception in gbk_to_utf8: " << e.what() << std::endl;
+        return "";
+    } catch (...) {
+        std::cerr << "Unknown exception in gbk_to_utf8" << std::endl;
         return "";
     }
-    
-    // Create string from buffer, using the correct length
-    std::string result(utf8_buf, out_buf_size - out_bytes_left);
-    
-    delete[] utf8_buf;
-    iconv_close(cd);
-    return result;
 }
 
 // Function to get tool name in UTF-8 from tool ID
@@ -1793,34 +1805,35 @@ void clearPersonNameCache() {
     personNameCacheInitialized = false;
 }
 
+#define NAME_BUF_LEN 10
 // Function to get person name in UTF-8 from person ID
 std::string getPersonGbkName(U8 personId) {
     // Safety check: ensure personId is valid (PERSON_MAX = 200)
-    if (personId >= 200 || personId <=0) {
+    if (personId >= 200 || personId <0) {
         return "Empty";
     }
     
     // Check cache first
-    auto it = personNameCache.find(personId);
-    if (it != personNameCache.end()) {
-        return it->second;
-    }
+    // auto it = personNameCache.find(personId);
+    // if (it != personNameCache.end()) {
+    //     return it->second;
+    // }
     
-    U8 nameBuf[10];
+    U8 nameBuf[NAME_BUF_LEN];
     // Clear the buffer first
-    memset(nameBuf, 0, sizeof(nameBuf));
+    memset(nameBuf, 0, NAME_BUF_LEN);
     
     // Add extra safety check for the buffer
     if (nameBuf == nullptr) {
         return "BufferError";
     }
-    
+	
     GetPersonName(personId, nameBuf);
     
     // Check if the name buffer is valid after the call
     if (nameBuf[0] == 0) {
         std::string result = "Empty";
-        personNameCache[personId] = result;
+        // personNameCache[personId] = result;
         return result;
     }
     
@@ -1828,12 +1841,12 @@ std::string getPersonGbkName(U8 personId) {
     std::string utf8Name = gbk_to_utf8((const char*)nameBuf, strlen((const char*)nameBuf));
     if (utf8Name.empty()) {
         std::string result = "ConversionError";
-        personNameCache[personId] = result;
+        // personNameCache[personId] = result;
         return result;
     }
     
     // Cache the result
-    personNameCache[personId] = utf8Name;
+    // personNameCache[personId] = utf8Name;
     return utf8Name;
 }
 

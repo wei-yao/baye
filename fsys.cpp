@@ -246,7 +246,14 @@ extern U8 g_startName_char[200];
 		tmp+=offset;	
 	if(fromwhere==SEEK_END)
 		tmp=fhandle->flen-offset;
+	
+	// Simple boundary check
+	if (tmp > fhandle->flen || tmp < 0) {
+		return 1; // Error: position out of bounds
+	}
+	
 	fhandle->curset=tmp;
+	return 0; // Success
 }
 /***********************************************************************
  * 说明:     将当前文件系统的文件读取函数封装为标准的fread函数
